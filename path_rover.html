@@ -12,6 +12,7 @@
 window.onload=createGrid;
 
 $(function(){
+    document.getElementById("mydrop").classList.toggle("show");	
 	$("#algorithm").draggable({
 	   containment:"#container"
 	});
@@ -31,30 +32,300 @@ $(function(){
 
 
 <div id="container" ui-grid="gridOptions" ui-grid-auto-resize>
-<div id="instructions">  </div>
+<div id="instructions"> 
+<header>
+<span id="_header"> Instructions </span>
+<span id="_hide">Hide</span>
+</header>
+<p id="ins_head">
+Click within the white grid and drag your mouse to draw obstacles.<br> Drag the <span style="color:#00ff00;"> green</span> node to set the start position. <br> Drag the <span style="color:#ff2800;">red </span>node to set the end position.<br>Choose the algorithm from right hand panel . <br> Click the start search in the lower-right corner to start animation.
+</p>
+ </div>
+
 
 <div id="algorithm"> 
+<div class="select"> <span>Select Algorithm </span></div>
 
-<div class="i_algo"> </div>
-<div class="i_algo"> </div>
-<div class="i_algo"> </div>
-<div class="i_algo"> </div>
-<div class="i_algo"> </div>
-<div class="i_algo"> </div>
-<div class="i_algo"> </div>
-<div class="i_algo"> </div>
+<div class="i_algo"> 
+
+<button onclick="A_algo()" class="dropbtn">A*</button>
+
+<div class="dropdown_content" id="mydrop">
+<span class="heuristic_head" >Heuristic</span>
+<br>
+<div class="heuristic">
+<input type="radio" id="Manhattan" name="path_A1" value="Manhattan">
+<label for"Manhattan">Manhattan</label>
+<!--span class="label_l"> Manhattan</span-->
+<br>
+<input type="radio" id="Euclidiean" name="path_A1" value="Euclidiean">
+<label for="Euclidiean">Euclidiean</label>
+<br>
+<input type="radio" id="Octile" name="path_A1" value="Octile">
+<label for="Octile">Octile</label>
+</br>
+<input type="radio" id="Chebysev" name="path_A1" value="Chebysev">
+<label for="Chebysev">Chebysev</label>
+<br>
+</div>
+<span class="heuristic_head"> Options</span>
+<br>
+<div class="heuristic">
+<input type="checkbox" id="a1" name="allow1" value="Allow_dia">
+<label for="a1"> Allow Diagonal</label>
+<br>
+<input type="checkbox" id="a2" name="bi1" value="Bi-directional">
+<label for="a2"> Bi-directional</label>
+<br>
+<input type="checkbox" id="a3" name="cross1" value="Don't_Cross">
+<label for="a3"> Don't Cross Corners</label>
+<br>
+<input type="text" id="weight" name="weight1" value="1">
+<label for="weight">Weight</label>
+</div>
+</div>
+</div>
+
+
+<div class="i_algo">
+
+<button onclick="IDA_algo()" class="dropbtn">IDA*</button>
+
+<div class="dropdown_content" id="mydrop2">
+<span class="heuristic_head" >Heuristic</span>
+<br>
+<div class="heuristic">
+<input type="radio" id="Manhattan" name="path_A2" value="Manhattan">
+<label for"Manhattan">Manhattan</label>
+<!--span class="label_l"> Manhattan</span-->
+<br>
+<input type="radio" id="Euclidiean" name="path_A2" value="Euclidiean">
+<label for="Euclidiean">Euclidiean</label>
+<br>
+<input type="radio" id="Octile" name="path_A2" value="Octile">
+<label for="Octile">Octile</label>
+</br>
+<input type="radio" id="Chebysev" name="path_A2" value="Chebysev">
+<label for="Chebysev">Chebysev</label>
+<br>
+</div>
+<span class="heuristic_head"> Options</span>
+<br>
+<div class="heuristic">
+<input type="checkbox" id="a4" name="allow1" value="Allow_dia">
+<label for="a1"> Allow Diagonal</label>
+<br>
+<input type="checkbox" id="a5" name="cross1" value="Don't_Cross">
+<label for="a3"> Don't Cross Corners</label>
+<br>
+<input type="text" id="weight" name="weight1" value="1">
+<label for="weight">Weight</label>
+<br>
+<input type="text" id="weight" name="second_limit1" value="10">
+<label for="second_limit">Second Limits</label>
+</br>
+<input type="checkbox" id="a6" name="recursion1" value="visulaize_recursion">
+<label for="a6"> Visualizze Recursion</label>
+</div>
+</div>
+
+ </div>
+
+
+<div class="i_algo"> 
+
+<button onclick="BFS_algo()" class="dropbtn">Breadth First Search</button>
+<div class="dropdown_content" id="mydrop3">
+<span class="heuristic_head"> Options</span>
+<br>
+<div class="heuristic">
+<input type="checkbox" id="a7" name="allow1" value="Allow_dia">
+<label for="a7"> Allow Diagonal</label>
+<br>
+<input type="checkbox" id="a8" name="bi1" value="Bi-directional">
+<label for="a8"> Bi-directional</label>
+<br>
+<input type="checkbox" id="a9" name="cross1" value="Don't_Cross">
+<label for="a9"> Don't Cross Corners</label>
+
+</div>
+</div>
+
+</div>
+<div class="i_algo"> 
+
+<button onclick="BtFS_algo()" class="dropbtn">Best First Search</button>
+
+<div class="dropdown_content" id="mydrop4">
+<span class="heuristic_head" >Heuristic</span>
+<br>
+<div class="heuristic">
+<input type="radio" id="Manhattan" name="path_A3" value="Manhattan">
+<label for"Manhattan">Manhattan</label>
+<!--span class="label_l"> Manhattan</span-->
+<br>
+<input type="radio" id="Euclidiean" name="path_A3" value="Euclidiean">
+<label for="Euclidiean">Euclidiean</label>
+<br>
+<input type="radio" id="Octile" name="path_A3" value="Octile">
+<label for="Octile">Octile</label>
+</br>
+<input type="radio" id="Chebysev" name="path_A3" value="Chebysev">
+<label for="Chebysev">Chebysev</label>
+<br>
+</div>
+<span class="heuristic_head"> Options</span>
+<br>
+<div class="heuristic">
+<input type="checkbox" id="a10" name="allow1" value="Allow_dia">
+<label for="a10"> Allow Diagonal</label>
+<br>
+<input type="checkbox" id="a11" name="bi1" value="Bi-directional">
+<label for="a11"> Bi-directional</label>
+<br>
+<input type="checkbox" id="a12" name="cross1" value="Don't_Cross">
+<label for="a12"> Don't Cross Corners</label>
+</div>
+</div>
+
+</div>
+<div class="i_algo">
+
+
+<button onclick="DJK_algo()" class="dropbtn">Dijkstra</button>
+<div class="dropdown_content" id="mydrop5">
+<span class="heuristic_head"> Options</span>
+<br>
+<div class="heuristic">
+<input type="checkbox" id="a13" name="allow1" value="Allow_dia">
+<label for="a13"> Allow Diagonal</label>
+<br>
+<input type="checkbox" id="a8" name="bi1" value="Bi-directional">
+<label for="a14"> Bi-directional</label>
+<br>
+<input type="checkbox" id="a15" name="cross1" value="Don't_Cross">
+<label for="a15"> Don't Cross Corners</label>
+
+</div>
+</div>
+ </div>
+ 
+<div class="i_algo"> 
+
+<button onclick="JPS_algo()" class="dropbtn">Jump Point Search</button>
+
+<div class="dropdown_content" id="mydrop6">
+<span class="heuristic_head" >Heuristic</span>
+<br>
+<div class="heuristic">
+<input type="radio" id="Manhattan" name="path_A4" value="Manhattan">
+<label for"Manhattan">Manhattan</label>
+<!--span class="label_l"> Manhattan</span-->
+<br>
+<input type="radio" id="Euclidiean" name="path_A4" value="Euclidiean">
+<label for="Euclidiean">Euclidiean</label>
+<br>
+<input type="radio" id="Octile" name="path_A4" value="Octile">
+<label for="Octile">Octile</label>
+</br>
+<input type="radio" id="Chebysev" name="path_A4" value="Chebysev">
+<label for="Chebysev">Chebysev</label>
+<br>
+</div>
+<span class="heuristic_head"> Options</span>
+<br>
+<div class="heuristic">
+<input type="checkbox" id="a16" name="recursion1" value="visulaize_recursion">
+<label for="a16"> Visualizze Recursion</label>
+</div>
+</div>
 
 </div>
 
-<div id="_click">  
 
-<div class="i_click"> </div>
-<div class="i_click"> </div>
-<div class="i_click"> </div>
+<div class="i_algo"> 
+
+<button onclick="OJPS_algo()" class="dropbtn">Orthogonal Jump Point Search</button>
+
+<div class="dropdown_content" id="mydrop7">
+<span class="heuristic_head" >Heuristic</span>
+<br>
+<div class="heuristic">
+<input type="radio" id="Manhattan" name="path_A5" value="Manhattan">
+<label for"Manhattan">Manhattan</label>
+<!--span class="label_l"> Manhattan</span-->
+<br>
+<input type="radio" id="Euclidiean" name="path_A5" value="Euclidiean">
+<label for="Euclidiean">Euclidiean</label>
+<br>
+<input type="radio" id="Octile" name="path_A5" value="Octile">
+<label for="Octile">Octile</label>
+</br>
+<input type="radio" id="Chebysev" name="path_A5" value="Chebysev">
+<label for="Chebysev">Chebysev</label>
+<br>
+</div>
+<span class="heuristic_head"> Options</span>
+<br>
+<div class="heuristic">
+<input type="checkbox" id="a17" name="recursion1" value="visulaize_recursion">
+<label for="a17"> Visualizze Recursion</label>
+</div>
+</div>
+
+</div>
+<div class="i_algo"> 
+
+<button onclick="T_algo()" class="dropbtn">Trace</button>
+
+<div class="dropdown_content" id="mydrop8">
+<span class="heuristic_head" >Heuristic</span>
+<br>
+<div class="heuristic">
+<input type="radio" id="Manhattan" name="path_A6" value="Manhattan">
+<label for"Manhattan">Manhattan</label>
+<!--span class="label_l"> Manhattan</span-->
+<br>
+<input type="radio" id="Euclidiean" name="path_A6" value="Euclidiean">
+<label for="Euclidiean">Euclidiean</label>
+<br>
+<input type="radio" id="Octile" name="path_A6" value="Octile">
+<label for="Octile">Octile</label>
+</br>
+<input type="radio" id="Chebysev" name="path_A6" value="Chebysev">
+<label for="Chebysev">Chebysev</label>
+<br>
+<span class="heuristic_head"> Options</span>
+<br>
+</div>
+<div class="heuristic">
+<input type="checkbox" id="a18" name="allow1" value="Allow_dia">
+<label for="a18"> Allow Diagonal</label>
+<br>
+<input type="checkbox" id="a19" name="cross1" value="Don't_Cross">
+<label for="a19"> Don't Cross Corners</label>
+</div>
 
 </div>
 
+</div>
 
+</div>
+
+<div class="_click">  
+
+
+<button onclick="start_search" class="click_button">Start Search</button>
+
+
+<button onclick="pause_search" class="click_button">Pause Search</button>
+
+
+
+<button onclick="clear_walls" class="click_button">Clear Walls</button>
+
+
+</div>
 </div>
 
 <!--button onclick="createGrid()"> new</button-->
