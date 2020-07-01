@@ -1,8 +1,10 @@
-
+//var p=0;
 function createGrid() {
     for (var rows = 0; rows < 26; rows++) {
         for (var columns = 0; columns < 54; columns++) {
-            $("#container").append("<div class='grid'></div>");
+			var t = rows * 54 + columns;
+            $("#container").append("<div class='grid' id= "+ t +" ></div>");
+			//p++;
         };
     };
     $(".grid").width(34.55);
@@ -45,6 +47,7 @@ function A_algo(){
 	close();
 document.getElementById("mydrop").classList.toggle("show");	
 id=1;
+
 }	
 function IDA_algo(){
 	close();

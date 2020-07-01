@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
-<html lang="en">
-    <meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
-
+<head>
 <title>  PATH ROVER</title>
-<link rel="stylesheet" type="text/css" href="style.css"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="style.css"> </link>
 <script type="text/javascript" src="interactive.js"> </script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
  <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -16,7 +15,9 @@
 
 <script>
 window.onload=createGrid;
-
+//$(window).on("resize load",function(){
+// createGrid();
+//});
 $(function(){
     document.getElementById("mydrop").classList.toggle("show");	
 	$("#algorithm").draggable({
@@ -36,7 +37,6 @@ $(function(){
 
 <body>
 
-
 <div id="container" ui-grid="gridOptions" ui-grid-auto-resize>
 <div id="instructions"> 
 <header>
@@ -48,7 +48,6 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 </p>
  </div>
 
-<!--comment-->
 
 <div id="algorithm"> 
 <div class="select"> <span>Select Algorithm </span></div>
@@ -195,8 +194,6 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 </div>
 </div>
 
-<!--comment-->
-
 </div>
 <div class="i_algo">
 
@@ -337,10 +334,8 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 </div>
 </div>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <!--button onclick="createGrid()"> new</button-->
+
 
 
 </body>
