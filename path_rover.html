@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-
-
 <html lang="en">
 <head>
     <meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
-
 <title>  PATH ROVER</title>
-<link rel="stylesheet" type="text/css" href="style.css"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="style.css"> </link>
 <script type="text/javascript" src="interactive.js"> </script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
  <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -16,7 +16,9 @@
 
 <script>
 window.onload=createGrid;
-
+//$(window).on("resize load",function(){
+// createGrid();
+//});
 $(function(){
     document.getElementById("mydrop").classList.toggle("show");	
 	$("#algorithm").draggable({
@@ -30,12 +32,17 @@ $(function(){
 	});
 });
 
+/* (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-52996509-1', 'auto');
+      ga('send', 'pageview'); */
 </script>
 
 </head>
 
 <body>
-
 
 <div id="container" ui-grid="gridOptions" ui-grid-auto-resize>
 
@@ -50,10 +57,6 @@ $(function(){
 Click within the white grid and drag your mouse to draw obstacles.<br> Drag the <span style="color:#00ff00;"> green</span> node to set the start position. <br> Drag the <span style="color:#ff2800;">red </span>node to set the end position.<br>Choose the algorithm from right hand panel . <br> Click the start search in the lower-right corner to start animation.
 </p>
 </div>
-
-<!--instructions ends here-->
-
-<!--algo box comes here-->
 
 <div id="algorithm"> 
 <div class="select"> <span>Select Algorithm </span></div>
@@ -200,8 +203,6 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 </div>
 </div>
 
-<!--comment-->
-
 </div>
 <div class="i_algo">
 
@@ -337,13 +338,8 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 </div>
 
 <!--button grp ends here-->
-
-</div>
-
-
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
-<!--	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
 <!--button onclick="createGrid()"> new</button-->
+
 
 
 </body>
