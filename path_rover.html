@@ -23,7 +23,7 @@ $(function(){
 	$("#instructions").draggable({
 		 containment:"#container"
 	});
-	$("#_click").draggable({
+	$("._click").draggable({
 		 containment:"#container"
 	});
 });
@@ -39,6 +39,8 @@ $(function(){
 </head>
 
 <body>
+
+<div id="wrapper">
 
 <div id="container" ui-grid="gridOptions" ui-grid-auto-resize>
 
@@ -333,6 +335,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <button onclick="clear_walls" class="click_button">Clear Walls</button>
 </div>
 
+</div>
 <!--button grp ends here-->
 <!--button onclick="createGrid()"> new</button-->
 
