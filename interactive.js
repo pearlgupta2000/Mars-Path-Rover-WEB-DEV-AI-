@@ -7,8 +7,8 @@ function createGrid() {
 			//p++;
         };
     };
-    $(".grid").width(34.55);
-    $(".grid").height(34.55);
+    $(".grid").width('34.55');
+    $(".grid").height('34.55');
 };
 
 var id=1;

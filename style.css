@@ -1,7 +1,7 @@
 
 body{
-	overflow-y:hidden;
-	overflow-x:scroll;
+	
+	overflow:hidden;
 }
 #container{
 	height:100%;
@@ -57,10 +57,10 @@ body{
 	position:fixed;
 	border-radius:10px;
 	width:270px;
-	height:85%;
+	height:530px;
 	margin-right:15px;
 	margin-top:15px;
-    right:0;
+   right:0px;
 	top:0;
 	color:white;
 	font-size:14px;
@@ -126,10 +126,11 @@ body{
 	position:fixed;
 	border-radius:10px;
 	width:270px;
-	height:10%;
+	height:60px;
 	margin-right:15px;
+	margin-top:560px;
 	right:0;
-	bottom:0;
+	
 	 box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
 
