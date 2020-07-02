@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css">
 <title>  PATH ROVER</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8">
@@ -10,8 +13,6 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
  <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-
-
 
 <script>
 window.onload=createGrid;
@@ -44,6 +45,9 @@ $(function(){
 <body>
 
 <div id="container" ui-grid="gridOptions" ui-grid-auto-resize>
+
+<!--instructions goes here-->
+
 <div id="instructions"> 
 <header>
 <span id="_header"> Instructions </span>
@@ -52,8 +56,7 @@ $(function(){
 <p id="ins_head">
 Click within the white grid and drag your mouse to draw obstacles.<br> Drag the <span style="color:#00ff00;"> green</span> node to set the start position. <br> Drag the <span style="color:#ff2800;">red </span>node to set the end position.<br>Choose the algorithm from right hand panel . <br> Click the start search in the lower-right corner to start animation.
 </p>
- </div>
-
+</div>
 
 <div id="algorithm"> 
 <div class="select"> <span>Select Algorithm </span></div>
@@ -67,7 +70,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <br>
 <div class="heuristic">
 <input type="radio" id="Manhattan" name="path_A1" value="Manhattan">
-<label for"Manhattan">Manhattan</label>
+<label for="Manhattan">Manhattan</label>
 <!--span class="label_l"> Manhattan</span-->
 <br>
 <input type="radio" id="Euclidiean" name="path_A1" value="Euclidiean">
@@ -75,7 +78,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <br>
 <input type="radio" id="Octile" name="path_A1" value="Octile">
 <label for="Octile">Octile</label>
-</br>
+<br>
 <input type="radio" id="Chebysev" name="path_A1" value="Chebysev">
 <label for="Chebysev">Chebysev</label>
 <br>
@@ -108,7 +111,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <br>
 <div class="heuristic">
 <input type="radio" id="Manhattan" name="path_A2" value="Manhattan">
-<label for"Manhattan">Manhattan</label>
+<label for="Manhattan">Manhattan</label>
 <!--span class="label_l"> Manhattan</span-->
 <br>
 <input type="radio" id="Euclidiean" name="path_A2" value="Euclidiean">
@@ -116,7 +119,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <br>
 <input type="radio" id="Octile" name="path_A2" value="Octile">
 <label for="Octile">Octile</label>
-</br>
+<br>
 <input type="radio" id="Chebysev" name="path_A2" value="Chebysev">
 <label for="Chebysev">Chebysev</label>
 <br>
@@ -135,7 +138,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <br>
 <input type="text" id="weight" name="second_limit1" value="10">
 <label for="second_limit">Second Limits</label>
-</br>
+<br>
 <input type="checkbox" id="a6" name="recursion1" value="visulaize_recursion">
 <label for="a6"> Visualizze Recursion</label>
 </div>
@@ -173,7 +176,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <br>
 <div class="heuristic">
 <input type="radio" id="Manhattan" name="path_A3" value="Manhattan">
-<label for"Manhattan">Manhattan</label>
+<label for="Manhattan">Manhattan</label>
 <!--span class="label_l"> Manhattan</span-->
 <br>
 <input type="radio" id="Euclidiean" name="path_A3" value="Euclidiean">
@@ -181,7 +184,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <br>
 <input type="radio" id="Octile" name="path_A3" value="Octile">
 <label for="Octile">Octile</label>
-</br>
+<br>
 <input type="radio" id="Chebysev" name="path_A3" value="Chebysev">
 <label for="Chebysev">Chebysev</label>
 <br>
@@ -231,7 +234,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <br>
 <div class="heuristic">
 <input type="radio" id="Manhattan" name="path_A4" value="Manhattan">
-<label for"Manhattan">Manhattan</label>
+<label for="Manhattan">Manhattan</label>
 <!--span class="label_l"> Manhattan</span-->
 <br>
 <input type="radio" id="Euclidiean" name="path_A4" value="Euclidiean">
@@ -239,7 +242,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <br>
 <input type="radio" id="Octile" name="path_A4" value="Octile">
 <label for="Octile">Octile</label>
-</br>
+<br>
 <input type="radio" id="Chebysev" name="path_A4" value="Chebysev">
 <label for="Chebysev">Chebysev</label>
 <br>
@@ -264,7 +267,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <br>
 <div class="heuristic">
 <input type="radio" id="Manhattan" name="path_A5" value="Manhattan">
-<label for"Manhattan">Manhattan</label>
+<label for="Manhattan">Manhattan</label>
 <!--span class="label_l"> Manhattan</span-->
 <br>
 <input type="radio" id="Euclidiean" name="path_A5" value="Euclidiean">
@@ -272,7 +275,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <br>
 <input type="radio" id="Octile" name="path_A5" value="Octile">
 <label for="Octile">Octile</label>
-</br>
+<br>
 <input type="radio" id="Chebysev" name="path_A5" value="Chebysev">
 <label for="Chebysev">Chebysev</label>
 <br>
@@ -295,7 +298,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <br>
 <div class="heuristic">
 <input type="radio" id="Manhattan" name="path_A6" value="Manhattan">
-<label for"Manhattan">Manhattan</label>
+<label for="Manhattan">Manhattan</label>
 <!--span class="label_l"> Manhattan</span-->
 <br>
 <input type="radio" id="Euclidiean" name="path_A6" value="Euclidiean">
@@ -303,7 +306,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <br>
 <input type="radio" id="Octile" name="path_A6" value="Octile">
 <label for="Octile">Octile</label>
-</br>
+<br>
 <input type="radio" id="Chebysev" name="path_A6" value="Chebysev">
 <label for="Chebysev">Chebysev</label>
 <br>
@@ -324,22 +327,17 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 
 </div>
 
+<!--algo ends here-->
+
+<!--button-->
+
 <div class="_click">  
-
-
 <button onclick="start_search" class="click_button">Start Search</button>
-
-
 <button onclick="pause_search" class="click_button">Pause Search</button>
-
-
-
 <button onclick="clear_walls" class="click_button">Clear Walls</button>
-
-
-</div>
 </div>
 
+<!--button grp ends here-->
 <!--button onclick="createGrid()"> new</button-->
 
 
