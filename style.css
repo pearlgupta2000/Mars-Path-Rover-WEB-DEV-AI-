@@ -1,9 +1,10 @@
 
 body{
-	
 	overflow:hidden;
+	overflow-x:auto;
 }
 #container{
+	
 	height:100%;
 	width:100%;
 	outline:1px ridge lightgray;
@@ -15,6 +16,7 @@ body{
 }
 
 .grid{
+	
 	outline:1px ridge lightgray;
 	display:inline-block;
 	margin:0;
