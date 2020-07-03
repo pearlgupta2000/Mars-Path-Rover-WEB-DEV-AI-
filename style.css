@@ -21,14 +21,15 @@ body{
 }
 
 .grid{
-	
+	font-size:1px;
 	outline:1px ridge lightgray;
 	display:inline-block;
 	margin:0;
 	border:none;
 	padding:0;
+	color:black;
 }
-
+.clr{background-color:gray;}
 
 #instructions{
 	margin:15px;
