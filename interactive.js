@@ -1,15 +1,16 @@
 //var p=0;
 function createGrid() {
-    for (var rows = 0; rows < 26; rows++) {
-        for (var columns = 0; columns < 54; columns++) {
-			var t = rows * 54 + columns;
-            $("#container").append("<div class='grid' id= "+ t +" ></div>");
+    for (var rows = 0; rows < 36; rows++) {
+        for (var columns = 0; columns < 39; columns++) {
+			var t = rows + "," + columns;
+            $("#container").append("<div class='grid' id= "+ rows + "," + columns + " onclick=funy("+rows+","+columns+")></div>");
 			//p++;
         };
     };
     $(".grid").width('34.55');
     $(".grid").height('34.55');
 };
+
 
 var id=1;
 
