@@ -7,3 +7,5 @@ function funy(x,y){
 	document.getElementById( x + ',' + y).classList.toggle("clr");
 }
 
+
+
