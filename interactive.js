@@ -9,6 +9,8 @@ function createGrid() {
     };
     $(".grid").width('34.55');
     $(".grid").height('34.55');
+	 document.getElementById("9,12").style.backgroundColor="green";
+	document.getElementById("9,19").style.backgroundColor="red";
 };
 
 
