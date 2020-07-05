@@ -1,16 +1,24 @@
 //var p=0;
 function createGrid() {
-    for (var rows = 0; rows < 36; rows++) {
-        for (var columns = 0; columns < 39; columns++) {
+    var width = window.outerWidth;
+    var height = window.outerHeight;
+    var columnNumber = Math.floor(width/34.55);
+    var rowNumber = Math.floor(height/34.55);
+    for (var rows = 0; rows < rowNumber; rows++) {
+        for (var columns = 0; columns < columnNumber; columns++) {
 			var t = rows + "," + columns;
-            $("#container").append("<div class='grid' id= "+ rows + "," + columns + " onclick=funy("+rows+","+columns+")></div>");
+            $("#container").append("<div class='grid' id= "+ rows + "," + columns + " ondragover='funy("+rows+","+columns+")' ondragstart='defineClass("+rows+","+columns+")' ondragend='clearClass()'></div>");
 			//p++;
         };
     };
     $(".grid").width('34.55');
     $(".grid").height('34.55');
-	 document.getElementById("9,12").style.backgroundColor="green";
+    
+    document.getElementById("9,12").style.backgroundColor="green";
 	document.getElementById("9,19").style.backgroundColor="red";
+    document.getElementById("9,12").setAttribute("start", "start");
+    document.getElementById("9,19").setAttribute("end", "end");
+
 };
 
 

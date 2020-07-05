@@ -5,13 +5,21 @@
 
 <title>  PATH ROVER</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="style.css"> </link>
+<link rel="stylesheet" type="text/css" href="style.css"> 
 <script type="text/javascript" src="interactive.js"> </script>
 <script type="text/javascript" src="interactive2.js"> </script>
 <script type="text/javascript" src="bfs.js"></script>
+
+<!--drag-->
+<!--
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+-->
+
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
  <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 <script>
 window.onload=createGrid;
 
@@ -38,9 +46,32 @@ $(function(){
       ga('send', 'pageview'); */
 </script>
 
+
+<!--dragabble function-->
+
+<!--
+<style>
+#makeMeDraggable { width: 34.55; height: 34.55; background: green; }
+</style>
+
+
+<script type="text/javascript">
+
+$( init );
+
+function init() {
+  $("9,12").draggable();
+}
+
+</script>
+-->
+
+
+
+
 </head>
 
-<body>
+<body style="height: 100%; width: 100%">
 
 <div id="wrapper">
 
@@ -334,7 +365,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <div class="_click">  
 <button onclick="start_search" class="click_button">Start Search</button>
 <button onclick="pause_search" class="click_button">Pause Search</button>
-<button onclick="clear_walls" class="click_button">Clear Walls</button>
+<button onclick="clearWalls()" class="click_button">Clear Walls</button>
 </div>
 
 
