@@ -23,24 +23,28 @@ function createGrid() {
     for (var rows = 0; rows < rowNumber; rows++) {
         for (var columns = 0; columns < columnNumber; columns++) {
 			var t = rows + "," + columns;
-            $("#container").append("<div class='grid' id= "+ rows + "," + columns + " ondragover='funy("+rows+","+columns+")' ondragstart='defineClass("+rows+","+columns+")' ondragend='clearClass()' onclick='click_obs("+rows+","+columns+")'></div>");
+            $("#container").append("<div class='grid' id= "+ rows + "," + columns + " ondragenter='funy("+rows+","+columns+")' ondragstart='defineClass("+rows+","+columns+")' ondrop='clearClass()' onclick='click_obs("+rows+","+columns+")' ondragleave='moveout("+rows+","+columns+")' ></div>");
 			
         };
     };
     $(".grid").width('34.55');
     $(".grid").height('34.55');
  
-    document.getElementById("9,12").setAttribute("start", "start");
-    document.getElementById("9,19").setAttribute("end", "end");
+    document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("start", "start");
+    document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("end","end");
     document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid end_");
-     document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("class", "grid start_");
-     
-	var i='0';                                             //added
-	$(".grid start_").mousedown(function(){i='1';});
-	$("grid end_").mousedown(function(){i='2';});
-    $(".grid").mouseup=helper(i);
-	
+    document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("class", "grid start_");                                            //added
 };
+$(".grid start_").click(function(e){
+    e.preventDefault();
+    i = 1;
+    helper(i);
+});
+$(".grid end_").click(function(e){
+    e.preventDefault();
+    i = 2;
+    helper(i);
+});
 
 function hide_ins(){
 	document.getElementById("instructions").style.display="none";

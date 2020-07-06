@@ -1,7 +1,5 @@
 
-<<<<<<< HEAD
-//obstacles
-=======
+
 /**function include(file) { 
   
   var script  = document.createElement('script'); 
@@ -18,52 +16,106 @@ include('interactive.js');**/
 //include('node.js');
 
 
->>>>>>> e3de31bd4c76bf5c4d45226cd11c5085aa9ef5b1
+var startpnt = [9,12];
+var endpnt = [9,19];
 
 var obstacles=[];
 var classToAdd = "";
 var isAlreadyObstacled = false;
 
 var Grid=[];
+var i = 0;
 
+function funy(x,y, event){
+    if(i===2) {
+        if(obstacles.length>0) {
+            var object = _.filter(obstacles, function(obj){
+                    return obj.x === x && obj.y ===y;
+                })
+            if(_.isUndefined(object) || object.length == 0) {
+                document.getElementById( x + ',' + y).setAttribute("class", "grid end_");
+                $('div[end="end"]').each(function(i,el) {
+                    $(el).removeAttr("end");
+                });
+                document.getElementById(x+","+y).setAttribute("end", "end");
+                endpnt= [x,y];
 
-
- var startpnt = [9,12];
- var endpnt = [9,19];
- 
-function funy(x,y){
-    if(isAlreadyObstacled) {
-        obstacles = _.without(obstacles, _.findWhere(obstacles, {
-            x: x,
-            y: y
-        }));
-    } else {
-	
-       if(obstacles.length > 0) {
-			
-	/**		 var ob = _.filter(obstacles, function(obj){                      //added
-                return (obj.x === startpnt[0] && obj.y ===startpnt[1]) || (obj.x === endpnt[0] && obj.y ===endpnt[1]);
-            })
-			if(ob.length() > 0) {
-				return;
-			}
-		**/	
+            }
+        } else {
+            document.getElementById( x + ',' + y).setAttribute("class", "grid end_");
+            $('div[end="end"]').each(function(i,el) {
+                $(el).removeAttr("end");
+            });
+            document.getElementById(x+","+y).setAttribute("end", "end");
+            endpnt= [x,y];
+        }
+        return;
+    } else if(i===1) {
+        if(obstacles.length > 0) {  
             var object = _.filter(obstacles, function(obj){
                 return obj.x === x && obj.y ===y;
             })
-			
             if(_.isUndefined(object) || object.length == 0) {
+                document.getElementById( x + ',' + y).setAttribute("class", "grid start_");
+                $('div[start="start"]').each(function(i,el) {
+                    $(el).removeAttr("start");
+                });
+                document.getElementById(x+","+y).setAttribute("start", "start");
+                startpnt= [x,y];
+            }   
+        } else {
+            document.getElementById( x + ',' + y).setAttribute("class", "grid start_");
+            $('div[start="start"]').each(function(i,el) {
+                    $(el).removeAttr("start");
+            });
+            document.getElementById(x+","+y).setAttribute("start", "start");
+            startpnt= [x,y];
+        }
+        return;
+    } else {
+        if(isAlreadyObstacled) {
+            obstacles = _.without(obstacles, _.findWhere(obstacles, {
+                x: x,
+                y: y
+            }));
+        } else {
+            if(startpnt[0]===x && startpnt[1] ===y ) {
+                return;
+            }
+
+            if(endpnt[0]===x && endpnt[1] ===y ) {
+                return;
+            }
+           if(obstacles.length > 0) {
+                var object = _.filter(obstacles, function(obj){
+                    return obj.x === x && obj.y ===y;
+                })
+
+                if(_.isUndefined(object) || object.length == 0) {
+                    obstacles.push({x:x, y:y});
+                }
+            } else {
                 obstacles.push({x:x, y:y});
             }
-        } else {
-            obstacles.push({x:x, y:y});
+
         }
-        
+        document.getElementById( x + ',' + y).setAttribute("class", classToAdd);
     }
-    document.getElementById( x + ',' + y).setAttribute("class", classToAdd);
 };
 
 function defineClass(x,y) {
+    var start = document.getElementById(x+","+y).getAttribute("start");
+    if(start==="start"){
+        i = 1;
+        document.getElementById(x+","+y).setAttribute("class","grid");
+        return;
+    }
+    var end = document.getElementById(x+","+y).getAttribute("end");
+    if(end==="end"){
+        document.getElementById(x+","+y).setAttribute("class","grid");
+        i = 2;
+        return;
+    }
     if(obstacles.length >0) {
 	    var object = _.filter(obstacles, function(obstacle) {
 			return obstacle.x === x && obstacle.y === y;
@@ -83,8 +135,17 @@ function defineClass(x,y) {
 	}
     funy(x,y);
 }
+document.addEventListener("dragover", function(event) {
+  // prevent default to allow drop
+  event.preventDefault();
+}, false);
 
-function clearClass() {
+function clearClass(event) {
+    event.preventDefault();
+    if(i!==0) {
+        i=0;
+        return;
+    }
 	classToAdd = "";
     isAlreadyObstacled = false;
 }
@@ -96,103 +157,43 @@ function clearWalls() {
     obstacles = [];
 }
 
-<<<<<<< HEAD
-//obstacles end
-
-
-var startpnt = [9,12];
-var endpnt = [9,19];
-=======
-function click_obs(x,y) {
-  var arr=[x,y];
- 
-  /** var ob = _.filter(obstacles, function(obj){                      //added
-                return (obj.x === startpnt[0] && obj.y ===startpnt[1]) || (obj.x === endpnt[0] && obj.y ===endpnt[1]);
-            })
-			if(ob.length() > 0) {
-				return;
-			} **/
-		
-	var object = _.filter(obstacles, function(obj){
+function moveout(x,y) {
+    if(i===1 || i===2) {
+       if(obstacles.length > 0) {
+            var object = _.filter(obstacles, function(obj){
                 return obj.x === x && obj.y ===y;
             })
-    if( object.length == 0) {
-                obstacles.push({x:x, y:y});
+            if(_.isUndefined(object) || object.length == 0) {
+                document.getElementById( x + ',' + y).setAttribute("class", "grid");        
             }
-        
-	else{
-		 obstacles = _.without(obstacles, _.findWhere(obstacles, {
-            x: x,
-            y: y
-		 } ));
-		
-	}
-	document.getElementById( x + ',' + y).classList.toggle("clr");	
-};
-
-
-
-
-function helper(i){
-	//if(i=='0'){alert("hey tom");}
-    if(i==='1'){
-		
-		//alert(i);
-		document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("class", "grid");
-		document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("start", "");
-		var id=$(this).attr('id');
-		var splited=id.split(",");
-		startpnt=[splited[0],splited[1]]; 
-
-		var object = _.filter(obstacles, function(obj){
-                return obj.x === startpnt[0] && obj.y ===startpnt[1];
-        })
-		
-		if(object.length() > 0) {
-			i='0';
-			return;
-		}
-	
-		document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("start", "start");
-		document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("class", "grid start_");
-	i='0';
-	}
-	if(i==='2'){
-			 document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class", "grid");
-			 		document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("end", "");
-		var id=$(this).attr('id');
-	 
-	var splited=id.split(",");
-	endpnt=[splited[0],splited[1]];  
-	var object = _.filter(obstacles, function(obj){
-                return obj.x === endpnt[0] && obj.y ===endpnt[1];
-            })
-		if(object.length() > 0) {
-			i='0';
-			return;
-		}
-		document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("end", "end");
-		document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid end_");
-		i='0';
-	}
+        } else {
+            document.getElementById( x + ',' + y).setAttribute("class", "grid");
+        }
+    }
 }
 
 
+function click_obs(x,y) {	
+    if(startpnt[0]===x && startpnt[1] ===y ) {
+        return;
+    }
+
+    if(endpnt[0]===x && endpnt[1] ===y ) {
+        return;
+    }
+	var object = _.filter(obstacles, function(obj){
+        return obj.x === x && obj.y ===y;
+    })
+    if( object.length == 0) {
+        obstacles.push({x:x, y:y});
+    } else{
+        obstacles = _.without(obstacles, _.findWhere(obstacles, {
+            x: x,
+            y: y
+        }));
+		
+    }
+	document.getElementById( x + ',' + y).classList.toggle("clr");
+};
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
->>>>>>> e3de31bd4c76bf5c4d45226cd11c5085aa9ef5b1
