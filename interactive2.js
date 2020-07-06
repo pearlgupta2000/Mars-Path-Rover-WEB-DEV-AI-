@@ -1,3 +1,6 @@
+
+//obstacles
+
 var obstacles=[];
 var classToAdd = "";
 var isAlreadyObstacled = false;
@@ -56,6 +59,9 @@ function clearWalls() {
    });
     obstacles = [];
 }
+
+//obstacles end
+
 
 var startpnt = [9,12];
 var endpnt = [9,19];
