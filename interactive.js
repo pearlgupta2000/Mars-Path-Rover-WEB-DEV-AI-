@@ -1,4 +1,20 @@
-//var p=0;
+
+function include(file) { 
+  
+  var script  = document.createElement('script'); 
+  script.src  = file; 
+  script.type = 'text/javascript'; 
+  script.defer = true; 
+  
+  document.getElementsByTagName('head').item(0).appendChild(script); 
+  
+} 
+  
+  
+include('interactive2.js');
+//include('node.js');  
+
+
 function createGrid() {
     var width = window.outerWidth;
     var height = window.outerHeight;
@@ -7,20 +23,28 @@ function createGrid() {
     for (var rows = 0; rows < rowNumber; rows++) {
         for (var columns = 0; columns < columnNumber; columns++) {
 			var t = rows + "," + columns;
-            $("#container").append("<div class='grid' id= "+ rows + "," + columns + " ondragover='funy("+rows+","+columns+")' ondragstart='defineClass("+rows+","+columns+")' ondragend='clearClass()'></div>");
-			//p++;
+            $("#container").append("<div class='grid' id= "+ rows + "," + columns + " ondragover='funy("+rows+","+columns+")' ondragstart='defineClass("+rows+","+columns+")' ondragend='clearClass()' onclick='click_obs("+rows+","+columns+")'></div>");
+			
         };
     };
     $(".grid").width('34.55');
     $(".grid").height('34.55');
-    
-    document.getElementById("9,12").style.backgroundColor="green";
-	document.getElementById("9,19").style.backgroundColor="red";
+ 
     document.getElementById("9,12").setAttribute("start", "start");
     document.getElementById("9,19").setAttribute("end", "end");
-
+    document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid end_");
+     document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("class", "grid start_");
+     
+	var i='0';                                             //added
+	$(".grid start_").mousedown(function(){i='1';});
+	$("grid end_").mousedown(function(){i='2';});
+    $(".grid").mouseup=helper(i);
+	
 };
 
+function hide_ins(){
+	document.getElementById("instructions").style.display="none";
+};
 
 var id=1;
 
