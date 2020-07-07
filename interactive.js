@@ -35,7 +35,7 @@ function createGrid() {
     document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid end_");
     document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("class", "grid start_");                                            //added
 };
-$(".grid start_").click(function(e){
+/*$(".grid start_").click(function(e){
     e.preventDefault();
     i = 1;
     helper(i);
@@ -44,7 +44,7 @@ $(".grid end_").click(function(e){
     e.preventDefault();
     i = 2;
     helper(i);
-});
+});*/
 
 function hide_ins(){
 	document.getElementById("instructions").style.display="none";

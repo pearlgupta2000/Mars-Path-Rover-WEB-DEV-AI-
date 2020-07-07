@@ -1,20 +1,5 @@
 
 
-/**function include(file) { 
-  
-  var script  = document.createElement('script'); 
-  script.src  = file; 
-  script.type = 'text/javascript'; 
-  script.defer = true; 
-  
-  document.getElementsByTagName('head').item(0).appendChild(script); 
-  
-} 
-  
-  
-include('interactive.js');**/
-//include('node.js');
-
 
 var startpnt = [9,12];
 var endpnt = [9,19];
@@ -28,11 +13,17 @@ var i = 0;
 
 function funy(x,y, event){
     if(i===2) {
-        if(obstacles.length>0) {
+       // if(obstacles.length>0) {
             var object = _.filter(obstacles, function(obj){
                     return obj.x === x && obj.y ===y;
                 })
-            if(_.isUndefined(object) || object.length == 0) {
+				if(startpnt[0]===x && startpnt[1]===y){
+					document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid end_");
+					document.getElementById(endpnt[0]+","+endpnt[1]).setAttribute("end", "end");
+					return;
+				}
+            if(_.isUndefined(object) || object.length == 0 || obstacles.length == 0) {
+				document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid");
                 document.getElementById( x + ',' + y).setAttribute("class", "grid end_");
                 $('div[end="end"]').each(function(i,el) {
                     $(el).removeAttr("end");
@@ -41,36 +32,52 @@ function funy(x,y, event){
                 endpnt= [x,y];
 
             }
-        } else {
+			else{
+					document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid end_");
+						document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("end","end");
+			}
+       /** } else {
             document.getElementById( x + ',' + y).setAttribute("class", "grid end_");
             $('div[end="end"]').each(function(i,el) {
                 $(el).removeAttr("end");
             });
             document.getElementById(x+","+y).setAttribute("end", "end");
             endpnt= [x,y];
-        }
+        }*/
+
         return;
     } else if(i===1) {
-        if(obstacles.length > 0) {  
+       // if(obstacles.length > 0) {  
             var object = _.filter(obstacles, function(obj){
                 return obj.x === x && obj.y ===y;
             })
-            if(_.isUndefined(object) || object.length == 0) {
+			if(endpnt[0]===x && endpnt[1]===y){
+				document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("class","grid start_");
+				 document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("start", "start");
+					return;
+				}
+            if(_.isUndefined(object) || object.length == 0 || obstacles.length == 0) {
+					document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("class","grid");
                 document.getElementById( x + ',' + y).setAttribute("class", "grid start_");
                 $('div[start="start"]').each(function(i,el) {
                     $(el).removeAttr("start");
                 });
                 document.getElementById(x+","+y).setAttribute("start", "start");
                 startpnt= [x,y];
-            }   
-        } else {
+            }  
+           else{
+					document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("class","grid start_");
+						document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("start","start");
+			}			
+		
+   /**     } else {
             document.getElementById( x + ',' + y).setAttribute("class", "grid start_");
             $('div[start="start"]').each(function(i,el) {
                     $(el).removeAttr("start");
             });
             document.getElementById(x+","+y).setAttribute("start", "start");
             startpnt= [x,y];
-        }
+        }*/
         return;
     } else {
         if(isAlreadyObstacled) {
@@ -99,7 +106,7 @@ function funy(x,y, event){
             }
 
         }
-        document.getElementById( x + ',' + y).setAttribute("class", classToAdd);
+        document.getElementById( x + "," + y).setAttribute("class", classToAdd);
     }
 };
 
@@ -129,25 +136,31 @@ function defineClass(x,y) {
         isAlreadyObstacled = false;
     }
 	if(isAlreadyObstacled) {
-		classToAdd = "grid"
+		classToAdd = "grid";
 	} else  {
-		classToAdd = "grid clr"
+		classToAdd = "grid clr";
 	}
-    funy(x,y);
+   // funy(x,y);
 }
 document.addEventListener("dragover", function(event) {
   // prevent default to allow drop
-  event.preventDefault();
-}, false);
+  //if(event){
+	  event.preventDefault();
+  //}
+}, false); 
 
 function clearClass(event) {
-    event.preventDefault();
-    if(i!==0) {
-        i=0;
-        return;
-    }
+ if(event){
+	 event.preventDefault();
+ }
+	i=0;
+	document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("class","grid start_");
+	document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("start","start");
+	document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid end_");
+	document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("end","end");
 	classToAdd = "";
     isAlreadyObstacled = false;
+	//alert(i);
 }
 
 function clearWalls() {
@@ -159,17 +172,47 @@ function clearWalls() {
 
 function moveout(x,y) {
     if(i===1 || i===2) {
+		if(i===2){
+		if(startpnt[0]===x && startpnt[1]===y){
+		 document.getElementById( x + ',' + y).setAttribute("class", "grid start_"); 
+		      document.getElementById(x+","+y).setAttribute("start", "start");
+		 return;
+		}}
+		if(i===1){
+		if(endpnt[0]===x && endpnt[1]===y){
+		 document.getElementById( x + ',' + y).setAttribute("class", "grid end_"); 
+		      document.getElementById(x+","+y).setAttribute("end", "end");
+		 return;
+		}
+		}
        if(obstacles.length > 0) {
             var object = _.filter(obstacles, function(obj){
                 return obj.x === x && obj.y ===y;
             })
             if(_.isUndefined(object) || object.length == 0) {
-                document.getElementById( x + ',' + y).setAttribute("class", "grid");        
+                document.getElementById( x + ',' + y).setAttribute("class", "grid");  
+			if(endpnt[0]===x && endpnt[1]===y){				
+             $('div[end="end"]').each(function(i,el) {
+                    $(el).removeAttr("end");
+                });	
+			 }
+			 if(startpnt[0]===x && startpnt[1]===y){
+			$('div[start="start"]').each(function(i,el) {
+                    $(el).removeAttr("start");
+                });
             }
-        } else {
+
+	   } }else {
             document.getElementById( x + ',' + y).setAttribute("class", "grid");
+			 $('div[end="end"]').each(function(i,el) {
+                    $(el).removeAttr("end");
+                });	
+			$('div[start="start"]').each(function(i,el) {
+                    $(el).removeAttr("start");
+                });
         }
-    }
+    
+}
 }
 
 
@@ -195,5 +238,4 @@ function click_obs(x,y) {
     }
 	document.getElementById( x + ',' + y).classList.toggle("clr");
 };
-
 
