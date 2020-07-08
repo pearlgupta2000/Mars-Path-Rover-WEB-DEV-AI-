@@ -13,13 +13,13 @@ function include(file) {
   
 include('interactive2.js');
 //include('node.js');  
-
-
-function createGrid() {
-    var width = window.outerWidth;
+ var width = window.outerWidth;
     var height = window.outerHeight;
     var columnNumber = Math.floor(width/34.55);
     var rowNumber = Math.floor(height/34.55);
+
+function createGrid() {
+   
     for (var rows = 0; rows < rowNumber; rows++) {
         for (var columns = 0; columns < columnNumber; columns++) {
 			var t = rows + "," + columns;
@@ -35,16 +35,28 @@ function createGrid() {
     document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid end_");
     document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("class", "grid start_");                                            //added
 };
-/*$(".grid start_").click(function(e){
-    e.preventDefault();
-    i = 1;
-    helper(i);
-});
-$(".grid end_").click(function(e){
-    e.preventDefault();
-    i = 2;
-    helper(i);
-});*/
+
+
+
+var Grid=[];        // contain 0 and 1
+ 
+for(var i=0;i<rowNumber;i++){
+	Grid[i]=new Array[columnNumber];
+};
+
+for(var i=0 ; i<rowNumber ; i++){
+	for(var j=0;j<columnNumber;j++){
+		 var object = _.filter(obstacles, function(obj){
+                    return obj.x === i && obj.y ===j;
+                })
+		if(object.length == 0){		
+		    Grid[i][j]=0;
+		}
+		else{
+		    Grid[i][j]=1;
+		}
+	}
+}
 
 function hide_ins(){
 	document.getElementById("instructions").style.display="none";
@@ -82,47 +94,89 @@ function close(){
 	}
 }
 
+var algo_selected="A*";
+
 function A_algo(){
 	close();
 document.getElementById("mydrop").classList.toggle("show");	
 id=1;
+algo_selected="A*";
 
 }	
 function IDA_algo(){
 	close();
 	document.getElementById("mydrop2").classList.toggle("show");
 	id=2;
+	algo_selected="IDA*";
 }
 function BFS_algo(){
 	close();
 	document.getElementById("mydrop3").classList.toggle("show");
 	id=3;
+	algo_selected="BreadthFS";
 }
 function BtFS_algo(){
 	close();
 	document.getElementById("mydrop4").classList.toggle("show");
 	id=4;
+	algo_selected="BestFS";
 }
 
 function DJK_algo(){
 	close();
 	document.getElementById("mydrop5").classList.toggle("show");
 	id=5;
+	algo_selected="DJK";
 }
 function JPS_algo(){
 	close();
 	document.getElementById("mydrop6").classList.toggle("show");
 	id=6;
+	algo_selected="JPS";
 }
 
 function OJPS_algo(){
 	close();
 	document.getElementById("mydrop7").classList.toggle("show");
 	id=7;
+	algo_selected="OJPS";
 }
 function T_algo(){
 	close();
 	document.getElementById("mydrop8").classList.toggle("show");
 	id=8;
+	algo_selected="Trace";
+}
+
+function start_search(){
+	
+	switch(algo_selected){
+		
+		case "A*":
+		   aStarSearch(Grid[rowNumber][columnNumber],startpnt,endpnt);
+		   break;
+		case "IDA*":
+              
+             break;
+		case "BreadthFS":
+              
+             break;	 
+		case "BestFS":
+              
+             break;
+        case "DJK":
+              
+             break;
+        case "JPS":
+              
+             break;	
+         case "OJPS":
+              
+             break;		
+         case "Trace":
+              
+             break;				 
+	}
+	
 }
 

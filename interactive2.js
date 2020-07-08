@@ -8,7 +8,7 @@ var obstacles=[];
 var classToAdd = "";
 var isAlreadyObstacled = false;
 
-var Grid=[];
+
 var i = 0;
 
 function funy(x,y, event){
