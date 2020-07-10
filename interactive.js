@@ -12,7 +12,11 @@ function include(file) {
   
   
 include('interactive2.js');
-//include('node.js');  
+include('A_algorithm.js');
+
+
+
+
  var width = window.outerWidth;
     var height = window.outerHeight;
     var columnNumber = Math.floor(width/34.55);
@@ -41,8 +45,12 @@ function createGrid() {
 var Grid=[];        // contain 0 and 1
  
 for(var i=0;i<rowNumber;i++){
-	Grid[i]=new Array[columnNumber];
+	Grid[i]=new Array(columnNumber);
 };
+
+
+
+function make_grid(weight){
 
 for(var i=0 ; i<rowNumber ; i++){
 	for(var j=0;j<columnNumber;j++){
@@ -50,13 +58,19 @@ for(var i=0 ; i<rowNumber ; i++){
                     return obj.x === i && obj.y ===j;
                 })
 		if(object.length == 0){		
-		    Grid[i][j]=0;
+		    Grid[i][j]=  weight ;
 		}
 		else{
-		    Grid[i][j]=1;
+		    Grid[i][j]=0;
 		}
 	}
 }
+
+}
+
+
+
+
 
 function hide_ins(){
 	document.getElementById("instructions").style.display="none";
@@ -94,13 +108,13 @@ function close(){
 	}
 }
 
-var algo_selected="A*";
+var algo_selected = "A*";
 
 function A_algo(){
 	close();
 document.getElementById("mydrop").classList.toggle("show");	
 id=1;
-algo_selected="A*";
+algo_selected = "A*";
 
 }	
 function IDA_algo(){
@@ -149,32 +163,59 @@ function T_algo(){
 }
 
 function start_search(){
-	
+	//alert("A");
 	switch(algo_selected){
 		
 		case "A*":
-		   aStarSearch(Grid[rowNumber][columnNumber],startpnt,endpnt);
+		
+		   w = document.getElementById("weight1").value;
+		   make_grid(w);
+		    var diagonal =  document.getElementById("a1").checked;  
+		   var graph = new Graph(Grid,diagonal);
+
+           var start = graph.grid[startpnt[0]][startpnt[1]];
+           var end = graph.grid[endpnt[0]][endpnt[1]];
+          // alert(end.f);
+		   var xx=document.getElementsByName('path_A1'); 
+
+          	 var x;  
+			
+			   for(var i=0;i<xx.length;i++){
+				   if(xx[i].checked){
+					  x=xx[i].value; 
+					  break;
+				   }
+			   }
+			   
+		   alert(x);
+           var result = graph.astarsearch(graph, start, end , x );   // { heuristic: heuristics. manhattan }
+		  
+		   alert(result.length);
 		   break;
+		   
+		   
+		   
 		case "IDA*":
-              
+              w = document.getElementById("wieght2").value;
+		     make_grid(w);
              break;
 		case "BreadthFS":
-              
+               make_grid(1);
              break;	 
 		case "BestFS":
-              
+               make_grid(1);
              break;
         case "DJK":
-              
+               make_grid(1);
              break;
         case "JPS":
-              
+               make_grid(1);
              break;	
          case "OJPS":
-              
+               make_grid(1);
              break;		
          case "Trace":
-              
+               make_grid(1);
              break;				 
 	}
 	

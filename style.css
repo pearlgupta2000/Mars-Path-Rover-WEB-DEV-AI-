@@ -33,7 +33,9 @@ body{
 .start_{
 	background-color:green;
 }
-
+.path{
+	background-color:yellow;
+}
 .end_{
 	
 	background-color:red;
@@ -99,7 +101,7 @@ body{
 	position:fixed;
 	border-radius:10px;
 	width:270px;
-	height:540px;
+	height:550px;
    right:12px;
 	top:12px;
 	color:white;
@@ -167,7 +169,7 @@ body{
 	border-radius:10px;
 	width:270px;
 	height:60px;
-	top:560px;
+	top:570px;
 	right:12px;
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
@@ -182,6 +184,14 @@ body{
 	cursor:pointer;
 	opacity:1;
 }
+
+.about{
+	color:green;
+	top:580px;
+	left:15px;
+	position:fixed;
+}
+
 
 .click_button:hover{
 	background-color:white;

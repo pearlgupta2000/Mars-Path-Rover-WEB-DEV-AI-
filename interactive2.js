@@ -36,14 +36,6 @@ function funy(x,y, event){
 					document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid end_");
 						document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("end","end");
 			}
-       /** } else {
-            document.getElementById( x + ',' + y).setAttribute("class", "grid end_");
-            $('div[end="end"]').each(function(i,el) {
-                $(el).removeAttr("end");
-            });
-            document.getElementById(x+","+y).setAttribute("end", "end");
-            endpnt= [x,y];
-        }*/
 
         return;
     } else if(i===1) {
@@ -70,14 +62,6 @@ function funy(x,y, event){
 						document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("start","start");
 			}			
 		
-   /**     } else {
-            document.getElementById( x + ',' + y).setAttribute("class", "grid start_");
-            $('div[start="start"]').each(function(i,el) {
-                    $(el).removeAttr("start");
-            });
-            document.getElementById(x+","+y).setAttribute("start", "start");
-            startpnt= [x,y];
-        }*/
         return;
     } else {
         if(isAlreadyObstacled) {
