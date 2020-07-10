@@ -13,7 +13,7 @@ function include(file) {
   
 include('interactive2.js');
 include('A_algorithm.js');
-
+include('bfs.js');
 
 
 
@@ -171,7 +171,7 @@ function start_search(){
 		   w = document.getElementById("weight1").value;
 		   make_grid(w);
 		    var diagonal =  document.getElementById("a1").checked;  
-		   var graph = new Graph(Grid,diagonal);
+		   var graph = new Graph(Grid,diagonal,w);
 
            var start = graph.grid[startpnt[0]][startpnt[1]];
            var end = graph.grid[endpnt[0]][endpnt[1]];
@@ -196,12 +196,18 @@ function start_search(){
 		   
 		   
 		case "IDA*":
-              w = document.getElementById("wieght2").value;
+              w = document.getElementById("weight2").value;
 		     make_grid(w);
              break;
 		case "BreadthFS":
-               make_grid(1);
-             break;	 
+                make_grid(1);
+				 var diagonal =  document.getElementById("a7").checked;  
+                var helping = new helper(Grid,diagonal);
+                var source = helping.grid[startpnt[0]][startpnt[1]];
+                var dest = helping.grid[endpnt[0]][endpnt[1]];
+                var dist = helping.bfs(helping, source, dest);
+                alert(dist.length);
+                break;	 
 		case "BestFS":
                make_grid(1);
              break;

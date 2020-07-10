@@ -5,33 +5,35 @@ class _gridNode_{
 		this.x = x;
         this.y = y;
         this.weight = weight;
-	    this.f = Number.MAX_VALUE;
+	 /*   this.f = Number.MAX_VALUE;
         this.g = Number.MAX_VALUE;
         this.h = Number.MAX_VALUE;
         this.visited = false;
         this.closed = false;
-        this.parent = null;
+        this.parent = null;*/
 	}
 	
 	getCost(fromNeighbor){
 		 // Take diagonal weight into consideration.
-  if (fromNeighbor && fromNeighbor.x - 1 != this.x && fromNeighbor.y + 1 != this.y) {
-    return this.weight*1.41421;    ///// 0.7071;   
-  }
-  else if (fromNeighbor && fromNeighbor.x + 1 != this.x && fromNeighbor.y + 1 != this.y) {
-    return this.weight*1.41421;    ///// 0.7071;   
-  }
-  else if (fromNeighbor && fromNeighbor.x - 1 != this.x && fromNeighbor.y - 1 != this.y) {
-    return this.weight*1.41421;    ///// 0.7071;   
-  }
-  else if (fromNeighbor && fromNeighbor.x + 1 != this.x && fromNeighbor.y - 1  != this.y) {
-    return this.weight*1.41421;    ///// 0.7071;   
-  }
-  else {
-  return this.weight;
-  }
-}
+  
+  if(fromNeighbor.x + 1 === this.x && fromNeighbor.y + 1 === this.y){
+  return this.weight*1.41421;
+	}
 	
+	if(fromNeighbor.x + 1 === this.x && fromNeighbor.y - 1 === this.y){
+  return this.weight*1.41421;
+	}
+	if(fromNeighbor.x - 1 === this.x && fromNeighbor.y + 1 === this.y){
+  return this.weight*1.41421;
+	}
+	if(fromNeighbor.x - 1 === this.x && fromNeighbor.y - 1 === this.y){
+  return this.weight*1.41421;
+	}
+	/**if (fromNeighbor && fromNeighbor.x != this.x && fromNeighbor.y != this.y) {
+    return this.weight * 1.41421;
+  }*/
+	return this.weight;
+	}
 	isWall(){
 		 return this.weight === 0;
 	}
@@ -228,8 +230,8 @@ function Chebysev(pos0,pos1){
 	var d2= Math.abs(pos1.y-pos0.y);
 	return Math.max(d1,d2);
 }	
- // }
- 
+
+
 function cleanNode(node) {
     node.f = 0;
     node.g = 0;
@@ -239,15 +241,14 @@ function cleanNode(node) {
     node.parent = null;
   }
 
-
 class Graph{
 	
-	constructor(gridIn,diagonal_,options){
+	constructor(gridIn,diagonal_,weight,options){
 		options = options || {};
       this.nodes = [];
-      this.diagonal = diagonal_;         
+      this.diagonal = diagonal_;          //!!options.diagonal
       this.grid = [];
-  
+      this.weight=weight;
   for (var x = 0; x < gridIn.length; x++) {
     this.grid[x] = [];
     for (var y = 0, row = gridIn[x]; y < row.length; y++) {
@@ -256,10 +257,27 @@ class Graph{
       this.nodes.push(node);
 	}
    }
-   
+ //  init();
+ this.dirtyNodes = [];
+  for (var i = 0; i < this.nodes.length; i++) {
+  cleanNode(this.nodes[i]);
    //  console.log(this.grid);
    }
+	}
 	
+
+  
+ 
+cleanDirty () {
+  for (var i = 0; i < this.dirtyNodes.length; i++) {
+    cleanNode(this.dirtyNodes[i]);
+  }
+  this.dirtyNodes = [];
+};
+
+markDirty(node) {
+  this.dirtyNodes.push(node);
+};
 
 	
 	neighborss(gridNode){
@@ -288,26 +306,25 @@ class Graph{
    
 
   if (this.diagonal) {
-	 
- // Northeast
-    if (grid[x + 1] && grid[x + 1][y + 1]) {
-      ret.push(grid[x + 1][y + 1]);
-    }	 
-	  // Northwest
-    if (grid[x - 1] && grid[x - 1][y + 1]) {
-      ret.push(grid[x - 1][y + 1]);
-    }
-	
-	// Southeast
-    if (grid[x + 1] && grid[x + 1][y - 1]) {
-      ret.push(grid[x + 1][y - 1]);
-    }
     // Southwest
     if (grid[x - 1] && grid[x - 1][y - 1]) {
       ret.push(grid[x - 1][y - 1]);
     }
 
-   
+    // Southeast
+    if (grid[x + 1] && grid[x + 1][y - 1]) {
+      ret.push(grid[x + 1][y - 1]);
+    }
+
+    // Northwest
+    if (grid[x - 1] && grid[x - 1][y + 1]) {
+      ret.push(grid[x - 1][y + 1]);
+    }
+
+    // Northeast
+    if (grid[x + 1] && grid[x + 1][y + 1]) {
+      ret.push(grid[x + 1][y + 1]);
+    }
   }
 
   return ret;
@@ -320,7 +337,7 @@ class Graph{
    var t0=performance.now();
 	var t1;
     options = options || {};
-  //  var heuristic = options.heuristic || heuristics.manhattan;
+ graph.cleanDirty();
     var closest = options.closest || false;
   
     var openHeap = getHeap();
@@ -345,9 +362,10 @@ class Graph{
       break;
 
   } 
-
+    graph.markDirty(start);
  
     start.g=0;
+	start.f=start.g+start.h;
 	start.visited=true;
     openHeap.push(start);
     //console.log(openHeap);
@@ -356,28 +374,21 @@ class Graph{
     while (openHeap.size() > 0) {
        
       var currentNode = openHeap.pop();
-	  
-	  
-	  console.log(currentNode.f);
-
-
 
       if (currentNode.x === end.x && currentNode.y === end.y) {
 		  t1=performance.now();
+		//  alert("i is " + i + "&& ans is found");
 		alert(t1-t0 + "ms");
 		 alert(k);
 	//	document.getElementById("").setAttribute("class","about");
         return pathTo(currentNode);
       }
 
-      // Normal case -- move currentNode from open to closed, process each of its neighbors.
       currentNode.closed = true;
 
       // Find all neighbors for the current node.
       var neighbors = graph.neighborss(currentNode);
-
-
-     //  console.log(neighbors.length);
+ 
 	   
       for (var i = 0, il = neighbors.length; i < il; ++i) {
         var neighbor = neighbors[i];
@@ -388,7 +399,7 @@ class Graph{
 
         // The g score is the shortest distance from start to current node.
         // We need to check if the path we have arrived at this neighbor is the shortest one we have seen yet.
-        var gScore = currentNode.g + neighbor.getCost(currentNode);               
+        var gScore = currentNode.g + neighbor.getCost(currentNode);                     /////////////////////////////////////////////////////////
         var beenVisited = neighbor.visited;
 
         if (!beenVisited || gScore < neighbor.g) {
@@ -416,12 +427,16 @@ class Graph{
       break;
 
   } 
-		  
-		  
-          neighbor.h = neighbor.h || r;                             
+		/**if(this.diagonal){
+			neighbor.h=this.weight*r;
+		}*/
+		//else{
+          neighbor.h = neighbor.h || this.weight*r;     
+		//}
+		  		
           neighbor.g = gScore;
           neighbor.f = neighbor.g + neighbor.h;
-         
+          graph.markDirty(neighbor);
           if (closest) {
             // If the neighbour is closer than the current closestNode or if it's equally close but has
             // a cheaper path than the current closest node then it becomes the closest node
