@@ -29,7 +29,15 @@ body{
 	padding:0;
 	color:black;
 }
+.current_{
+	opacity:1;
+	background-color:deepskyblue;
+}
 
+.neighbor_{
+	opacity:1;
+	background-color:palegreen;
+}
 .start_{
 	background-color:green;
 }

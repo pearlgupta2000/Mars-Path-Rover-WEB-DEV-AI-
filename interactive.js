@@ -204,10 +204,20 @@ function start_search(){
 		case "BreadthFS":
                 make_grid(1);
 				 var diagonal =  document.getElementById("a7").checked;  
+                 var bi = document.getElementById('a8').checked;
                 var helping = new helper(Grid,diagonal);
                 var source = helping.grid[startpnt[0]][startpnt[1]];
                 var dest = helping.grid[endpnt[0]][endpnt[1]];
+               
+                if(!bi){
                 var dist = helping.bfs(helping, source, dest);
+                }
+                else{
+                    var dist=helping.bidirbst(helping,source,dest);
+                }
+               
+            
+            
                 alert(dist.length);
                 break;	 
 		case "BestFS":
@@ -216,11 +226,18 @@ function start_search(){
         case "DJK":
                 make_grid(1);
 				 var diagonal =  document.getElementById("a13").checked;  
-				 alert(diagonal);
+				// alert(diagonal);
+            var bi=document.getElementById("a14").checked;
                 var helping = new helper_dik(Grid,diagonal);
                 var source = helping.grid[startpnt[0]][startpnt[1]];
                 var dest = helping.grid[endpnt[0]][endpnt[1]];
+            if(!bi){
                 var dist = helping.dijkishtras(helping, source, dest);
+            }
+            else{
+                var dist=helping.bidirdik(helping,source,dest);
+            }
+            
                 alert(dist.length);
                 break;	 
         case "JPS":

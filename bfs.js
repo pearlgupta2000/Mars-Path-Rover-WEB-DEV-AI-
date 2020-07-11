@@ -33,10 +33,14 @@ bfs(maze,src, dest) {
   while (queue.length>0) {
 	  
     current = queue.shift();
+   
 
     var m = current.x;
     var n = current.y;
 	
+       
+      //  document.getElementById(current.x + ',' + current.y).setAttribute("class","grid current_");
+      
     if (m === dest.x && n === dest.y){
 		
          return pathTo(dest); //returning parent
@@ -46,7 +50,7 @@ bfs(maze,src, dest) {
 	 
 	 for (var i = 0, il = neighbors.length; i < il; ++i) {
         var neighbor = neighbors[i];
-		
+		//document.getElementById(neighbor.x + ',' + neighbor.y).setAttribute("class","grid neighbor_");
 		if(neighbor.isWall()){
 			continue;
 		}
@@ -67,6 +71,118 @@ bfs(maze,src, dest) {
   }
   return 0;
 }
+  
+    
+    //bidir
+bidirbst(maze,src,dest){
+  var startlist = [];
+  var endlist = [];
+    
+
+    src.visited = true;
+    src.dist=0;
+    src.parent = null;
+    src.by=src;
+    //pushing STARTING NODE and end node in the list
+    startlist.push(src);
+    
+    dest.visited = true;
+    dest.dist=0;
+    dest.parent = null;
+    dest.by=dest;
+    
+    endlist.push(dest);
+    
+
+    
+    //popping node 
+    while(startlist.length && endlist.length){
+        
+        var take= startlist.shift();
+        take.closed = true;
+        
+        var neighbors = neighborss(take,this.grid,this.diagonal); 
+	 
+	    for (var i = 0, il = neighbors.length; i < il; ++i) {
+            var neighbor = neighbors[i];
+
+
+            if(neighbor.isWall() || neighbor.closed){
+                continue;
+            }
+
+
+            if(neighbor.visited){
+                if(neighbor.by===dest){
+                    return newPath(take,neighbor);
+                   // var pathA=pathTo(dest);
+    //                neighbor.parent=null;
+    //                var pathB=pathTo(neighbor);
+    //                return pathA.concat(pathB);
+                }
+                continue;
+            }
+
+           neighbor.parent=take;
+           neighbor.visited=true;
+           neighbor.by=src;
+           if(neighbor.dist > take.dist + 1){
+                neighbor.dist=take.dist + 1;
+                startlist.push(neighbor);
+           }
+			
+       }
+		
+	 
+          //woring on END NODE
+    
+    
+    //popping node
+      var take1 = endlist.shift();
+      take1.closed=true;
+   
+        var neighbors = neighborss(take1,this.grid,this.diagonal); 
+	 
+	    for (var i = 0, il = neighbors.length; i < il; ++i) {
+        var neighbor = neighbors[i];
+       
+		if(neighbor.isWall() || neighbor.closed){
+			continue;
+		}
+		
+		if(neighbor.visited){
+            if(neighbor.by===src){
+                return newPath(neighbor,take1);
+             //   var pathA=pathTo(neighbor);
+//                neighbor.parent=null;
+//                var pathB=pathTo(dest);
+//                return pathA.concat(pathB);
+            }
+			continue;
+		}
+         
+            neighbor.parent=take1;
+			neighbor.visited=true;
+            neighbor.by=dest;
+			if(neighbor.dist > take1.dist + 1){
+				neighbor.dist=take1.dist + 1;
+				endlist.push(neighbor);
+			}
+		
+	 }
+ 
+        
+        
+    }
+    
+
+    
+    
+    return 0;
+}
 
     
 }
+    
+    
+

@@ -7,6 +7,7 @@ class _info_p{
         this.visited=false;
         this.parent=null;
 		this.closed=false;
+        this.by = null;
             this.wall=wall;
     }
     
@@ -16,8 +17,14 @@ class _info_p{
    }
 }
 
-
-
+function newPath(nodeA,nodeB){
+    var pathA = pathTo(nodeA);
+    var pathB = pathTo(nodeB);
+   document.getElementById(nodeA.x + ',' + nodeA.y).setAttribute("class","grid path");
+    document.getElementById(nodeB.x + ',' + nodeB.y).setAttribute("class","grid path");
+    
+    return pathA.concat(pathB);
+}
 
 function pathTo(node) {
   var curr = node;
