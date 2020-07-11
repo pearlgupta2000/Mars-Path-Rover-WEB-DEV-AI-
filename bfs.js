@@ -2,7 +2,9 @@
 class helper{
     constructor(gridIn,diagonal,d){
         this.grid=[];
-		this.diagonal=Diagonal({allowDiagonal:diagonal,dontCrossCorners:d,diagonalMovement:diagonal});
+		this.diagonal=diagonal;
+		this.dont=d;
+		//alert(this.diagonal + " " + this.dont);
         for (var x = 0; x < gridIn.length; x++) {
         this.grid[x] = [];
         for (var y = 0, row = gridIn[x]; y < row.length; y++) {
@@ -46,7 +48,7 @@ bfs(maze,src, dest) {
          return pathTo(dest); //returning parent
     }
      
-     var neighbors = neighborss(current,this.grid,this.diagonal); 
+     var neighbors = neighborss(current,this.grid,this.diagonal,this.dont); 
 	 
 	 for (var i = 0, il = neighbors.length; i < il; ++i) {
         var neighbor = neighbors[i];
@@ -101,7 +103,7 @@ bidirbst(maze,src,dest){
         var take= startlist.shift();
         take.closed = true;
         
-        var neighbors = neighborss(take,this.grid,this.diagonal); 
+        var neighbors = neighborss(take,this.grid,this.diagonal,this.dont); 
 	 
 	    for (var i = 0, il = neighbors.length; i < il; ++i) {
             var neighbor = neighbors[i];
@@ -141,7 +143,7 @@ bidirbst(maze,src,dest){
       var take1 = endlist.shift();
       take1.closed=true;
    
-        var neighbors = neighborss(take1,this.grid,this.diagonal); 
+        var neighbors = neighborss(take1,this.grid,this.diagonal,this.dont); 
 	 
 	    for (var i = 0, il = neighbors.length; i < il; ++i) {
         var neighbor = neighbors[i];

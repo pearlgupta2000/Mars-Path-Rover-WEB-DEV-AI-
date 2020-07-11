@@ -8,9 +8,10 @@ function getHeap() {
  
 
 class helper_dik{
-    constructor(gridIn,diagonal){
+    constructor(gridIn,diagonal,dont){
         this.grid=[];
 		this.diagonal=diagonal;
+		this.dont=dont;
         for (var x = 0; x < gridIn.length; x++) {
         this.grid[x] = [];
         for (var y = 0, row = gridIn[x]; y < row.length; y++) {
@@ -44,7 +45,7 @@ class helper_dik{
 		  //document.getElementById(current.x + ',' + current.y).setAttribute("class","grid current_");
 	
 		
-		  var neighbors=neighborss(current,this.grid,this.diagonal);
+		  var neighbors=neighborss(current,this.grid,this.diagonal,this.dont);
 		  
 		   for (var i = 0, il = neighbors.length; i < il; ++i) {
 			   
@@ -108,7 +109,7 @@ bidirdik(maze,src,dest){
 //        var m = take.x;
 //        var n = take.y;
      
-        var neighbors = neighborss(take,this.grid,this.diagonal); 
+        var neighbors = neighborss(take,this.grid,this.diagonal,this.dont); 
 	 
 	    for (var i = 0, il = neighbors.length; i < il; ++i) {
             var neighbor = neighbors[i];
@@ -161,7 +162,7 @@ bidirdik(maze,src,dest){
 //        var m1 = take.x;
 //        var n1 = take.y;
 
-        var neighbors = neighborss(take1,this.grid,this.diagonal); 
+        var neighbors = neighborss(take1,this.grid,this.diagonal,this.dont); 
 	 
 	    for (var i = 0, il = neighbors.length; i < il; ++i) {
         var neighbor = neighbors[i];

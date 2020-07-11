@@ -40,37 +40,7 @@ function pathTo(node) {
 }
 
 
-function Diagonal(opt) {
-    opt = opt || {};
-	console.log(opt);
-    this.allowDiagonal = opt.allowDiagonal;
-    this.dontCrossCorners = opt.dontCrossCorners;
-    this.diagonalMovement = opt.diagonalMovement;
-    console.log(this.diagonalMovement);
-    if (!this.diagonalMovement) {
-        if (!this.allowDiagonal) {
-            this.diagonalMovement = DiagonalMovement.Never;
-        } else {
-            if (this.dontCrossCorners) {
-                this.diagonalMovement = DiagonalMovement.OnlyWhenNoObstacles;
-            } else {
-                this.diagonalMovement = DiagonalMovement.IfAtMostOneObstacle;
-            }
-        }
-    }
-	return this.diagonalMovement;
-}
-
-var DiagonalMovement = {
-    Always: 1,
-    Never: 2,
-    IfAtMostOneObstacle: 3,
-    OnlyWhenNoObstacles: 4
-};
-
-
-
-function neighborss(gridNode,grid_,diagonalMovement){
+function neighborss(gridNode,grid_,diagonalMovement,corners){
 		 var ret = [];
   var x = gridNode.x;
   var y = gridNode.y;
@@ -83,64 +53,74 @@ function neighborss(gridNode,grid_,diagonalMovement){
 
 
    // North -->
-  if (grid[x] && grid[x][y + 1]) {
+  if (grid[x] && grid[x][y + 1] && grid[x][y+1].wall) {
     ret.push(grid[x][y + 1]);
-	s2 = true;
+	s1 = true;
   }// East
-  if (grid[x + 1] && grid[x + 1][y]) {
+  if (grid[x + 1] && grid[x + 1][y] && grid[x + 1][y].wall) {
     ret.push(grid[x + 1][y]);
-	 s1 = true;
+	 s2 = true;
   }
   
    // West
-  if (grid[x - 1] && grid[x - 1][y]) {
+  if (grid[x - 1] && grid[x - 1][y] && grid[x-1][y].wall) {
     ret.push(grid[x - 1][y]);
-	s3 = true;
+	s0 = true;
   }
     // South
-  if (grid[x] && grid[x][y - 1]) {
+  if (grid[x] && grid[x][y - 1] && grid[x][y-1].wall) {
     ret.push(grid[x][y - 1]);
-	s0=true;
+	s3=true;
   } 
   
   
-    if (diagonalMovement === DiagonalMovement.Never) {
+    if (!diagonalMovement) {
         return ret;
     }
 
-    if (diagonalMovement === DiagonalMovement.OnlyWhenNoObstacles) {
-        d0 = s3 && s0;
-        d1 = s0 && s1;
-        d2 = s1 && s2;
-        d3 = s2 && s3;
-    } else if (diagonalMovement === DiagonalMovement.IfAtMostOneObstacle) {
-        d0 = s3 || s0;
-        d1 = s0 || s1;
-        d2 = s1 || s2;
-        d3 = s2 || s3;
-    } else if (diagonalMovement === DiagonalMovement.Always) {
+    if (diagonalMovement && !corners) {
         d0 = true;
         d1 = true;
         d2 = true;
         d3 = true;
-    } else{
-		 throw new Error('Incorrect value of diagonalMovement');
+    } 
+	
+	else{
+		d0 = true;
+        d1 = true;
+        d2 = true;
+        d3 = true;
+		if(!s0){
+			d0=false;
+			d1=false;
+		
+		}
+		if(!s1){
+			d1=false;
+			d2=false;
+		}
+		if(!s2){
+			d3=false;
+			d2=false;
+		}
+		if(!s3){
+			d0=false;
+			d3=false;
+		}
 	}
-   
 
-  
     // Southwest
     if (grid[x - 1] && grid[x - 1][y - 1] && d0) {
       ret.push(grid[x - 1][y - 1]);
     }
 
     // Southeast
-    if (grid[x + 1] && grid[x + 1][y - 1] && d1) {
+    if (grid[x + 1] && grid[x + 1][y - 1] && d3) {
       ret.push(grid[x + 1][y - 1]);
     }
 
     // Northwest
-    if (grid[x - 1] && grid[x - 1][y + 1] && d3) {
+    if (grid[x - 1] && grid[x - 1][y + 1] && d1) {
       ret.push(grid[x - 1][y + 1]);
     }
 
