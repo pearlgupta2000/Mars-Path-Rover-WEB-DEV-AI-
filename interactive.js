@@ -14,7 +14,9 @@ function include(file) {
 include('interactive2.js');
 include('A_algorithm.js');
 include('bfs.js');
-
+include('binary_heap.js');
+include('grid_nodes_.js');
+include('dik.js');
 
 
  var width = window.outerWidth;
@@ -212,8 +214,15 @@ function start_search(){
                make_grid(1);
              break;
         case "DJK":
-               make_grid(1);
-             break;
+                make_grid(1);
+				 var diagonal =  document.getElementById("a13").checked;  
+				 alert(diagonal);
+                var helping = new helper_dik(Grid,diagonal);
+                var source = helping.grid[startpnt[0]][startpnt[1]];
+                var dest = helping.grid[endpnt[0]][endpnt[1]];
+                var dist = helping.dijkishtras(helping, source, dest);
+                alert(dist.length);
+                break;	 
         case "JPS":
                make_grid(1);
              break;	
