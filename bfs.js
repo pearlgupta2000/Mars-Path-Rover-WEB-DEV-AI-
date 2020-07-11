@@ -1,8 +1,8 @@
 
 class helper{
-    constructor(gridIn,diagonal){
+    constructor(gridIn,diagonal,d){
         this.grid=[];
-		this.diagonal=diagonal;
+		this.diagonal=Diagonal({allowDiagonal:diagonal,dontCrossCorners:d,diagonalMovement:diagonal});
         for (var x = 0; x < gridIn.length; x++) {
         this.grid[x] = [];
         for (var y = 0, row = gridIn[x]; y < row.length; y++) {

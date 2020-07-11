@@ -205,7 +205,8 @@ function start_search(){
                 make_grid(1);
 				 var diagonal =  document.getElementById("a7").checked;  
                  var bi = document.getElementById('a8').checked;
-                var helping = new helper(Grid,diagonal);
+				 var dont=document.getElementById("a9").checked;
+                var helping = new helper(Grid,diagonal,dont );
                 var source = helping.grid[startpnt[0]][startpnt[1]];
                 var dest = helping.grid[endpnt[0]][endpnt[1]];
                
