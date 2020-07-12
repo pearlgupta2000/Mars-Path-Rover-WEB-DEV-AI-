@@ -191,7 +191,6 @@ function start_search(){
 				   }
 			   }
 			   
-		   alert(x);
 		  // alert(diagonal);
 		   if(!bi){
            var result = graph.astarsearch(graph, start, end , x );   
@@ -199,7 +198,7 @@ function start_search(){
 		   else{
 			  // var result=graph.biastar(graph,start,end,x);
 		   }
-		   alert(result.length);
+		   alert(result);
 		   break;
 		   
 		   
@@ -225,8 +224,7 @@ function start_search(){
                 }
                
             
-            
-                alert(dist.length);
+                alert(dist);
                 break;	 
 		case "BestFS":
                make_grid(1);
@@ -256,7 +254,7 @@ function start_search(){
 		   else{
 			   var result=graph2.biBestFS(graph2,start,end,x);
 		   }
-		   alert(result.length);
+		   alert(result);
 			   
              break;
         case "DJK":
@@ -274,7 +272,7 @@ function start_search(){
                 var dist=helping.bidirdik(helping,source,dest);
             }
             
-                alert(dist.length);
+                alert(dist);
                 break;	 
         case "JPS":
                make_grid(1);

@@ -14,23 +14,22 @@ class _gridNode_{
         this.parent = null;
 	}
 	
-	getCost(fromNeighbor){
-  
-  if(fromNeighbor.x + 1 === this.x && fromNeighbor.y + 1 === this.y){
-  return this.wall*1.41421;
-	}else if(fromNeighbor.x + 1 === this.x && fromNeighbor.y - 1 === this.y){
-  return this.wall*1.41421;
-	}else if(fromNeighbor.x - 1 === this.x && fromNeighbor.y + 1 === this.y){
-  return this.wall*1.41421;
-	}else if(fromNeighbor.x - 1 === this.x && fromNeighbor.y - 1 === this.y){
-  return this.wall*1.41421;
-	}else{
-	return this.wall;
-	}
-	
-  return this.weight;
-	}
-	
+//	getCost(fromNeighbor, distance){
+//  
+//  if(fromNeighbor.x + distance === this.x && fromNeighbor.y + distance === this.y){
+//  return this.wall*Math.sqrt(2*distance);
+//	}else if(fromNeighbor.x + distance === this.x && fromNeighbor.y - distance === this.y){
+//  return this.wall*Math.sqrt(2*distance);
+//	}else if(fromNeighbor.x - distance === this.x && fromNeighbor.y + distance === this.y){
+//  return this.wall*Math.sqrt(2*distance);
+//	}else if(fromNeighbor.x - distance === this.x && fromNeighbor.y - distance === this.y){
+//  return this.wall*Math.sqrt(2*distance);
+//	}else{
+//	return this.wall;
+//	}
+//  return this.weight;
+//	}
+//	
 	isWall(){
 		 return this.wall === 0;
 	}
@@ -108,61 +107,63 @@ astarsearch(graph, start, end, x ) {
       currentNode.closed = true;
       if (currentNode.x === end.x && currentNode.y === end.y) {
 		  t1=performance.now();
-        return pathTo(currentNode);
+        return pathTo(currentNode,this.weight);
       }
      
       var neighbors = neighborss(currentNode,this.grid,this.diagonal,this.dont);
+        
     //var neighbors = graph.neighborsb(currentNode);
 	   
       for (var i = 0, il = neighbors.length; i < il; ++i) {
         var neighbor = neighbors[i];
-        
+        var distance = neighbor.distance;
+       var neighborGrid = neighbor.grid;
 		
-        if (neighbor.closed || neighbor.isWall()) {
+        if (neighborGrid.closed || neighborGrid.isWall()) {
           continue;
         }
      
-	 var gScore=currentNode.g + neighbor.getCost(currentNode);   // ((neighbor.x - currentNode.x === 0 || neighbor.y - currentNode.y === 0) ? 1 : Math.sqrt(2))
+	 var gScore=currentNode.g + distance;
 		
 		
 		
-	if(!neighbor.visited || gScore < neighbor.g){
+	if(!neighborGrid.visited || gScore < neighborGrid.g){
 		
-			neighbor.parent=currentNode;
-			neighbor.g=gScore;
+			neighborGrid.parent=currentNode;
+			neighborGrid.g=gScore;
 			
 			 var hScore;
 	 switch(x){
 	  case "Manhattan":
-	  hScore = manhattan(neighbor, end); 
+	  hScore = manhattan(neighborGrid,end); 
 	  //console.log(hScore);
       break;
 	  
 	  case "Euclidiean":
-	  hScore=Euclidiean(neighbor,end);
+	  hScore=Euclidiean(neighborGrid,end);
 	  break;
 	  
 	  case "Octile":
-	  hScore=Octile(neighbor,end);
+	  hScore=Octile(neighborGrid,end);
 	  break;
 	  
 	  case "Chebysev":
-	  hScore=Chebysev(neighbor,end);
+	  hScore=Chebysev(neighborGrid,end);
       break;
 
     } 
       
        
-			neighbor.h= (hScore);
-			 var fScore=neighbor.h + neighbor.g;
-             neighbor.f=fScore;
+			neighborGrid.h= (hScore);
+			 var fScore=neighborGrid.h + neighborGrid.g;
+             neighborGrid.f=fScore;
 
-           if(!neighbor.visited){            
-            neighbor.visited=true;
-			 openHeap.push(neighbor);	
+           if(!neighborGrid.visited){            
+            neighborGrid.visited=true;
+			 openHeap.push(neighborGrid);	
            }
 		  		else{
-					openHeap.rescoreElement(neighbor);
+					openHeap.rescoreElement(neighborGrid);
 				}
 			
 		}
@@ -174,7 +175,214 @@ return [];
 }
   
   
+biastar(graph,start,end,x){
+    
+    var openHeap = graph.getHeap();
+    var endlist=graph.getHeap();
+    var hScore;
+	
+	 switch(x){
+	  case "Manhattan":
+	  hScore = manhattan(start, end); 
+	  //console.log(hScore);
+      break;
+	  
+	  case "Euclidiean":
+	  hScore=Euclidiean(start,end);
+	  break;
+	  
+	  case "Octile":
+	  hScore=Octile(start,end);
+	  break;
+	  
+	  case "Chebysev":
+	  hScore=Chebysev(start,end);
+      break;
 
+    } 
+      
+    start.g=0;
+	start.f=hScore;
+	start.h=hScore;
+	start.visited=true;
+	start.parent=null;
+    start.by=start;
+    openHeap.push(start);
+    
+end.by=end;
+    end.parent=null;
+    end.g=0;
+    
+    switch(x){
+	  case "Manhattan":
+	  hScore = manhattan(end,start); 
+	  //console.log(hScore);
+      break;
+	  
+	  case "Euclidiean":
+	  hScore=Euclidiean(end,start);
+	  break;
+	  
+	  case "Octile":
+	  hScore=Octile(end,start);
+	  break;
+	  
+	  case "Chebysev":
+	  hScore=Chebysev(end,start);
+      break;
+
+    } 
+    end.h=hScore;
+    end.f=hScore;
+    end.visited=true;
+    endlist.push(end);
+   
+	//var k=0;
+	 
+    while (openHeap.size() > 0 && endlist.size() > 0) {
+       
+      var currentNode = openHeap.pop();
+      currentNode.closed = true;
+      if (currentNode.x === end.x && currentNode.y === end.y) {
+		  t1=performance.now();
+        return pathTo(currentNode,this.weight);
+      }
+     
+      var neighbors = neighborss(currentNode,this.grid,this.diagonal,this.dont);
+        
+    //var neighbors = graph.neighborsb(currentNode);
+	   
+      for (var i = 0, il = neighbors.length; i < il; ++i) {
+        var neighbor = neighbors[i];
+        var distance = neighbor.distance;
+       var neighborGrid = neighbor.grid;
+		
+        if (neighborGrid.closed || neighborGrid.isWall()) {
+          continue;
+        }
+     
+	 var gScore=currentNode.g + distance;
+		
+		
+		
+	if(!neighborGrid.visited || gScore < neighborGrid.g){
+		
+			neighborGrid.parent=currentNode;
+			neighborGrid.g=gScore;
+			
+			 var hScore;
+	 switch(x){
+	  case "Manhattan":
+	  hScore = manhattan(neighborGrid,end); 
+	  //console.log(hScore);
+      break;
+	  
+	  case "Euclidiean":
+	  hScore=Euclidiean(neighborGrid,end);
+	  break;
+	  
+	  case "Octile":
+	  hScore=Octile(neighborGrid,end);
+	  break;
+	  
+	  case "Chebysev":
+	  hScore=Chebysev(neighborGrid,end);
+      break;
+
+    } 
+      
+       
+			neighborGrid.h= (hScore);
+			 var fScore=neighborGrid.h + neighborGrid.g;
+             neighborGrid.f=fScore;
+
+           if(!neighborGrid.visited){            
+            neighborGrid.visited=true;
+			 openHeap.push(neighborGrid);	
+           }
+		  		else{
+					openHeap.rescoreElement(neighborGrid);
+				}
+			
+		}
+
+
+  }
+        
+         var currentNode = endlist.pop();
+      currentNode.closed = true;
+      if (currentNode.x === end.x && currentNode.y === end.y) {
+		  t1=performance.now();
+        return pathTo(currentNode,this.weight);
+      }
+     
+      var neighbors = neighborss(currentNode,this.grid,this.diagonal,this.dont);
+        
+    //var neighbors = graph.neighborsb(currentNode);
+	   
+      for (var i = 0, il = neighbors.length; i < il; ++i) {
+        var neighbor = neighbors[i];
+        var distance = neighbor.distance;
+       var neighborGrid = neighbor.grid;
+		
+        if (neighborGrid.closed || neighborGrid.isWall()) {
+          continue;
+        }
+     
+	 var gScore=currentNode.g + distance;
+		
+		
+		
+	if(!neighborGrid.visited || gScore < neighborGrid.g){
+		
+			neighborGrid.parent=currentNode;
+			neighborGrid.g=gScore;
+			
+			 var hScore;
+	 switch(x){
+	  case "Manhattan":
+	  hScore = manhattan(neighborGrid,end); 
+	  //console.log(hScore);
+      break;
+	  
+	  case "Euclidiean":
+	  hScore=Euclidiean(neighborGrid,end);
+	  break;
+	  
+	  case "Octile":
+	  hScore=Octile(neighborGrid,end);
+	  break;
+	  
+	  case "Chebysev":
+	  hScore=Chebysev(neighborGrid,end);
+      break;
+
+    } 
+      
+       
+			neighborGrid.h= (hScore);
+			 var fScore=neighborGrid.h + neighborGrid.g;
+             neighborGrid.f=fScore;
+
+           if(!neighborGrid.visited){            
+            neighborGrid.visited=true;
+			 openHeap.push(neighborGrid);	
+           }
+		  		else{
+					openHeap.rescoreElement(neighborGrid);
+				}
+			
+		}
+
+
+  }
+        
+        
+        
+}
+return [];
+    
+}
 
 
 

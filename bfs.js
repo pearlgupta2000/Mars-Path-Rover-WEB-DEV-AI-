@@ -4,6 +4,7 @@ class helper{
         this.grid=[];
 		this.diagonal=diagonal;
 		this.dont=d;
+        
 		//alert(this.diagonal + " " + this.dont);
         for (var x = 0; x < gridIn.length; x++) {
         this.grid[x] = [];
@@ -12,6 +13,7 @@ class helper{
               this.grid[x][y] = node;
 	    }
         }
+        this.weight=1;
    
 }
  
@@ -45,24 +47,27 @@ bfs(maze,src, dest) {
       
     if (m === dest.x && n === dest.y){
 		
-         return pathTo(dest); //returning parent
+         return pathTo(dest,this.weight); //returning parent
     }
      
      var neighbors = neighborss(current,this.grid,this.diagonal,this.dont); 
+      
 	 
 	 for (var i = 0, il = neighbors.length; i < il; ++i) {
         var neighbor = neighbors[i];
+         var distance = neighbor.distance;
+               var neighborGrid = neighbor.grid;
 		//document.getElementById(neighbor.x + ',' + neighbor.y).setAttribute("class","grid neighbor_");
-		if(neighbor.isWall()){
+		if(neighborGrid.isWall()){
 			continue;
 		}
 		
-		if(!neighbor.visited){
-			neighbor.parent=current;
-			neighbor.visited=true;
-			if(neighbor.dist > current.dist + 1){
-				neighbor.dist=current.dist + 1;
-				queue.push(neighbor);
+		if(!neighborGrid.visited){
+			neighborGrid.parent=current;
+			neighborGrid.visited=true;
+			if(neighborGrid.dist > current.dist + distance){
+				neighborGrid.dist=current.dist + distance;
+				queue.push(neighborGrid);
 			}
 			
 		}
@@ -107,26 +112,27 @@ bidirbst(maze,src,dest){
 	 
 	    for (var i = 0, il = neighbors.length; i < il; ++i) {
             var neighbor = neighbors[i];
+            var distance = neighbor.distance;
+               var neighborGrid = neighbor.grid;
 
-
-            if(neighbor.isWall() || neighbor.closed){
+            if(neighborGrid.isWall() || neighborGrid.closed){
                 continue;
             }
 
 
-            if(neighbor.visited){
-                if(neighbor.by===dest){
-                    return newPath(take,neighbor);
+            if(neighborGrid.visited){
+                if(neighborGrid.by===dest){
+                    return newPath(take,neighborGrid,this.weight);
                 }
                 continue;
             }
 
-           neighbor.parent=take;
-           neighbor.visited=true;
-           neighbor.by=src;
-           if(neighbor.dist > take.dist + 1){
-                neighbor.dist=take.dist + 1;
-                startlist.push(neighbor);
+           neighborGrid.parent=take;
+           neighborGrid.visited=true;
+           neighborGrid.by=src;
+           if(neighborGrid.dist > take.dist + distance){
+                neighborGrid.dist=take.dist + distance;
+                startlist.push(neighborGrid);
            }
 			
        }
@@ -143,24 +149,26 @@ bidirbst(maze,src,dest){
 	 
 	    for (var i = 0, il = neighbors.length; i < il; ++i) {
         var neighbor = neighbors[i];
-       
-		if(neighbor.isWall() || neighbor.closed){
+       var distance = neighbor.distance;
+               var neighborGrid = neighbor.grid;
+            
+		if(neighborGrid.isWall() || neighborGrid.closed){
 			continue;
 		}
 		
-		if(neighbor.visited){
-            if(neighbor.by===src){
-                return newPath(neighbor,take1);
+		if(neighborGrid.visited){
+            if(neighborGrid.by===src){
+                return newPath(neighborGrid,take1,this.weight);
             }
 			continue;
 		}
          
-            neighbor.parent=take1;
-			neighbor.visited=true;
-            neighbor.by=dest;
-			if(neighbor.dist > take1.dist + 1){
-				neighbor.dist=take1.dist + 1;
-				endlist.push(neighbor);
+            neighborGrid.parent=take1;
+			neighborGrid.visited=true;
+            neighborGrid.by=dest;
+			if(neighborGrid.dist > take1.dist + distance){
+				neighborGrid.dist=take1.dist + distance;
+				endlist.push(neighborGrid);
 			}
 		
 	 }

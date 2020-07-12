@@ -54,7 +54,8 @@ class BestfsGraph{
 	
 	constructor(gridIn,diagonal_,dont){
 		this.dont=dont;
-      this.diagonal = diagonal_;         
+      this.diagonal = diagonal_; 
+        this.weight=1;
       this.grid = [];
   for (var x = 0; x < gridIn.length; x++) {
     this.grid[x] = [];
@@ -113,7 +114,7 @@ bestFS(graph,start,end,x){
 		if(current.x===end.x && current.y===end.y){
 			t1=performance.now();
 			alert(t1-t0);
-			return pathTo(current);
+			return pathTo(current,this.weight);
 		}
 		
 		current.closed=true;
@@ -123,51 +124,52 @@ bestFS(graph,start,end,x){
 	   
       for (var i = 0, il = neighbors.length; i < il; ++i) {
         var neighbor = neighbors[i];
-        
+        var distance = neighbor.distance;
+               var neighborGrid = neighbor.grid;
 		
-        if (neighbor.closed || neighbor.isWall()) {
+        if (neighborGrid.closed || neighborGrid.isWall()) {
           continue;
         }
      
-	 var gScore=current.g + ((neighbor.x - current.x === 0 || neighbor.y - current.y === 0) ? 1 : Math.sqrt(2));  
+	 var gScore=current.g + distance;  
 		
 		
 		
-			neighbor.parent=current;
-			neighbor.g=gScore;
+			neighborGrid.parent=current;
+			neighborGrid.g=gScore;
 			
 			 var hScore;
 	 switch(x){
 	  case "Manhattan":
-	  hScore = manhattan(neighbor, end); 
+	  hScore = manhattan(neighborGrid, end); 
 	  //console.log(hScore);
       break;
 	  
 	  case "Euclidiean":
-	  hScore=Euclidiean(neighbor,end);
+	  hScore=Euclidiean(neighborGrid,end);
 	  break;
 	  
 	  case "Octile":
-	  hScore=Octile(neighbor,end);
+	  hScore=Octile(neighborGrid,end);
 	  break;
 	  
 	  case "Chebysev":
-	  hScore=Chebysev(neighbor,end);
+	  hScore=Chebysev(neighborGrid,end);
       break;
 
     } 
       
        
-			neighbor.h= (hScore);
-			 var fScore=neighbor.h + neighbor.g;
-             neighbor.f=fScore;
+			neighborGrid.h= (hScore);
+			 var fScore=neighborGrid.h + neighborGrid.g;
+             neighborGrid.f=fScore;
 
-           if(!neighbor.visited){            
-            neighbor.visited=true;
-			 heap.push(neighbor);	
+           if(!neighborGrid.visited){            
+            neighborGrid.visited=true;
+			 heap.push(neighborGrid);	
            }
 		  		else{
-					heap.rescoreElement(neighbor);
+					heap.rescoreElement(neighborGrid);
 				}
 			
 		
@@ -253,59 +255,61 @@ biBestFS(graph,start,end,x){
     
       for (var i = 0, il = neighbors.length; i < il; ++i) {
         var neighbor = neighbors[i];
+          var distance = neighbor.distance;
+               var neighborGrid = neighbor.grid;
         
 		
-        if (neighbor.closed || neighbor.isWall()) {
+        if (neighborGrid.closed || neighborGrid.isWall()) {
           continue;
         }
      
 	    
-		if(neighbor.visited){
-			if(neighbor.by===end){
-				return newPath(current,neighbor);
+		if(neighborGrid.visited){
+			if(neighborGrid.by===end){
+				return newPath(current,neighborGrid,this.weight);
 			}
 			continue;
 		} 
 		
-	 var gScore=current.g + ((neighbor.x - current.x === 0 || neighbor.y - current.y === 0) ? 1 : Math.sqrt(2));  
+	 var gScore=current.g + distance;  
 		
 		
 		
-			neighbor.parent=current;
-			neighbor.g=gScore;
+			neighborGrid.parent=current;
+			neighborGrid.g=gScore;
 			
 			 var hScore;
 	 switch(x){
 	  case "Manhattan":
-	  hScore = manhattan(neighbor, end); 
+	  hScore = manhattan(neighborGrid, end); 
 	  //console.log(hScore);
       break;
 	  
 	  case "Euclidiean":
-	  hScore=Euclidiean(neighbor,end);
+	  hScore=Euclidiean(neighborGrid,end);
 	  break;
 	  
 	  case "Octile":
-	  hScore=Octile(neighbor,end);
+	  hScore=Octile(neighborGrid,end);
 	  break;
 	  
 	  case "Chebysev":
-	  hScore=Chebysev(neighbor,end);
+	  hScore=Chebysev(neighborGrid,end);
       break;
 
     } 
       
        
-			neighbor.h= (hScore);
-			 var fScore=neighbor.h + neighbor.g;
-             neighbor.f=fScore;
-             neighbor.by=start;
-           if(!neighbor.visited){            
-            neighbor.visited=true;
-			 heap.push(neighbor);	
+			neighborGrid.h= (hScore);
+			 var fScore=neighborGrid.h + neighborGrid.g;
+             neighborGrid.f=fScore;
+             neighborGrid.by=start;
+           if(!neighborGrid.visited){            
+            neighborGrid.visited=true;
+			 heap.push(neighborGrid);	
            }
 		  		else{
-					heap.rescoreElement(neighbor);
+					heap.rescoreElement(neighborGrid);
 				}
   }
   
@@ -317,59 +321,61 @@ biBestFS(graph,start,end,x){
     
       for (var i = 0, il = neighbors.length; i < il; ++i) {
         var neighbor = neighbors[i];
+           var distance = neighbor.distance;
+               var neighborGrid = neighbor.grid;
         
 		
-        if (neighbor.closed || neighbor.isWall()) {
+        if (neighborGrid.closed || neighborGrid.isWall()) {
           continue;
         }
      
 	    
-		if(neighbor.visited){
-			if(neighbor.by===start){
-				return newPath(neighbor,current2);
+		if(neighborGrid.visited){
+			if(neighborGrid.by===start){
+				return newPath(neighborGrid,current2,this.weight);
 			}
 			continue;
 		} 
 		
-	 var gScore=current2.g + ((neighbor.x - current2.x === 0 || neighbor.y - current2.y === 0) ? 1 : Math.sqrt(2));  
+	 var gScore=current2.g + distance;
 		
 		
 		
-			neighbor.parent=current2;
-			neighbor.g=gScore;
+			neighborGrid.parent=current2;
+			neighborGrid.g=gScore;
 			
 			 var hScore;
 	 switch(x){
 	  case "Manhattan":
-	  hScore = manhattan(neighbor, start); 
+	  hScore = manhattan(neighborGrid, start); 
 	  //console.log(hScore);
       break;
 	  
 	  case "Euclidiean":
-	  hScore=Euclidiean(neighbor,start);
+	  hScore=Euclidiean(neighborGrid,start);
 	  break;
 	  
 	  case "Octile":
-	  hScore=Octile(neighbor,start);
+	  hScore=Octile(neighborGrid,start);
 	  break;
 	  
 	  case "Chebysev":
-	  hScore=Chebysev(neighbor,start);
+	  hScore=Chebysev(neighborGrid,start);
       break;
 
     } 
       
-           neighbor.by=end;
-			neighbor.h= (hScore);
-			 var fScore=neighbor.h + neighbor.g;
-             neighbor.f=fScore;
+           neighborGrid.by=end;
+			neighborGrid.h= (hScore);
+			 var fScore=neighborGrid.h + neighborGrid.g;
+             neighborGrid.f=fScore;
 
-           if(!neighbor.visited){            
-            neighbor.visited=true;
-			 endlist.push(neighbor);	
+           if(!neighborGrid.visited){            
+            neighborGrid.visited=true;
+			 endlist.push(neighborGrid);	
            }
 		  		else{
-					endlist.rescoreElement(neighbor);
+					endlist.rescoreElement(neighborGrid);
 				}
 	
   }
