@@ -130,6 +130,7 @@ body{
 	color:white;
 	font-size:13px;
 	padding:3px;
+	border-radius:10px;
 }
 .heuristic{
 	margin-left:40px;

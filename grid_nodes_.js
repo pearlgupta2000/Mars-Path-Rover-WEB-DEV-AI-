@@ -15,6 +15,10 @@ class _info_p{
    isWall(){
 	   return this.wall === 0;
    }
+   
+   
+   
+   
 }
 
 function newPath(nodeA,nodeB){
@@ -36,6 +40,7 @@ function pathTo(node) {
     curr = curr.parent;
   }
  document.getElementById(node.x + ',' + node.y).setAttribute("class","grid end_");
+ alert(path.length);
   return path;
 }
 

@@ -172,12 +172,14 @@ function start_search(){
 		
 		   w = document.getElementById("weight1").value;
 		   make_grid(w);
-		    var diagonal =  document.getElementById("a1").checked;  
-		   var graph = new Graph(Grid,diagonal,w);
+		    var diagonal =  document.getElementById("a1").checked; 
+            var bi = document.getElementById("a2").checked;
+			var dont=document.getElementById("a3").checked;			
+		   var graph = new Graph(Grid,diagonal,w,dont);
 
            var start = graph.grid[startpnt[0]][startpnt[1]];
            var end = graph.grid[endpnt[0]][endpnt[1]];
-          // alert(end.f);
+     
 		   var xx=document.getElementsByName('path_A1'); 
 
           	 var x;  
@@ -190,8 +192,13 @@ function start_search(){
 			   }
 			   
 		   alert(x);
-           var result = graph.astarsearch(graph, start, end , x );   // { heuristic: heuristics. manhattan }
-		  
+		  // alert(diagonal);
+		   if(!bi){
+           var result = graph.astarsearch(graph, start, end , x );   
+		   }
+		   else{
+			   var result=graph.biastar(graph,start,end,x);
+		   }
 		   alert(result.length);
 		   break;
 		   
