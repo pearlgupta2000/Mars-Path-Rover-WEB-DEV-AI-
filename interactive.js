@@ -196,7 +196,7 @@ function start_search(){
            var result = graph.astarsearch(graph, start, end , x );   
 		   }
 		   else{
-			  // var result=graph.biastar(graph,start,end,x);
+			   var result=graph.biastar(graph,start,end,x);
 		   }
 		   alert(result);
 		   break;

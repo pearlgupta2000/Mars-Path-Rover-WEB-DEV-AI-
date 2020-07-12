@@ -13,23 +13,7 @@ class _gridNode_{
         this.closed = false;
         this.parent = null;
 	}
-	
-//	getCost(fromNeighbor, distance){
-//  
-//  if(fromNeighbor.x + distance === this.x && fromNeighbor.y + distance === this.y){
-//  return this.wall*Math.sqrt(2*distance);
-//	}else if(fromNeighbor.x + distance === this.x && fromNeighbor.y - distance === this.y){
-//  return this.wall*Math.sqrt(2*distance);
-//	}else if(fromNeighbor.x - distance === this.x && fromNeighbor.y + distance === this.y){
-//  return this.wall*Math.sqrt(2*distance);
-//	}else if(fromNeighbor.x - distance === this.x && fromNeighbor.y - distance === this.y){
-//  return this.wall*Math.sqrt(2*distance);
-//	}else{
-//	return this.wall;
-//	}
-//  return this.weight;
-//	}
-//	
+
 	isWall(){
 		 return this.wall === 0;
 	}
@@ -243,15 +227,10 @@ end.by=end;
        
       var currentNode = openHeap.pop();
       currentNode.closed = true;
-      if (currentNode.x === end.x && currentNode.y === end.y) {
-		  t1=performance.now();
-        return pathTo(currentNode,this.weight);
-      }
+      
      
       var neighbors = neighborss(currentNode,this.grid,this.diagonal,this.dont);
         
-    //var neighbors = graph.neighborsb(currentNode);
-	   
       for (var i = 0, il = neighbors.length; i < il; ++i) {
         var neighbor = neighbors[i];
         var distance = neighbor.distance;
@@ -260,6 +239,13 @@ end.by=end;
         if (neighborGrid.closed || neighborGrid.isWall()) {
           continue;
         }
+		
+		if(neighborGrid.visited){
+			if(neighborGrid.by===end){
+				return newPath(currentNode,neighborGrid,this.weight);
+			}
+			continue;
+		} 
      
 	 var gScore=currentNode.g + distance;
 		
@@ -295,7 +281,7 @@ end.by=end;
 			neighborGrid.h= (hScore);
 			 var fScore=neighborGrid.h + neighborGrid.g;
              neighborGrid.f=fScore;
-
+             neighborGrid.by=start;
            if(!neighborGrid.visited){            
             neighborGrid.visited=true;
 			 openHeap.push(neighborGrid);	
@@ -309,16 +295,11 @@ end.by=end;
 
   }
         
-         var currentNode = endlist.pop();
-      currentNode.closed = true;
-      if (currentNode.x === end.x && currentNode.y === end.y) {
-		  t1=performance.now();
-        return pathTo(currentNode,this.weight);
-      }
+        var currentNode2 = endlist.pop();
+      currentNode2.closed = true;
      
-      var neighbors = neighborss(currentNode,this.grid,this.diagonal,this.dont);
-        
-    //var neighbors = graph.neighborsb(currentNode);
+       neighbors = neighborss(currentNode2,this.grid,this.diagonal,this.dont);
+     
 	   
       for (var i = 0, il = neighbors.length; i < il; ++i) {
         var neighbor = neighbors[i];
@@ -328,48 +309,56 @@ end.by=end;
         if (neighborGrid.closed || neighborGrid.isWall()) {
           continue;
         }
+		
+		if(neighborGrid.visited){
+			if(neighborGrid.by===start){
+				return newPath(neighborGrid,currentNode2,this.weight);
+			}
+			continue;
+		} 
+		
      
-	 var gScore=currentNode.g + distance;
+	 var gScore=currentNode2.g + distance;
 		
 		
 		
 	if(!neighborGrid.visited || gScore < neighborGrid.g){
 		
-			neighborGrid.parent=currentNode;
+			neighborGrid.parent=currentNode2;
 			neighborGrid.g=gScore;
 			
 			 var hScore;
 	 switch(x){
 	  case "Manhattan":
-	  hScore = manhattan(neighborGrid,end); 
+	  hScore = manhattan(neighborGrid,start); 
 	  //console.log(hScore);
       break;
 	  
 	  case "Euclidiean":
-	  hScore=Euclidiean(neighborGrid,end);
+	  hScore=Euclidiean(neighborGrid,start);
 	  break;
 	  
 	  case "Octile":
-	  hScore=Octile(neighborGrid,end);
+	  hScore=Octile(neighborGrid,start);
 	  break;
 	  
 	  case "Chebysev":
-	  hScore=Chebysev(neighborGrid,end);
+	  hScore=Chebysev(neighborGrid,start);
       break;
 
     } 
       
-       
+       neighborGrid.by=end;
 			neighborGrid.h= (hScore);
 			 var fScore=neighborGrid.h + neighborGrid.g;
              neighborGrid.f=fScore;
 
            if(!neighborGrid.visited){            
             neighborGrid.visited=true;
-			 openHeap.push(neighborGrid);	
+			 endlist.push(neighborGrid);	
            }
 		  		else{
-					openHeap.rescoreElement(neighborGrid);
+					endlist.rescoreElement(neighborGrid);
 				}
 			
 		}
