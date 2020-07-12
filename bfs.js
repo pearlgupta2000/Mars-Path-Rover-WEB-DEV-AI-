@@ -117,10 +117,6 @@ bidirbst(maze,src,dest){
             if(neighbor.visited){
                 if(neighbor.by===dest){
                     return newPath(take,neighbor);
-                   // var pathA=pathTo(dest);
-    //                neighbor.parent=null;
-    //                var pathB=pathTo(neighbor);
-    //                return pathA.concat(pathB);
                 }
                 continue;
             }
@@ -155,10 +151,6 @@ bidirbst(maze,src,dest){
 		if(neighbor.visited){
             if(neighbor.by===src){
                 return newPath(neighbor,take1);
-             //   var pathA=pathTo(neighbor);
-//                neighbor.parent=null;
-//                var pathB=pathTo(dest);
-//                return pathA.concat(pathB);
             }
 			continue;
 		}

@@ -8,7 +8,7 @@ class _info_p{
         this.parent=null;
 		this.closed=false;
         this.by = null;
-            this.wall=wall;
+        this.wall=wall;
     }
     
     

@@ -1,12 +1,5 @@
 
 
-function getHeap() {
-  return new BinaryHeap(function(node) {
-    return node.dist;
-  });
-}
- 
-
 class helper_dik{
     constructor(gridIn,diagonal,dont){
         this.grid=[];
@@ -21,10 +14,16 @@ class helper_dik{
         }
    
 }
+getHeap() {
+  return new BinaryHeap(function(node) {
+    return node.dist;
+  });
+}
+ 
 
   dijkishtras(graph,src,dest){
 	  
-	   var openHeap = getHeap();
+	   var openHeap = graph.getHeap();
 	   src.parent=null;
 	   src.dist=0;
 	   src.visisted=true;
@@ -51,9 +50,9 @@ class helper_dik{
 			   
 			   var neighbor=neighbors[i];
 			   
-			   if(neighbor.isWall()){continue;}
+			   if(neighbor.closed || neighbor.isWall()){continue;}
 			  // document.getElementById(neighbor.x + ',' + neighbor.y).setAttribute("class","grid neighbor_");
-			   if(!neighbor.closed){
+			  
 				   
 				   if(current.dist + 1 < neighbor.dist){
 					   neighbor.dist=current.dist+1;
@@ -69,9 +68,7 @@ class helper_dik{
 					  
 					 
 				   }
-				   
-			   }
-  
+			
 		   }
 	  }
 	  
@@ -81,8 +78,8 @@ class helper_dik{
     
     //adding bidir
 bidirdik(maze,src,dest){
-  var startlist =getHeap();
-  var endlist = getHeap();
+  var startlist =maze.getHeap();
+  var endlist = maze.getHeap();
     
 
     src.visited = true;

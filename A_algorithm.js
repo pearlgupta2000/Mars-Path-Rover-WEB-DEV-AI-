@@ -7,7 +7,7 @@ class _gridNode_{
         this.y = y;
         this.wall = wall;
 	    this.f = Number.MAX_VALUE;
-        this.g = Number.MAX_VALUE;
+        this.g =  Number.MAX_VALUE;
         this.h =Number.MAX_VALUE;
         this.visited = false;
         this.closed = false;
@@ -18,22 +18,18 @@ class _gridNode_{
   
   if(fromNeighbor.x + 1 === this.x && fromNeighbor.y + 1 === this.y){
   return this.wall*1.41421;
-	}
-	
-	if(fromNeighbor.x + 1 === this.x && fromNeighbor.y - 1 === this.y){
+	}else if(fromNeighbor.x + 1 === this.x && fromNeighbor.y - 1 === this.y){
   return this.wall*1.41421;
-	}
-	if(fromNeighbor.x - 1 === this.x && fromNeighbor.y + 1 === this.y){
+	}else if(fromNeighbor.x - 1 === this.x && fromNeighbor.y + 1 === this.y){
   return this.wall*1.41421;
-	}
-	if(fromNeighbor.x - 1 === this.x && fromNeighbor.y - 1 === this.y){
+	}else if(fromNeighbor.x - 1 === this.x && fromNeighbor.y - 1 === this.y){
   return this.wall*1.41421;
-	}
-	
+	}else{
 	return this.wall;
-	
 	}
 	
+  return this.weight;
+	}
 	
 	isWall(){
 		 return this.wall === 0;
@@ -42,41 +38,7 @@ class _gridNode_{
 }
 
 
-
-function getHeap() {
-  return new BinaryHeap(function(nodeA) {
-    return nodeA.f ;
-  });
-}
  
- 
-function manhattan(pos0, pos1) {
-      var d1 = Math.abs(pos1.x - pos0.x);
-      var d2 = Math.abs(pos1.y - pos0.y);
-      return d1 + d2;
-}
-	
-	
-function Euclidiean(pos0,pos1){
-	var d1 = (pos1.x-pos0.x)*(pos1.x-pos0.x);
-	var d2=   (pos1.y-pos0.y)*(pos1.y-pos0.y);
-	return Math.sqrt(d1+d2);
-}	
-
-function Octile(pos0,pos1){
-	var d1= Math.abs(pos1.x - pos0.x);
-	var d2=  Math.abs(pos1.y - pos0.y);
-	 var F = Math.SQRT2 - 1;
-      return (d1 < d2) ? F * d1 + d2 : F * d2 + d1;         
-}
-
-function Chebysev(pos0,pos1){
-	var d1= Math.abs(pos1.x-pos0.x);
-	var d2= Math.abs(pos1.y-pos0.y);
-	return Math.max(d1,d2);
-}	
-
-
 
 class Graph{
 	
@@ -96,55 +58,10 @@ class Graph{
 }
 	
 
-neighborsb(node) {
-  var ret = [];
-  var x = node.x;
-  var y = node.y;
-  var grid = this.grid;
-
-  // West
-  if (grid[x - 1] && grid[x - 1][y]) {
-    ret.push(grid[x - 1][y]);
-  }
-
-  // East
-  if (grid[x + 1] && grid[x + 1][y]) {
-    ret.push(grid[x + 1][y]);
-  }
-
-  // South
-  if (grid[x] && grid[x][y - 1]) {
-    ret.push(grid[x][y - 1]);
-  }
-
-  // North
-  if (grid[x] && grid[x][y + 1]) {
-    ret.push(grid[x][y + 1]);
-  }
-
-  if (this.diagonal) {
-    // Southwest
-    if (grid[x - 1] && grid[x - 1][y - 1]) {
-      ret.push(grid[x - 1][y - 1]);
-    }
-
-    // Southeast
-    if (grid[x + 1] && grid[x + 1][y - 1]) {
-      ret.push(grid[x + 1][y - 1]);
-    }
-
-    // Northwest
-    if (grid[x - 1] && grid[x - 1][y + 1]) {
-      ret.push(grid[x - 1][y + 1]);
-    }
-
-    // Northeast
-    if (grid[x + 1] && grid[x + 1][y + 1]) {
-      ret.push(grid[x + 1][y + 1]);
-    }
-  }
-
-  return ret;
+getHeap() {
+  return new BinaryHeap(function(nodeA) {
+    return nodeA.f ;
+  });
 }
 
 astarsearch(graph, start, end, x ) {
@@ -153,11 +70,32 @@ astarsearch(graph, start, end, x ) {
 	var t1;
  
  
-    var openHeap = getHeap();
-   
+    var openHeap = graph.getHeap();
+    var hScore;
+	
+	 switch(x){
+	  case "Manhattan":
+	  hScore = manhattan(start, end); 
+	  //console.log(hScore);
+      break;
+	  
+	  case "Euclidiean":
+	  hScore=Euclidiean(start,end);
+	  break;
+	  
+	  case "Octile":
+	  hScore=Octile(start,end);
+	  break;
+	  
+	  case "Chebysev":
+	  hScore=Chebysev(start,end);
+      break;
+
+    } 
+      end.h=0;
     start.g=0;
-	start.f=0;
-	start.h=0;
+	start.f=hScore;
+	start.h=hScore;
 	start.visited=true;
 	start.parent=null;
     openHeap.push(start);
@@ -167,7 +105,7 @@ astarsearch(graph, start, end, x ) {
     while (openHeap.size() > 0) {
        
       var currentNode = openHeap.pop();
- currentNode.closed = true;
+      currentNode.closed = true;
       if (currentNode.x === end.x && currentNode.y === end.y) {
 		  t1=performance.now();
         return pathTo(currentNode);
@@ -184,14 +122,15 @@ astarsearch(graph, start, end, x ) {
           continue;
         }
      
-	 var gScore=currentNode.g +  ((neighbor.x - currentNode.x === 0 || neighbor.y - currentNode.y === 0) ? 1 : Math.sqrt(2));//neighbor.getCost(currentNode);
+	 var gScore=currentNode.g + neighbor.getCost(currentNode);   // ((neighbor.x - currentNode.x === 0 || neighbor.y - currentNode.y === 0) ? 1 : Math.sqrt(2))
 		
 		
 		
-	if(!neighbor.visited || gScore<neighbor.g){
+	if(!neighbor.visited || gScore < neighbor.g){
 		
 			neighbor.parent=currentNode;
 			neighbor.g=gScore;
+			
 			 var hScore;
 	 switch(x){
 	  case "Manhattan":
@@ -214,7 +153,7 @@ astarsearch(graph, start, end, x ) {
     } 
       
        
-			neighbor.h= neighbor.h || (this.weight * hScore);
+			neighbor.h= (hScore);
 			 var fScore=neighbor.h + neighbor.g;
              neighbor.f=fScore;
 
@@ -235,8 +174,9 @@ return [];
 }
   
   
+
+
+
+
+
 }
-
-
-
-

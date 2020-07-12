@@ -17,7 +17,7 @@ include('bfs.js');
 include('binary_heap.js');
 include('grid_nodes_.js');
 include('dik.js');
-
+include('best fs.js');
 
  var width = window.outerWidth;
     var height = window.outerHeight;
@@ -197,7 +197,7 @@ function start_search(){
            var result = graph.astarsearch(graph, start, end , x );   
 		   }
 		   else{
-			   var result=graph.biastar(graph,start,end,x);
+			  // var result=graph.biastar(graph,start,end,x);
 		   }
 		   alert(result.length);
 		   break;
@@ -230,13 +230,40 @@ function start_search(){
                 break;	 
 		case "BestFS":
                make_grid(1);
+			    var diagonal =  document.getElementById("a10").checked; 
+            var bi = document.getElementById("a11").checked;
+			var dont=document.getElementById("a12").checked;			
+		   var graph2 = new BestfsGraph(Grid,diagonal,dont);
+
+           var start = graph2.grid[startpnt[0]][startpnt[1]];
+           var end = graph2.grid[endpnt[0]][endpnt[1]];
+      
+		   var xx=document.getElementsByName('path_A3'); 
+
+          	 var x;  
+			
+			   for(var i=0;i<xx.length;i++){
+				   if(xx[i].checked){
+					  x=xx[i].value; 
+					  break;
+				   }
+			   }
+			   
+		   alert(x);
+		   if(!bi){
+           var result = graph2.bestFS(graph2, start, end , x );   
+		   }
+		   else{
+			   var result=graph2.biBestFS(graph2,start,end,x);
+		   }
+		   alert(result.length);
+			   
              break;
         case "DJK":
                 make_grid(1);
-				 var diagonal =  document.getElementById("a13").checked;  
-				
-            var bi=document.getElementById("a14").checked;
-			 var dont=document.getElementById("a15").checked;
+			    var diagonal =  document.getElementById("a13").checked;  
+                var bi=document.getElementById("a14").checked;
+			    var dont=document.getElementById("a15").checked;
                 var helping = new helper_dik(Grid,diagonal,dont);
                 var source = helping.grid[startpnt[0]][startpnt[1]];
                 var dest = helping.grid[endpnt[0]][endpnt[1]];
