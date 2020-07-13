@@ -18,6 +18,8 @@ include('binary_heap.js');
 include('grid_nodes_.js');
 include('dik.js');
 include('best fs.js');
+include('idaStar.js');
+include('jump_point_search.js');
 
  var width = window.outerWidth;
     var height = window.outerHeight;
@@ -190,8 +192,7 @@ function start_search(){
 					  break;
 				   }
 			   }
-			   
-		  // alert(diagonal);
+		
 		   if(!bi){
            var result = graph.astarsearch(graph, start, end , x );   
 		   }
@@ -200,12 +201,34 @@ function start_search(){
 		   }
 		   alert(result);
 		   break;
-		   
-		   
-		   
+
 		case "IDA*":
               w = document.getElementById("weight2").value;
 		     make_grid(w);
+             var diagonal = document.getElementById("a4").checked;
+             var dont = document.getElementById("a5").checked;
+            var time_ = document.getElementById("weight").value;
+            var trackRecursion = document.getElementById("a6").checked;
+            var help =new ida_graph(Grid,diagonal,dont,w,time_,trackRecursion);
+            
+            
+            var start_ = help.grid[startpnt[0]][startpnt[1]];
+           var end_ = help.grid[endpnt[0]][endpnt[1]];
+            
+             var xx=document.getElementsByName('path_A2'); 
+
+          	 var x;  
+			
+			   for(var i=0;i<xx.length;i++){
+				   if(xx[i].checked){
+					  x=xx[i].value; 
+					  break;
+				   }
+			   }
+            
+            var result = help.idasearch(help,start_,end_,x);
+            alert(result.length);
+     
              break;
 		case "BreadthFS":
                 make_grid(1);

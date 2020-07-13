@@ -27,52 +27,50 @@ class Graph{
 	
 	constructor(gridIn,diagonal_,weight,dont){
 		this.dont=dont;
-      this.diagonal = diagonal_;         
-      this.grid = [];
-      this.weight=weight;
-  for (var x = 0; x < gridIn.length; x++) {
-    this.grid[x] = [];
-    for (var y = 0, row = gridIn[x]; y < row.length; y++) {
-      var node = new _gridNode_(x, y, row[y]);
-      this.grid[x][y] = node;
-
-	}
-   }
-}
+        this.diagonal = diagonal_;         
+        this.grid = [];
+        this.weight=weight;
+        for (var x = 0; x < gridIn.length; x++) {
+             this.grid[x] = [];
+            for (var y = 0, row = gridIn[x]; y < row.length; y++){
+                var node = new _gridNode_(x, y, row[y]);
+                this.grid[x][y] = node;
+            }
+        }
+     }
 	
 
-getHeap() {
-  return new BinaryHeap(function(nodeA) {
-    return nodeA.f ;
-  });
-}
+    getHeap() {
+        return new BinaryHeap(function(nodeA) {
+        return nodeA.f ;
+        });
+    }
 
-astarsearch(graph, start, end, x ) {
+    astarsearch(graph, start, end, x ) {
    
-   var t0=performance.now();
-	var t1;
+        var t0=performance.now();
+	    var t1;
  
  
-    var openHeap = graph.getHeap();
-    var hScore;
+        var openHeap = graph.getHeap();
+        var hScore;
 	
-	 switch(x){
-	  case "Manhattan":
-	  hScore = manhattan(start, end); 
-	  //console.log(hScore);
-      break;
+        switch(x){
+	       case "Manhattan":
+	           hScore = manhattan(start, end); 
+                break;
 	  
-	  case "Euclidiean":
-	  hScore=Euclidiean(start,end);
-	  break;
+            case "Euclidiean":
+                hScore=Euclidiean(start,end);
+	           break;
 	  
-	  case "Octile":
-	  hScore=Octile(start,end);
-	  break;
+            case "Octile":
+                hScore=Octile(start,end);
+	           break;
 	  
-	  case "Chebysev":
-	  hScore=Chebysev(start,end);
-      break;
+	        case "Chebysev":
+	           hScore=Chebysev(start,end);
+                break;
 
     } 
       end.h=0;
