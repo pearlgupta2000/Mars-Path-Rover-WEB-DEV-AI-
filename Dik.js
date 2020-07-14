@@ -21,15 +21,16 @@ getHeap() {
   });
 }
  
-
+ 
   dijkishtras(graph,src,dest){
-	  
+	 var visited_in_order=[];
+	  var t0=performance.now(),t1;
 	   var openHeap = graph.getHeap();
 	   src.parent=null;
 	   src.dist=0;
 	   src.visisted=true;
 	   openHeap.push(src);
-	  //var i=0;
+	  var k=0;
 	  while(openHeap.size() > 0){
 	
 	      //i++;
@@ -37,14 +38,21 @@ getHeap() {
 		  current.closed=true;
 		  
 		  if(current.x === dest.x && current.y === dest.y){
-
-			  //document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("class", "grid start_");  
-			  return pathTo(current,this.weight);
+             var opt = pathTo(current,this.weight);
+			 t1=performance.now();
+		     var time=t1-t0;
+             var length = opt.len; 
+		     var operations = k;
+		     length=length.toFixed(2);
+		     time=time.toFixed(4);
+		     
+			 animate(visited_in_order,opt.arr,dest,src);
+		    
+		    
+		    document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
+         return;
 		  }
 		  
-		  //document.getElementById(current.x + ',' + current.y).setAttribute("class","grid current_");
-	
-		
 		  var neighbors=neighborss(current,this.grid,this.diagonal,this.dont);
 		  
 		   for (var i = 0, il = neighbors.length; i < il; ++i) {
@@ -54,17 +62,18 @@ getHeap() {
                var neighborGrid = neighbor.grid;
 			   
 			         if(neighborGrid.closed || neighborGrid.isWall()){continue;}
-			  // document.getElementById(neighbor.x + ',' + neighbor.y).setAttribute("class","grid neighbor_");
-			  
-				   
+		
 				   if(current.dist + distance < neighborGrid.dist){
 					   neighborGrid.dist=current.dist+distance;
 					  neighborGrid.parent=current;
 					  
+					  
+					      
 					  if(neighborGrid.visited){
 						  openHeap.rescoreElement(neighborGrid);
 					  }
 					  else{
+						   visited_in_order.push(neighborGrid); 
                           neighborGrid.visited=true;
 						  openHeap.push(neighborGrid);
 					  }
@@ -76,8 +85,10 @@ getHeap() {
     
     
     
-    //adding bidir
 bidirdik(maze,src,dest){
+	
+	var visited_in_order=[];
+	 var t0=performance.now(),t1;
   var startlist =maze.getHeap();
   var endlist = maze.getHeap();
     
@@ -98,14 +109,12 @@ bidirdik(maze,src,dest){
     
 
     
-    //popping node 
+   var k=0;
     while(startlist.size() > 0 && endlist.size() > 0){
         
         var take= startlist.pop();
         take.closed = true;
-//        var m = take.x;
-//        var n = take.y;
-     
+
         var neighbors = neighborss(take,this.grid,this.diagonal,this.dont); 
 	 
 	    for (var i = 0, il = neighbors.length; i < il; ++i) {
@@ -118,7 +127,8 @@ bidirdik(maze,src,dest){
                 continue;
             }
 
-
+            
+			
             if(neighborGrid.visited){
                 
                  if(neighborGrid.dist > take.dist + distance){
@@ -130,17 +140,24 @@ bidirdik(maze,src,dest){
                 
                 
                 if(neighborGrid.by===dest){
-                    return newPath(take,neighborGrid,this.weight);
-                   // var pathA=pathTo(dest);
-    //                neighbor.parent=null;
-    //                var pathB=pathTo(neighbor);
-    //                return pathA.concat(pathB);
-                }
+						 t1=performance.now();
+						 var opt=newPath(take,neighborGrid,this.weight);
+		 var time=t1-t0;
+         var length = opt.len;
+		 var operations = k
+		  length=length.toFixed(2);
+		 time=time.toFixed(4);
+		 
+		  animate(visited_in_order,opt.arr,dest);
+		 
+		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
+		 return;
+                }   
                 continue;
             }
             
-            
-
+              // if(!neighborGrid.visited){
+			   visited_in_order.push(neighborGrid);// }
            neighborGrid.parent=take;
            neighborGrid.visited=true;
            neighborGrid.by=src;
@@ -152,14 +169,8 @@ bidirdik(maze,src,dest){
        }
 		
 	 
-          //woring on END NODE
-    
-    
-    //popping node
       var take1 = endlist.pop();
       take1.closed=true;
-//        var m1 = take.x;
-//        var n1 = take.y;
 
         var neighbors = neighborss(take1,this.grid,this.diagonal,this.dont); 
 	 
@@ -172,6 +183,8 @@ bidirdik(maze,src,dest){
 			continue;
 		}
 		
+		
+		
 		if(neighborGrid.visited){
             
             if(neighborGrid.dist > take1.dist + distance){
@@ -182,15 +195,21 @@ bidirdik(maze,src,dest){
             }
             
             if(neighborGrid.by===src){
-                return newPath(neighborGrid,take1,this.weight);
-             //   var pathA=pathTo(neighbor);
-//                neighbor.parent=null;
-//                var pathB=pathTo(dest);
-//                return pathA.concat(pathB);
+					 t1=performance.now();
+		 var time=t1-t0;
+         var length =  newPath(neighborGrid,take1,this.weight);
+		 //var operations = 
+		  length=length.toFixed(2);
+		 time=time.toFixed(4);
+		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
+		 return;
+               
             }
 			continue;
 		}
          
+		  //if(!neighborGrid.visited){
+			   visited_in_order.push(neighborGrid);// }
             neighborGrid.parent=take1;
 			neighborGrid.visited=true;
             neighborGrid.by=dest;
@@ -214,6 +233,7 @@ bidirdik(maze,src,dest){
     
   
   
+
 }
 
 

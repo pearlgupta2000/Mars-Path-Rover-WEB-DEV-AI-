@@ -76,7 +76,8 @@ getHeap() {
  
 
 bestFS(graph,start,end,x){
-	
+	var visited_in_order=[];
+	var t0=performance.now(),t1;
 	var heap=graph.getHeap();
 	
 	start.g=0;
@@ -105,24 +106,33 @@ bestFS(graph,start,end,x){
 	start.visited=true;
 	heap.push(start);
 	
-	//dest.h=0;
+	//dest.h=0;  
+	var k=0;
 	while(heap.size() > 0){
 		
 		var t0=performance.now(),t1;
 		var current=heap.pop();
 		
 		if(current.x===end.x && current.y===end.y){
+			var opt=pathTo(current,this.weight);
 			t1=performance.now();
-			alert(t1-t0);
-			return pathTo(current,this.weight);
+		 var time=t1-t0;
+         var length = opt.len;
+		 var operations = k;
+		  length=length.toFixed(2);
+		 time=time.toFixed(4);
+		 
+		 animate(visited_in_order,opt.arr,end,start);
+		 
+		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : " + operations;
+		 return;
 		}
 		
 		current.closed=true;
 		
 		  var neighbors = neighborss(current,this.grid,this.diagonal,this.dont);
-    //var neighbors = graph.neighborsb(currentNode);
-	   
-      for (var i = 0, il = neighbors.length; i < il; ++i) {
+  
+      for (var i = 0, il = neighbors.length; i < il; ++i) {  
         var neighbor = neighbors[i];
         var distance = neighbor.distance;
                var neighborGrid = neighbor.grid;
@@ -131,6 +141,7 @@ bestFS(graph,start,end,x){
           continue;
         }
      
+	 //k++;
 	 var gScore=current.g + distance;  
 		
 		
@@ -161,10 +172,12 @@ bestFS(graph,start,end,x){
       
        
 			neighborGrid.h= (hScore);
+			//k++;
 			 var fScore=neighborGrid.h + neighborGrid.g;
              neighborGrid.f=fScore;
 
-           if(!neighborGrid.visited){            
+           if(!neighborGrid.visited){  
+visited_in_order.push(neighborGrid);		   
             neighborGrid.visited=true;
 			 heap.push(neighborGrid);	
            }
@@ -244,9 +257,9 @@ biBestFS(graph,start,end,x){
 	end.visited=true;
 	end.by=end;
 	endlist.push(end);
-	
+	var k=0;
 	while(heap.size() > 0 && endlist.size() > 0){
-		
+		var t0=performance.now(),t1;
 		var current=heap.pop();
 		
 		current.closed=true;
@@ -266,7 +279,15 @@ biBestFS(graph,start,end,x){
 	    
 		if(neighborGrid.visited){
 			if(neighborGrid.by===end){
-				return newPath(current,neighborGrid,this.weight);
+					t1=performance.now();
+		 var time=t1-t0;
+         var length =  newPath(current,neighborGrid,this.weight);
+		 var operations = k;
+		  length=length.toFixed(2);
+		 time=time.toFixed(4);
+		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : " + operations;
+		 return;
+				
 			}
 			continue;
 		} 
@@ -332,7 +353,15 @@ biBestFS(graph,start,end,x){
 	    
 		if(neighborGrid.visited){
 			if(neighborGrid.by===start){
-				return newPath(neighborGrid,current2,this.weight);
+					t1=performance.now();
+		 var time=t1-t0;
+         var length = newPath(neighborGrid,current2,this.weight);
+		 var operations = k;
+		  length=length.toFixed(2);
+		 time=time.toFixed(4);
+		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : " + operations;
+		 return;
+				
 			}
 			continue;
 		} 

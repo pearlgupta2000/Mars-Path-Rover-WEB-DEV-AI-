@@ -18,8 +18,8 @@ include('binary_heap.js');
 include('grid_nodes_.js');
 include('dik.js');
 include('best fs.js');
-include('idaStar.js');
-include('jump_point_search.js');
+//include('idaStar.js');
+//include('jump_point_search.js');
 
  var width = window.outerWidth;
     var height = window.outerHeight;
@@ -199,7 +199,7 @@ function start_search(){
 		   else{
 			   var result=graph.biastar(graph,start,end,x);
 		   }
-		   alert(result);
+		   //alert(result);
 		   break;
 
 		case "IDA*":
@@ -227,7 +227,7 @@ function start_search(){
 			   }
             
             var result = help.idasearch(help,start_,end_,x);
-            alert(result.length);
+            //alert(result.length);
      
              break;
 		case "BreadthFS":
@@ -247,7 +247,7 @@ function start_search(){
                 }
                
             
-                alert(dist);
+                //alert(dist);
                 break;	 
 		case "BestFS":
                make_grid(1);
@@ -270,14 +270,14 @@ function start_search(){
 				   }
 			   }
 			   
-		   alert(x);
+		  // alert(x);
 		   if(!bi){
            var result = graph2.bestFS(graph2, start, end , x );   
 		   }
 		   else{
 			   var result=graph2.biBestFS(graph2,start,end,x);
 		   }
-		   alert(result);
+		   //alert(result);
 			   
              break;
         case "DJK":
@@ -295,7 +295,7 @@ function start_search(){
                 var dist=helping.bidirdik(helping,source,dest);
             }
             
-                alert(dist);
+               // alert(dist);
                 break;	 
         case "JPS":
                make_grid(1);

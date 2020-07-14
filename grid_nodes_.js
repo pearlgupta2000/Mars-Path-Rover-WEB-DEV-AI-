@@ -35,7 +35,6 @@ function pathTo(node,wt) {
   var path = [];
     var final=0;
   while (curr.parent !== null) {
-	 // alert(curr.parent);
       if((curr.parent.x + 1===curr.x && curr.parent.y + 1 ===curr.y) || (curr.parent.x + 1===curr.x && curr.parent.y - 1 ===curr.y) || (curr.parent.x - 1===curr.x && curr.parent.y + 1 ===curr.y) || (curr.parent.x - 1===curr.x && curr.parent.y - 1 ===curr.y) ){
           final = final + Math.sqrt(2) * wt;
       }
@@ -43,14 +42,66 @@ function pathTo(node,wt) {
           final=final+(1*wt);
       }
       
-	 document.getElementById(curr.x + ',' + curr.y).setAttribute("class" ,"grid path");
+	// document.getElementById(curr.x + ',' + curr.y).setAttribute("class" ,"grid path");
     path.unshift(curr);
     curr = curr.parent;
   }
- document.getElementById(node.x + ',' + node.y).setAttribute("class","grid end_");
- //alert(path.length);
-  return final;
+ //document.getElementById(node.x + ',' + node.y).setAttribute("class","grid end_");
+ 
+ 
+  return ({"len":final ,"arr":path});
 }
+
+
+function animate(visitedNodesInOrder, nodesInShortestPathOrder,end,src){
+	 for (let i = 0; i <= visitedNodesInOrder.length; i++) {
+      if (i === visitedNodesInOrder.length) {
+        setTimeout(() => {
+          this.animateShortestPath(nodesInShortestPathOrder);
+        }, 12 * i);
+        return;
+      }
+	  if(visitedNodesInOrder[i].x ===src.x &&  visitedNodesInOrder[i].y ===src.y){continue;}
+	  if(visitedNodesInOrder[i].x ===end.x &&  visitedNodesInOrder[i].y ===end.y){continue;}
+	   if(visitedNodesInOrder[i].wall === 0){continue};
+	 
+      setTimeout(() => {
+        const node = visitedNodesInOrder[i];
+        document.getElementById(node.x + ',' + node.y).className =
+          'grid node-visited';
+      }, 12 * i);
+	
+	 if(i!=visitedNodesInOrder.length -1){
+	  setTimeout(() => {
+        const node = visitedNodesInOrder[i];
+        document.getElementById(node.x + ',' + node.y).className =
+          'grid _node-visited';
+      }, 17 * i);
+	  }
+	  
+	   if(visitedNodesInOrder[i].closed === false || visitedNodesInOrder[i].visited === false){
+	  
+      setTimeout(() => {
+        const node = visitedNodesInOrder[i];
+        document.getElementById(node.x + ',' + node.y).className =
+          'grid node-visited';
+      }, 17 * i);
+	 }
+	  
+    }
+ }
+
+ function animateShortestPath(nodesInShortestPathOrder) {
+	 nodesInShortestPathOrder.pop();
+    for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
+      setTimeout(() => {
+        const node = nodesInShortestPathOrder[i];
+        document.getElementById(node.x + ',' + node.y).className =
+          'grid node-shortest-path';
+      }, 80 * i);
+    }
+  }
+
 
 
 function neighborss(gridNode,grid_,diagonalMovement,corners){

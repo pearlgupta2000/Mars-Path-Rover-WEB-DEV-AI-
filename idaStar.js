@@ -9,7 +9,7 @@ class ida_node{
         this.g =  Number.MAX_VALUE;
         this.h =Number.MAX_VALUE;
         this.tested = false;
-        this.closed = false;
+     //   this.closed = false;
         this.parent = null;
       //  this.time_ = 10; //need to be checked
     }
@@ -42,8 +42,8 @@ class ida_graph{
             return (a.x === b.x || a.y === b.y) ? 1 : Math.sqrt(2);
         }
     
-      search(start_, g, cutoff, route, depth){
-            nodevisited++;
+      search(start_, g, cutoff, route, depth,end_,route){
+           // nodevisited++;
             
             if (this.timeLimit > 0 &&
                 new Date().getTime() - startTime > this.timeLimit * 1000) {
@@ -76,8 +76,8 @@ class ida_graph{
                 return f;
             }
             
-            if (start_ == end_) {
-                route[depth] = [start_.x, start_.y];
+            if (start_.x == end_.x && start_.y === end_.y) {
+                route[depth] = [start_.x, start_.y];                                ////////////////////
                 return start_;
             }
 
@@ -95,7 +95,7 @@ class ida_graph{
                     }
                 }
                 
-                t = this.search(nbr, g + cost(start_, neighbour), cutoff, route, depth + 1);
+                t = this.search(nbr, g + cost(start_, neighbour), cutoff, route, depth + 1,end_,route);
                 
                 if (t instanceof ida_node) {
                     route[depth] = [start_.x, start_.y];
@@ -123,7 +123,7 @@ class ida_graph{
         
         //START PART
         
-        var nodevisited = 0;
+       // var nodevisited = 0;
         var hScore;
         var startTime = new Date().getTime();
         
@@ -163,7 +163,7 @@ class ida_graph{
     for (j = 0; true; ++j) {
 
         route = [];
-        t = this.search(start_, 0, cutoff, route, 0);
+        t = this.search(start_, 0, cutoff, route, 0,end_,route);
 
         if (t === Infinity) {
             return [];

@@ -5,7 +5,6 @@ class helper{
 		this.diagonal=diagonal;
 		this.dont=d;
         
-		//alert(this.diagonal + " " + this.dont);
         for (var x = 0; x < gridIn.length; x++) {
         this.grid[x] = [];
         for (var y = 0, row = gridIn[x]; y < row.length; y++) {
@@ -20,53 +19,62 @@ class helper{
 
 
 bfs(maze,src, dest) {
-
- //alert("inside");
+  var visited_in_order=[];
   var queue = [];   
-    
+    var t0=performance.now(),t1;
 
        var current;
   
+  src.closed=true;
     src.visited=true;
     src.parent=null;
 	src.dist=0;
-	//console.log(src);
+
     queue.push(src);
-  // console.log(queue.length);
-   
+  
+   var k=0;
   while (queue.length>0) {
 	  
     current = queue.shift();
-   
 
     var m = current.x;
     var n = current.y;
-	
-       
-      //  document.getElementById(current.x + ',' + current.y).setAttribute("class","grid current_");
+	current.closed=true;
       
     if (m === dest.x && n === dest.y){
-		
-         return pathTo(dest,this.weight); //returning parent
+	
+		t1=performance.now();
+			var opt= pathTo(dest,this.weight); 
+		 var time=t1-t0;
+         var length =opt.len;
+		 var operations = k;
+		 length=length.toFixed(2);
+		 time=time.toFixed(4);
+		 animate(visited_in_order,opt.arr,dest,src);
+		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : " +k;
+         return;
     }
-     
+    
      var neighbors = neighborss(current,this.grid,this.diagonal,this.dont); 
       
 	 
-	 for (var i = 0, il = neighbors.length; i < il; ++i) {
+	 for (var i = 0, il = neighbors.length; i < il; ++i) {   
+	
         var neighbor = neighbors[i];
          var distance = neighbor.distance;
                var neighborGrid = neighbor.grid;
-		//document.getElementById(neighbor.x + ',' + neighbor.y).setAttribute("class","grid neighbor_");
+	
 		if(neighborGrid.isWall()){
 			continue;
 		}
 		
-		if(!neighborGrid.visited){
+		
+		if(!neighborGrid.visited){ 
+           visited_in_order.push(neighborGrid);		
 			neighborGrid.parent=current;
-			neighborGrid.visited=true;
-			if(neighborGrid.dist > current.dist + distance){
-				neighborGrid.dist=current.dist + distance;
+			neighborGrid.visited=true; k++;
+			if(neighborGrid.dist > current.dist + distance){ 
+				neighborGrid.dist=current.dist + distance;   k++;
 				queue.push(neighborGrid);
 			}
 			
@@ -82,6 +90,7 @@ bfs(maze,src, dest) {
     
     //bidir
 bidirbst(maze,src,dest){
+	var t0=performance.now(),t1;
   var startlist = [];
   var endlist = [];
     
@@ -101,8 +110,7 @@ bidirbst(maze,src,dest){
     endlist.push(dest);
     
 
-    
-    //popping node 
+    var k=0;
     while(startlist.length && endlist.length){
         
         var take= startlist.shift();
@@ -122,7 +130,15 @@ bidirbst(maze,src,dest){
 
             if(neighborGrid.visited){
                 if(neighborGrid.by===dest){
-                    return newPath(take,neighborGrid,this.weight);
+					t1=performance.now();
+		 var time=t1-t0;
+         var length =  newPath(take,neighborGrid,this.weight);
+		 //var operations = 
+		 length=length.toFixed(2);
+		 time=time.toFixed(4);
+		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : " +k;
+         return;
+                  
                 }
                 continue;
             }
@@ -158,7 +174,15 @@ bidirbst(maze,src,dest){
 		
 		if(neighborGrid.visited){
             if(neighborGrid.by===src){
-                return newPath(neighborGrid,take1,this.weight);
+				t1=performance.now();
+		 var time=t1-t0;
+         var length =   newPath(neighborGrid,take1,this.weight);
+		 //var operations = 
+		 length=length.toFixed(2);
+		 time=time.toFixed(4);
+		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : " +k;
+         return;
+             
             }
 			continue;
 		}

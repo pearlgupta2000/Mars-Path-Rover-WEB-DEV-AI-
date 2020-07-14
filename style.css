@@ -60,6 +60,16 @@ body{
 }
 .clr{background-color:gray;}
 
+
+.node-visited{
+	background-color:#b3ffb3;
+}
+.node-shortest-path{
+	background-color:yellow;
+}
+._node-visited{
+	background-color:#ccf5ff;
+}
 #instructions{
 	margin:15px;
 	padding:5px;
@@ -168,6 +178,17 @@ body{
 	top:570px;
 	right:12px;
 	box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+#information{
+	color:#00cc00;
+	position:fixed;
+	top:580px;
+	margin-left:20px;
+	
+	font-size:15px;
+	background-color:rgba(255,255,255,0.8);
+	
 }
 
 .click_button{
