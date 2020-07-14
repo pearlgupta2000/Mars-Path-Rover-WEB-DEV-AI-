@@ -94,7 +94,7 @@ bidirbst(maze,src,dest){
   var startlist = [];
   var endlist = [];
     
-
+var visited_in_order=[];
     src.visited = true;
     src.dist=0;
     src.parent = null;
@@ -130,19 +130,21 @@ bidirbst(maze,src,dest){
 
             if(neighborGrid.visited){
                 if(neighborGrid.by===dest){
+                    var opt= newPath(take,neighborGrid,this.weight);
 					t1=performance.now();
 		 var time=t1-t0;
-         var length =  newPath(take,neighborGrid,this.weight);
+         var length = opt.len;
 		 //var operations = 
 		 length=length.toFixed(2);
 		 time=time.toFixed(4);
+                    animate(visited_in_order,opt.arr,dest,src);
 		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : " +k;
          return;
                   
                 }
                 continue;
             }
-
+           visited_in_order.push(neighborGrid);
            neighborGrid.parent=take;
            neighborGrid.visited=true;
            neighborGrid.by=src;
@@ -174,19 +176,21 @@ bidirbst(maze,src,dest){
 		
 		if(neighborGrid.visited){
             if(neighborGrid.by===src){
+                var opt=newPath(neighborGrid,take1,this.weight);
 				t1=performance.now();
 		 var time=t1-t0;
-         var length =   newPath(neighborGrid,take1,this.weight);
+         var length =   opt.len;
 		 //var operations = 
 		 length=length.toFixed(2);
 		 time=time.toFixed(4);
+                animate(visited_in_order,opt.arr,dest,src);
 		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : " +k;
          return;
              
             }
 			continue;
 		}
-         
+         visited_in_order.push(neighborGrid);
             neighborGrid.parent=take1;
 			neighborGrid.visited=true;
             neighborGrid.by=dest;

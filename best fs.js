@@ -198,8 +198,8 @@ visited_in_order.push(neighborGrid);
 
 
 biBestFS(graph,start,end,x){
-	
-	
+	var visited_in_order=[];
+	//var k=0;
 	var heap=graph.getHeap();
 	var endlist=graph.getHeap();
 	
@@ -279,12 +279,14 @@ biBestFS(graph,start,end,x){
 	    
 		if(neighborGrid.visited){
 			if(neighborGrid.by===end){
+                var opt=  newPath(current,neighborGrid,this.weight);
 					t1=performance.now();
 		 var time=t1-t0;
-         var length =  newPath(current,neighborGrid,this.weight);
+         var length =opt.len;
 		 var operations = k;
 		  length=length.toFixed(2);
 		 time=time.toFixed(4);
+                animate(visited_in_order,opt.arr,end,start);
 		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : " + operations;
 		 return;
 				
@@ -295,7 +297,7 @@ biBestFS(graph,start,end,x){
 	 var gScore=current.g + distance;  
 		
 		
-		
+		visited_in_order.push(neighborGrid);
 			neighborGrid.parent=current;
 			neighborGrid.g=gScore;
 			
@@ -352,13 +354,16 @@ biBestFS(graph,start,end,x){
      
 	    
 		if(neighborGrid.visited){
+          
 			if(neighborGrid.by===start){
+                  var opt=newPath(neighborGrid,current2,this.weight);
 					t1=performance.now();
 		 var time=t1-t0;
-         var length = newPath(neighborGrid,current2,this.weight);
+         var length = opt.len;
 		 var operations = k;
 		  length=length.toFixed(2);
 		 time=time.toFixed(4);
+                animate(visited_in_order,opt.arr,end,start);
 		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : " + operations;
 		 return;
 				
@@ -368,7 +373,7 @@ biBestFS(graph,start,end,x){
 		
 	 var gScore=current2.g + distance;
 		
-		
+		visited_in_order.push(neighborGrid);
 		
 			neighborGrid.parent=current2;
 			neighborGrid.g=gScore;

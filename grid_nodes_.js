@@ -10,24 +10,38 @@ class _info_p{
         this.by = null;
         this.wall=wall;
     }
-    
-    
+     
    isWall(){
 	   return this.wall === 0;
    }
-   
-   
-   
-   
 }
 
 function newPath(nodeA,nodeB,wt){
     var pathA = pathTo(nodeA,wt);
     var pathB = pathTo(nodeB,wt);
-   document.getElementById(nodeA.x + ',' + nodeA.y).setAttribute("class","grid path");
-    document.getElementById(nodeB.x + ',' + nodeB.y).setAttribute("class","grid path");
+ //  document.getElementById(nodeA.x + ',' + nodeA.y).setAttribute("class","grid path");
+//    document.getElementById(nodeB.x + ',' + nodeB.y).setAttribute("class","grid path");
+//    
+//    var len = pathA+pathB+(1*wt);
+//    var arr = pathA.concat(pathB);
     
-    return pathA+pathB+(1*wt);
+    
+    var a = pathA.arr;
+    var b = pathB.arr;
+
+   alert(a.length + " "+b.length);
+    
+    a.push(nodeA);
+    b.unshift(nodeB);
+    
+    console.log(a);
+    console.log(b);
+    
+   
+    alert(a.length + " "+b.length);
+    
+    return ({"len":(pathA.len)+(pathB.len)+(1*wt) , "arr":a.concat(b.reverse())}); 
+
 }
 
 function pathTo(node,wt) {
@@ -47,8 +61,6 @@ function pathTo(node,wt) {
     curr = curr.parent;
   }
  //document.getElementById(node.x + ',' + node.y).setAttribute("class","grid end_");
- 
- 
   return ({"len":final ,"arr":path});
 }
 
@@ -58,7 +70,7 @@ function animate(visitedNodesInOrder, nodesInShortestPathOrder,end,src){
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
           this.animateShortestPath(nodesInShortestPathOrder);
-        }, 12 * i);
+        }, 15.1 * i);
         return;
       }
 	  if(visitedNodesInOrder[i].x ===src.x &&  visitedNodesInOrder[i].y ===src.y){continue;}
@@ -71,12 +83,12 @@ function animate(visitedNodesInOrder, nodesInShortestPathOrder,end,src){
           'grid node-visited';
       }, 12 * i);
 	
-	 if(i!=visitedNodesInOrder.length -1){
+	 if(i!== (visitedNodesInOrder.length -1)){
 	  setTimeout(() => {
         const node = visitedNodesInOrder[i];
         document.getElementById(node.x + ',' + node.y).className =
           'grid _node-visited';
-      }, 17 * i);
+      }, 15 * i);
 	  }
 	  
 	   if(visitedNodesInOrder[i].closed === false || visitedNodesInOrder[i].visited === false){
@@ -85,7 +97,7 @@ function animate(visitedNodesInOrder, nodesInShortestPathOrder,end,src){
         const node = visitedNodesInOrder[i];
         document.getElementById(node.x + ',' + node.y).className =
           'grid node-visited';
-      }, 17 * i);
+      }, 15 * i);
 	 }
 	  
     }
