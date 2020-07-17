@@ -18,8 +18,10 @@ include('binary_heap.js');
 include('grid_nodes_.js');
 include('dik.js');
 include('best fs.js');
-//include('idaStar.js');
-//include('jump_point_search.js');
+
+
+    
+var visited_in_order=[];
 
  var width = window.outerWidth;
     var height = window.outerHeight;
@@ -72,13 +74,6 @@ for(var i=0 ; i<rowNumber ; i++){
 
 }
 
-
-
-
-
-function hide_ins(){
-	document.getElementById("instructions").style.display="none";
-};
 
 var id=1;
 
@@ -166,8 +161,36 @@ function T_algo(){
 	algo_selected="Trace";
 }
 
+function clearWalls() {
+    _.each(obstacles, function(obj) {
+        document.getElementById( obj.x + ',' + obj.y).setAttribute("class", "grid");
+   });
+    obstacles = [];
+	restart();
+}
+
+
+
+function restart(){
+	for(var i=0;i<visited_in_order.length ;i++){
+		var object = _.filter(obstacles, function(obj){
+        return obj.x === visited_in_order[i].x && obj.y ===visited_in_order[i].y;
+    })
+	if(object.length == 0){
+		document.getElementById(visited_in_order[i].x + ',' + visited_in_order[i].y).setAttribute("class","grid"); 
+	}
+	}
+	document.getElementById(endpnt[0] + ',' + endpnt[1]).setAttribute("class","grid end_");
+   visited_in_order=[];	
+
+}
+
+
 function start_search(){
-	//alert("A");
+	
+	document.getElementById("start").innerHTML="Restart Search";
+	restart();
+	
 	switch(algo_selected){
 		
 		case "A*":
@@ -310,3 +333,12 @@ function start_search(){
 	
 }
 
+async function pause_search(){
+	//if(event){event.preventDefault();}
+	//$('#start').eventPause('pause');
+	 //$('.click_button').eventPause('pause');
+	pause();
+	
+	document.getElementById("pause").innerHTML="Cancel Search";
+	document.getElementById("start").innerHTML="Resume Search";
+}

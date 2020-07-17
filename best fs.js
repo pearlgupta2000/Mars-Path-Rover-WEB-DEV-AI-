@@ -76,7 +76,7 @@ getHeap() {
  
 
 bestFS(graph,start,end,x){
-	var visited_in_order=[];
+	
 	var t0=performance.now(),t1;
 	var heap=graph.getHeap();
 	
@@ -198,7 +198,7 @@ visited_in_order.push(neighborGrid);
 
 
 biBestFS(graph,start,end,x){
-	var visited_in_order=[];
+	
 	//var k=0;
 	var heap=graph.getHeap();
 	var endlist=graph.getHeap();

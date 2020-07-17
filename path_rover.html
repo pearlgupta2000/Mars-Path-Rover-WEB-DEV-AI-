@@ -35,9 +35,22 @@ $(function(){
 	$("._click").draggable({
 		 containment:"#container"
 	});
+	$('#_hide').click(function() {
+        $('#instructions').slideUp();
+    });
   
-	
+   $("#start").click(() => {
+		start_search();
+    });
+    $("#pause").click(() => {
+        $("#start").stop();
+		
+    });
+	$("#clear_").click(() => {
+        clearWalls();
+    });
 
+    
 });
 
 
@@ -342,9 +355,9 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <!--button-->
 
 <div class="_click">  
-<button onclick="start_search()" class="click_button">Start Search</button>
-<button onclick="pause_search()" class="click_button">Pause Search</button>
-<button onclick="clearWalls()" class="click_button">Clear Walls</button>
+<button class="click_button" id="start">Start Search</button>                
+<button class="click_button" id="pause">Pause Search</button>
+<button class="click_button" id="clear_">Clear Walls</button>
 </div>
 
 <div id = "information">

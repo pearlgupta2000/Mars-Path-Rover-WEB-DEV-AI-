@@ -19,7 +19,7 @@ class helper{
 
 
 bfs(maze,src, dest) {
-  var visited_in_order=[];
+  
   var queue = [];   
     var t0=performance.now(),t1;
 
@@ -93,8 +93,7 @@ bidirbst(maze,src,dest){
 	var t0=performance.now(),t1;
   var startlist = [];
   var endlist = [];
-    
-var visited_in_order=[];
+
     src.visited = true;
     src.dist=0;
     src.parent = null;

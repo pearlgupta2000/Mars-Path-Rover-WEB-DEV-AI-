@@ -49,7 +49,6 @@ getHeap() {
 
 astarsearch(graph, start, end, x ) {
    
-   var visited_in_order=[];
    var t0=performance.now();
 	var t1;
  
@@ -176,7 +175,7 @@ biastar(graph,start,end,x){
     var openHeap = graph.getHeap();
     var endlist=graph.getHeap();
     var hScore;
-	var visited_in_order=[];
+
 	 switch(x){
 	  case "Manhattan":
 	  hScore = manhattan(start, end); 

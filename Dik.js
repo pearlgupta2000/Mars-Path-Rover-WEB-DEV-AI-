@@ -23,7 +23,7 @@ getHeap() {
  
  
   dijkishtras(graph,src,dest){
-	 var visited_in_order=[];
+	
 	  var t0=performance.now(),t1;
 	   var openHeap = graph.getHeap();
 	   src.parent=null;
@@ -87,7 +87,7 @@ getHeap() {
     
 bidirdik(maze,src,dest){
 	
-	var visited_in_order=[];
+	
 	 var t0=performance.now(),t1;
   var startlist =maze.getHeap();
   var endlist = maze.getHeap();

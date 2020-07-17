@@ -14,6 +14,9 @@ var i = 0;
 function funy(x,y, event){
     if(i===2) {
        // if(obstacles.length>0) {
+		//               var object_visit = _.filter(visited_in_order, function(obj){
+        //            return obj.x === x && obj.y ===y;
+        //        })
             var object = _.filter(obstacles, function(obj){
                     return obj.x === x && obj.y ===y;
                 })
@@ -22,7 +25,7 @@ function funy(x,y, event){
 					document.getElementById(endpnt[0]+","+endpnt[1]).setAttribute("end", "end");
 					return;
 				}
-            if(_.isUndefined(object) || object.length == 0 || obstacles.length == 0) {
+            if(_.isUndefined(object) || object.length == 0 || obstacles.length == 0 ) {
 				document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid");
                 document.getElementById( x + ',' + y).setAttribute("class", "grid end_");
                 $('div[end="end"]').each(function(i,el) {
@@ -147,19 +150,13 @@ function clearClass(event) {
 	//alert(i);
 }
 
-function clearWalls() {
-    _.each(obstacles, function(obj) {
-        document.getElementById( obj.x + ',' + obj.y).setAttribute("class", "grid");
-   });
-    obstacles = [];
-}
 
 function moveout(x,y) {
     if(i===1 || i===2) {
 		if(i===2){
 		if(startpnt[0]===x && startpnt[1]===y){
-		 document.getElementById( x + ',' + y).setAttribute("class", "grid start_"); 
-		      document.getElementById(x+","+y).setAttribute("start", "start");
+		    document.getElementById( x + ',' + y).setAttribute("class", "grid start_"); 
+		    document.getElementById(x+","+y).setAttribute("start", "start");
 		 return;
 		}}
 		if(i===1){
@@ -210,16 +207,23 @@ function click_obs(x,y) {
     }
 	var object = _.filter(obstacles, function(obj){
         return obj.x === x && obj.y ===y;
-    })
-    if( object.length == 0) {
+	})
+    
+    if( object.length == 0  ) {
+		var s=document.getElementById(x+','+y).className;
+		classToAdd="grid clr";
+		//alert(classToAdd);
+		//if(s === "grid node-visited"){document.getElementById( x + ',' + y).classList.toggle("clr"); return;}
         obstacles.push({x:x, y:y});
-    } else{
+    } else {
+	
         obstacles = _.without(obstacles, _.findWhere(obstacles, {
             x: x,
             y: y
         }));
-		
+		classToAdd="grid";
     }
-	document.getElementById( x + ',' + y).classList.toggle("clr");
+	document.getElementById( x + ',' + y).setAttribute("class",classToAdd);
+	
 };
 

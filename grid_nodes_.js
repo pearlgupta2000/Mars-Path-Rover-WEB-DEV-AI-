@@ -16,29 +16,20 @@ class _info_p{
    }
 }
 
+
+
+
 function newPath(nodeA,nodeB,wt){
     var pathA = pathTo(nodeA,wt);
     var pathB = pathTo(nodeB,wt);
- //  document.getElementById(nodeA.x + ',' + nodeA.y).setAttribute("class","grid path");
-//    document.getElementById(nodeB.x + ',' + nodeB.y).setAttribute("class","grid path");
-//    
-//    var len = pathA+pathB+(1*wt);
-//    var arr = pathA.concat(pathB);
-    
+
     
     var a = pathA.arr;
     var b = pathB.arr;
 
-   alert(a.length + " "+b.length);
-    
     a.push(nodeA);
     b.unshift(nodeB);
-    
-    console.log(a);
-    console.log(b);
-    
-   
-    alert(a.length + " "+b.length);
+
     
     return ({"len":(pathA.len)+(pathB.len)+(1*wt) , "arr":a.concat(b.reverse())}); 
 

@@ -22,7 +22,7 @@ body{
 
 .grid{
 	font-size:1px;
-	outline:1px ridge lightgray;
+	outline:1px ridge darkgray;
 	display:inline-block;
 	margin:0;
 	border:none;
@@ -62,15 +62,15 @@ body{
 
 
 .node-visited{
-	background-color: #98fb98;  
-/*    #b3ffb3;*/
+	background-color: #80ff80; 
     
 }
 .node-shortest-path{
 	background-color:yellow;
 }
 ._node-visited{
-	background-color:#afeeee;
+	background-color:#99e6ff;
+	
 }
 #instructions{
 	margin:15px;
@@ -214,4 +214,7 @@ body{
 
 .click_button:hover{
 	background-color:white;
+}
+#pause{
+	enabled:false;
 }
