@@ -101,7 +101,7 @@ astarsearch(graph, start, end, x ) {
 		 animate(visited_in_order,opt.arr,end,start);
 		 
 		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
-		 return;
+		 return ;
       }
      
       var neighbors = neighborss(currentNode,this.grid,this.diagonal,this.dont);
@@ -165,6 +165,10 @@ visited_in_order.push(neighborGrid);
 
   }
 }
+time=performance.now()-t0;
+time=time.toFixed(4);
+animate(visited_in_order,[],end,start);
+document.getElementById('information').innerText="Length : " + "0" + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
 return [];
 }
   
@@ -402,7 +406,11 @@ end.by=end;
         
         
 }
-return [];
+time=performance.now()-t0;
+time=time.toFixed(4);
+animate(visited_in_order,[],end,start);
+document.getElementById('information').innerText="Length : " + "0" + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
+return ;
     
 }
 

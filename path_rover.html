@@ -42,15 +42,22 @@ $(function(){
    $("#start").click(() => {
 		start_search();
     });
-    $("#pause").click(() => {
-        $("#start").stop();
-		
+    $("#clr_grid").click(() => {
+	 clearWalls();
+       
     });
 	$("#clear_").click(() => {
-        clearWalls();
+       restart();
     });
 
-    
+    $("#stair").click(() => {
+       stairDemonstration();
+    });
+	
+	$("#rec_div").click(() => {
+       Recursion_Division();
+    });
+	
 });
 
 
@@ -125,50 +132,6 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 </div>
 
 
-<div class="i_algo">
-
-<button onclick="IDA_algo()" class="dropbtn">IDA*</button>
-
-<div class="dropdown_content" id="mydrop2">
-<span class="heuristic_head" >Heuristic</span>
-<br>
-<div class="heuristic">
-<input type="radio" id="Manhattan" name="path_A2" value="Manhattan">
-<label for="Manhattan">Manhattan</label>
-<!--span class="label_l"> Manhattan</span-->
-<br>
-<input type="radio" id="Euclidiean" name="path_A2" value="Euclidiean">
-<label for="Euclidiean">Euclidiean</label>
-<br>
-<input type="radio" id="Octile" name="path_A2" value="Octile">
-<label for="Octile">Octile</label>
-<br>
-<input type="radio" id="Chebysev" name="path_A2" value="Chebysev">
-<label for="Chebysev">Chebysev</label>
-<br>
-</div>
-<span class="heuristic_head"> Options</span>
-<br>
-<div class="heuristic">
-<input type="checkbox" id="a4" name="allow1" value="Allow_dia">
-<label for="a1"> Allow Diagonal</label>
-<br>
-<input type="checkbox" id="a5" name="cross1" value="Don't_Cross">
-<label for="a3"> Don't Cross Corners</label>
-<br>
-<input type="text" id="weight2" name="weight" value="1">
-<label for="weight">Weight</label>
-<br>
-<input type="text" id="weight" name="second_limit1" value="10">
-<label for="second_limit">Second Limits</label>
-<br>
-<input type="checkbox" id="a6" name="recursion1" value="visulaize_recursion">
-<label for="a6"> Visualizze Recursion</label>
-</div>
-</div>
-
- </div>
-
 
 <div class="i_algo"> 
 
@@ -200,7 +163,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <div class="heuristic">
 <input type="radio" id="Manhattan" name="path_A3" value="Manhattan" checked>
 <label for="Manhattan">Manhattan</label>
-<!--span class="label_l"> Manhattan</span-->
+
 <br>
 <input type="radio" id="Euclidiean" name="path_A3" value="Euclidiean">
 <label for="Euclidiean">Euclidiean</label>
@@ -247,117 +210,27 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 </div>
 </div>
  </div>
+
+
+<div class="patterns" > 
+
+<div class="select"> <span>Mazes & Pattern </span></div>
+
+<div class="dropbtn pat">
+<input type="radio" id="stair" name="pattern_" value="stair">
+<label for ="stair" > Stair Pattern</label><br>
+<input type="radio" id="rec_div" name="pattern_" value="rec_div">
+<label for ="rec_div" > Recursion Division</label><br>
+</div>
+</div>
  
-<div class="i_algo"> 
-
-<button onclick="JPS_algo()" class="dropbtn">Jump Point Search</button>
-
-<div class="dropdown_content" id="mydrop6">
-<span class="heuristic_head" >Heuristic</span>
-<br>
-<div class="heuristic">
-<input type="radio" id="Manhattan" name="path_A4" value="Manhattan">
-<label for="Manhattan">Manhattan</label>
-<!--span class="label_l"> Manhattan</span-->
-<br>
-<input type="radio" id="Euclidiean" name="path_A4" value="Euclidiean">
-<label for="Euclidiean">Euclidiean</label>
-<br>
-<input type="radio" id="Octile" name="path_A4" value="Octile">
-<label for="Octile">Octile</label>
-<br>
-<input type="radio" id="Chebysev" name="path_A4" value="Chebysev">
-<label for="Chebysev">Chebysev</label>
-<br>
 </div>
-<span class="heuristic_head"> Options</span>
-<br>
-<div class="heuristic">
-<input type="checkbox" id="a16" name="recursion1" value="visulaize_recursion">
-<label for="a16"> Visualizze Recursion</label>
-</div>
-</div>
-
-</div>
-
-
-<div class="i_algo"> 
-
-<button onclick="OJPS_algo()" class="dropbtn">Orthogonal Jump Point Search</button>
-
-<div class="dropdown_content" id="mydrop7">
-<span class="heuristic_head" >Heuristic</span>
-<br>
-<div class="heuristic">
-<input type="radio" id="Manhattan" name="path_A5" value="Manhattan">
-<label for="Manhattan">Manhattan</label>
-<!--span class="label_l"> Manhattan</span-->
-<br>
-<input type="radio" id="Euclidiean" name="path_A5" value="Euclidiean">
-<label for="Euclidiean">Euclidiean</label>
-<br>
-<input type="radio" id="Octile" name="path_A5" value="Octile">
-<label for="Octile">Octile</label>
-<br>
-<input type="radio" id="Chebysev" name="path_A5" value="Chebysev">
-<label for="Chebysev">Chebysev</label>
-<br>
-</div>
-<span class="heuristic_head"> Options</span>
-<br>
-<div class="heuristic">
-<input type="checkbox" id="a17" name="recursion1" value="visulaize_recursion">
-<label for="a17"> Visualizze Recursion</label>
-</div>
-</div>
-
-</div>
-<div class="i_algo"> 
-
-<button onclick="T_algo()" class="dropbtn">Trace</button>
-
-<div class="dropdown_content" id="mydrop8">
-<span class="heuristic_head" >Heuristic</span>
-<br>
-<div class="heuristic">
-<input type="radio" id="Manhattan" name="path_A6" value="Manhattan">
-<label for="Manhattan">Manhattan</label>
-<!--span class="label_l"> Manhattan</span-->
-<br>
-<input type="radio" id="Euclidiean" name="path_A6" value="Euclidiean">
-<label for="Euclidiean">Euclidiean</label>
-<br>
-<input type="radio" id="Octile" name="path_A6" value="Octile">
-<label for="Octile">Octile</label>
-<br>
-<input type="radio" id="Chebysev" name="path_A6" value="Chebysev">
-<label for="Chebysev">Chebysev</label>
-<br>
-<span class="heuristic_head"> Options</span>
-<br>
-</div>
-<div class="heuristic">
-<input type="checkbox" id="a18" name="allow1" value="Allow_dia">
-<label for="a18"> Allow Diagonal</label>
-<br>
-<input type="checkbox" id="a19" name="cross1" value="Don't_Cross">
-<label for="a19"> Don't Cross Corners</label>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!--algo ends here-->
-
-<!--button-->
+     
 
 <div class="_click">  
 <button class="click_button" id="start">Start Search</button>                
-<button class="click_button" id="pause">Pause Search</button>
-<button class="click_button" id="clear_">Clear Walls</button>
+<button class="click_button" id="clr_grid">Clear Grid</button>
+<button class="click_button" id="clear_">Clear Path</button>
 </div>
 
 <div id = "information">

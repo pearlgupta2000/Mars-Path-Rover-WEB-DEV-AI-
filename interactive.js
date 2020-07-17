@@ -18,8 +18,8 @@ include('binary_heap.js');
 include('grid_nodes_.js');
 include('dik.js');
 include('best fs.js');
-
-
+include("stair_pattern.js");
+include("rec_division.js");
     
 var visited_in_order=[];
 
@@ -182,14 +182,20 @@ function restart(){
 	}
 	document.getElementById(endpnt[0] + ',' + endpnt[1]).setAttribute("class","grid end_");
    visited_in_order=[];	
+  
 
 }
 
-
+var link;
 function start_search(){
 	
-	document.getElementById("start").innerHTML="Restart Search";
+	/**link = document.getElementById("start");
+	link.disabled = true;
+	link.style.backgroundColor="light-gray";***/
+	
+
 	restart();
+	
 	
 	switch(algo_selected){
 		
@@ -215,14 +221,17 @@ function start_search(){
 					  break;
 				   }
 			   }
-		
+		     
 		   if(!bi){
-           var result = graph.astarsearch(graph, start, end , x );   
+            graph.astarsearch(graph, start, end , x );   
 		   }
 		   else{
-			   var result=graph.biastar(graph,start,end,x);
+			 graph.biastar(graph,start,end,x);
 		   }
-		   //alert(result);
+	   /**setTimeout(() => {
+         link.disabled = false;
+         }, result*1);*/
+	
 		   break;
 
 		case "IDA*":
@@ -318,9 +327,8 @@ function start_search(){
                 var dist=helping.bidirdik(helping,source,dest);
             }
             
-               // alert(dist);
                 break;	 
-        case "JPS":
+        /**case "JPS":
                make_grid(1);
              break;	
          case "OJPS":
@@ -328,17 +336,7 @@ function start_search(){
              break;		
          case "Trace":
                make_grid(1);
-             break;				 
+             break;		*/		 
 	}
 	
-}
-
-async function pause_search(){
-	//if(event){event.preventDefault();}
-	//$('#start').eventPause('pause');
-	 //$('.click_button').eventPause('pause');
-	pause();
-	
-	document.getElementById("pause").innerHTML="Cancel Search";
-	document.getElementById("start").innerHTML="Resume Search";
 }

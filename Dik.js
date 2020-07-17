@@ -80,7 +80,11 @@ getHeap() {
 				   }
 		   }
 	  }
-	  
+time=performance.now()-t0;
+time=time.toFixed(4);
+animate(visited_in_order,[],end,start);
+document.getElementById('information').innerText="Length : " + "0" + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
+return [];	  
   }	
     
     
@@ -229,9 +233,12 @@ bidirdik(maze,src,dest){
     }
     
 
+ time=performance.now()-t0;
+time=time.toFixed(4);
+animate(visited_in_order,[],end,start);
+document.getElementById('information').innerText="Length : " + "0" + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
+return [];	   
     
-    
-    return 0;
 }
 
     

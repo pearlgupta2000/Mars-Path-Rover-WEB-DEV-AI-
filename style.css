@@ -110,11 +110,12 @@ body{
 	width:270px;
 	height:550px;
    right:12px;
-	top:12px;
+	top:15px;
 	color:white;
 	font-size:14px;
 	 box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 	 padding-left:12px;
+	 
 }
 
 #i_algo{
@@ -126,11 +127,15 @@ body{
 }
 .select{
 	opacity:1;
-	margin:3px;
+	margin:5px;
 	padding:1px;
 	font-weight:bold;
 	text-align:center;
     font-size:16px;
+}
+.patterns{
+	bottom:60px;
+	position:absolute;
 }
 .dropbtn{
 	margin:2px;
@@ -143,6 +148,11 @@ body{
 	font-size:13px;
 	padding:3px;
 	border-radius:10px;
+}
+.pat{
+
+	font-size:15px;
+	margin-bottom:5px;
 }
 .heuristic{
 	margin-left:40px;
@@ -214,7 +224,4 @@ body{
 
 .click_button:hover{
 	background-color:white;
-}
-#pause{
-	enabled:false;
 }

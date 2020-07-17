@@ -59,9 +59,11 @@ function pathTo(node,wt) {
 function animate(visitedNodesInOrder, nodesInShortestPathOrder,end,src){
 	 for (let i = 0; i <= visitedNodesInOrder.length; i++) {
       if (i === visitedNodesInOrder.length) {
+
         setTimeout(() => {
           this.animateShortestPath(nodesInShortestPathOrder);
         }, 15.1 * i);
+		
         return;
       }
 	  if(visitedNodesInOrder[i].x ===src.x &&  visitedNodesInOrder[i].y ===src.y){continue;}
@@ -90,19 +92,23 @@ function animate(visitedNodesInOrder, nodesInShortestPathOrder,end,src){
           'grid node-visited';
       }, 15 * i);
 	 }
-	  
+	 
     }
+	
  }
 
  function animateShortestPath(nodesInShortestPathOrder) {
 	 nodesInShortestPathOrder.pop();
+	 // link.disabled = true;
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
         const node = nodesInShortestPathOrder[i];
         document.getElementById(node.x + ',' + node.y).className =
           'grid node-shortest-path';
-      }, 80 * i);
+      }, 16 * i);
     }
+	
+	
   }
 
 

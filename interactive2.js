@@ -212,8 +212,6 @@ function click_obs(x,y) {
     if( object.length == 0  ) {
 		var s=document.getElementById(x+','+y).className;
 		classToAdd="grid clr";
-		//alert(classToAdd);
-		//if(s === "grid node-visited"){document.getElementById( x + ',' + y).classList.toggle("clr"); return;}
         obstacles.push({x:x, y:y});
     } else {
 	
