@@ -1,20 +1,20 @@
 
 
-class _gridNode_{
-	
-	constructor(x,y,wall){
-		this.x = x;
-        this.y = y;
-        this.wall = wall;
-	    this.f = Number.MAX_VALUE;
-        this.g =  Number.MAX_VALUE;
-        this.h =Number.MAX_VALUE;
-        this.visited = false;
-        this.closed = false;
-        this.parent = null;
-	}
+class node3{
 
-	isWall(){
+constructor(x,y,wall){
+	this.x=x;
+	this.y=y;
+	this.wall=wall;
+	this.parent=null;
+	this.f=Number.MAX_VALUE;
+	this.g=Number.MAX_VALUE;
+	this.h=Number.MAX_VALUE;
+	this.closed=false;
+	this.visited=false;
+}
+
+isWall(){
 		 return this.wall === 0;
 	}
 	
@@ -22,40 +22,65 @@ class _gridNode_{
 
 
  
-
-class Graph{
+function manhattan(pos0, pos1) {
+      var d1 = Math.abs(pos1.x - pos0.x);
+      var d2 = Math.abs(pos1.y - pos0.y);
+      return d1 + d2;
+}
 	
-	constructor(gridIn,diagonal_,weight,dont){
+	
+function Euclidiean(pos0,pos1){
+	var d1 = (pos1.x-pos0.x)*(pos1.x-pos0.x);
+	var d2=   (pos1.y-pos0.y)*(pos1.y-pos0.y);
+	return Math.sqrt(d1+d2);
+}	
+
+function Octile(pos0,pos1){
+	var d1= Math.abs(pos1.x - pos0.x);
+	var d2=  Math.abs(pos1.y - pos0.y);
+	 var F = Math.SQRT2 - 1;
+      return (d1 < d2) ? F * d1 + d2 : F * d2 + d1;         
+}
+
+function Chebysev(pos0,pos1){
+	var d1= Math.abs(pos1.x-pos0.x);
+	var d2= Math.abs(pos1.y-pos0.y);
+	return Math.max(d1,d2);
+}	
+
+
+
+class BestfsGraph{
+	
+	constructor(gridIn,diagonal_,dont){
 		this.dont=dont;
-      this.diagonal = diagonal_;         
+      this.diagonal = diagonal_; 
+        this.weight=1;
       this.grid = [];
-      this.weight=weight;
   for (var x = 0; x < gridIn.length; x++) {
     this.grid[x] = [];
     for (var y = 0, row = gridIn[x]; y < row.length; y++) {
-      var node = new _gridNode_(x, y, row[y]);
+      var node = new node3(x, y, row[y]);
       this.grid[x][y] = node;
 
 	}
    }
 }
-	
+
 
 getHeap() {
   return new BinaryHeap(function(nodeA) {
     return nodeA.f ;
   });
 }
+ 
 
-astarsearch(graph, start, end, x ) {
-   
-   var t0=performance.now();
-	var t1;
- 
- 
-    var openHeap = graph.getHeap();
-    var hScore;
+bestFS(graph,start,end,x){
 	
+	var t0=performance.now(),t1;
+	var heap=graph.getHeap();
+	
+	start.g=0;
 	 switch(x){
 	  case "Manhattan":
 	  hScore = manhattan(start, end); 
@@ -75,60 +100,57 @@ astarsearch(graph, start, end, x ) {
       break;
 
     } 
-      end.h=0;
-    start.g=0;
-	start.f=hScore;
 	start.h=hScore;
-	start.visited=true;
 	start.parent=null;
-    openHeap.push(start);
-   
-	var k=0;
-	 
-    while (openHeap.size() > 0) {
-       
-      var currentNode = openHeap.pop();
-      currentNode.closed = true;
-      if (currentNode.x === end.x && currentNode.y === end.y) {
-		  var opt=pathTo(currentNode,this.weight);
-		  t1=performance.now();
+	start.f=start.h+start.g;
+	start.visited=true;
+	heap.push(start);
+	
+
+	while(heap.size() > 0){
+		
+		var t0=performance.now(),t1;
+		var current=heap.pop();
+		
+		if(current.x===end.x && current.y===end.y){
+			var opt=pathTo(current,this.weight);
+			t1=performance.now();
 		 var time=t1-t0;
          var length = opt.len;
-		 var operations = k;
 		  length=length.toFixed(2);
 		 time=time.toFixed(4);
 		 
 		 animate(visited_in_order,opt.arr,end,start);
 		 
 		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
-		 return ;
-      }
-     
-      var neighbors = neighborss(currentNode,this.grid,this.diagonal,this.dont);
-        
-	   
-      for (var i = 0, il = neighbors.length; i < il; ++i) {
+		 return;
+		}
+		
+		current.closed=true;
+		
+		  var neighbors = neighborss(current,this.grid,this.diagonal,this.dont);
+  
+      for (var i = 0, il = neighbors.length; i < il; ++i) {  
         var neighbor = neighbors[i];
         var distance = neighbor.distance;
-       var neighborGrid = neighbor.grid;
+               var neighborGrid = neighbor.grid;
 		
         if (neighborGrid.closed || neighborGrid.isWall()) {
           continue;
         }
      
-	 var gScore=currentNode.g + distance;
+	 //k++;
+	 var gScore=current.g + distance;  
 		
 		
 		
-	if(!neighborGrid.visited || gScore < neighborGrid.g){
-		
-			neighborGrid.parent=currentNode;
+			neighborGrid.parent=current;
 			neighborGrid.g=gScore;
 			
 			 var hScore;
 	 switch(x){
 	  case "Manhattan":
-	  hScore = manhattan(neighborGrid,end); 
+	  hScore = manhattan(neighborGrid, end); 
 	  //console.log(hScore);
       break;
 	  
@@ -148,38 +170,42 @@ astarsearch(graph, start, end, x ) {
       
        
 			neighborGrid.h= (hScore);
+			//k++;
 			 var fScore=neighborGrid.h + neighborGrid.g;
              neighborGrid.f=fScore;
 
            if(!neighborGrid.visited){  
 visited_in_order.push(neighborGrid);		   
             neighborGrid.visited=true;
-			 openHeap.push(neighborGrid);	
+			 heap.push(neighborGrid);	
            }
 		  		else{
-					openHeap.rescoreElement(neighborGrid);
+					heap.rescoreElement(neighborGrid);
 				}
 			
-		}
+		
 
 
   }
-}
+		
+		
+	}
 time=performance.now()-t0;
 time=time.toFixed(4);
 animate(visited_in_order,[],end,start);
-document.getElementById('information').innerText="Length : " + "0" + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
-return [];
+document.getElementById('information').innerText="Length : " + "0" + "\n" + "Time : " + time + "ms";
+	return [];
+	
 }
-  
-  
-biastar(graph,start,end,x){
 
-     var t0=performance.now(),t1;
-    var openHeap = graph.getHeap();
-    var endlist=graph.getHeap();
-    var hScore;
 
+biBestFS(graph,start,end,x){
+	
+	//var k=0;
+	var heap=graph.getHeap();
+	var endlist=graph.getHeap();
+	
+	start.g=0;
 	 switch(x){
 	  case "Manhattan":
 	  hScore = manhattan(start, end); 
@@ -199,22 +225,18 @@ biastar(graph,start,end,x){
       break;
 
     } 
-      
-    start.g=0;
-	start.f=hScore;
 	start.h=hScore;
-	start.visited=true;
 	start.parent=null;
-    start.by=start;
-    openHeap.push(start);
-    
-end.by=end;
-    end.parent=null;
-    end.g=0;
-    
-    switch(x){
+	start.f=start.h+start.g;
+	start.visited=true;
+	start.by=start;
+	heap.push(start);
+	
+	
+	end.g=0;
+	 switch(x){
 	  case "Manhattan":
-	  hScore = manhattan(end,start); 
+	  hScore = manhattan(end, start); 
 	  //console.log(hScore);
       break;
 	  
@@ -231,62 +253,59 @@ end.by=end;
       break;
 
     } 
-    end.h=hScore;
-    end.f=hScore;
-    end.visited=true;
-    endlist.push(end);
-   
+	end.h=hScore;
+	end.parent=null;
+	end.f=end.h+end.g;
+	end.visited=true;
+	end.by=end;
+	endlist.push(end);
 	var k=0;
-	 
-    while (openHeap.size() > 0 && endlist.size() > 0) {
-       
-      var currentNode = openHeap.pop();
-      currentNode.closed = true;
-      
-     
-      var neighbors = neighborss(currentNode,this.grid,this.diagonal,this.dont);
-        
+	while(heap.size() > 0 && endlist.size() > 0){
+		var t0=performance.now(),t1;
+		var current=heap.pop();
+		
+		current.closed=true;
+		
+		  var neighbors = neighborss(current,this.grid,this.diagonal,this.dont);
+    
       for (var i = 0, il = neighbors.length; i < il; ++i) {
         var neighbor = neighbors[i];
-        var distance = neighbor.distance;
-       var neighborGrid = neighbor.grid;
+          var distance = neighbor.distance;
+               var neighborGrid = neighbor.grid;
+        
 		
         if (neighborGrid.closed || neighborGrid.isWall()) {
           continue;
         }
-		
+     
+	    
 		if(neighborGrid.visited){
 			if(neighborGrid.by===end){
-                var opt=newPath(currentNode,neighborGrid,this.weight);
-				 t1=performance.now();
+                var opt=  newPath(current,neighborGrid,this.weight);
+					t1=performance.now();
 		 var time=t1-t0;
-         var length = opt.len;
-		 //var operations = 
+         var length =opt.len;
 		  length=length.toFixed(2);
 		 time=time.toFixed(4);
                 animate(visited_in_order,opt.arr,end,start);
-		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
+		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms";
 		 return;
 				
 			}
 			continue;
 		} 
-          
-          visited_in_order.push(neighborGrid);
-     
-	 var gScore=currentNode.g + distance;
+		
+	 var gScore=current.g + distance;  
 		
 		
-		
-	if(!neighborGrid.visited || gScore < neighborGrid.g){
-		
-			neighborGrid.parent=currentNode;
+		visited_in_order.push(neighborGrid);
+			neighborGrid.parent=current;
 			neighborGrid.g=gScore;
 			
 			 var hScore;
 	 switch(x){
 	  case "Manhattan":
-	  hScore = manhattan(neighborGrid,end); 
+	  hScore = manhattan(neighborGrid, end); 
 	  //console.log(hScore);
       break;
 	  
@@ -311,63 +330,58 @@ end.by=end;
              neighborGrid.by=start;
            if(!neighborGrid.visited){            
             neighborGrid.visited=true;
-			 openHeap.push(neighborGrid);	
+			 heap.push(neighborGrid);	
            }
 		  		else{
-					openHeap.rescoreElement(neighborGrid);
+					heap.rescoreElement(neighborGrid);
 				}
-			
-		}
-
-
   }
-        
-        var currentNode2 = endlist.pop();
-      currentNode2.closed = true;
-     
-       neighbors = neighborss(currentNode2,this.grid,this.diagonal,this.dont);
-     
-	   
+  
+    var current2=endlist.pop();
+		
+		current2.closed=true;
+		
+		  var neighbors = neighborss(current2,this.grid,this.diagonal,this.dont);
+    
       for (var i = 0, il = neighbors.length; i < il; ++i) {
         var neighbor = neighbors[i];
-        var distance = neighbor.distance;
-       var neighborGrid = neighbor.grid;
+           var distance = neighbor.distance;
+               var neighborGrid = neighbor.grid;
+        
 		
         if (neighborGrid.closed || neighborGrid.isWall()) {
           continue;
         }
-		
+     
+	    
 		if(neighborGrid.visited){
+          
 			if(neighborGrid.by===start){
-                var opt=newPath(neighborGrid,currentNode2,this.weight);
-					 t1=performance.now();
+                  var opt=newPath(neighborGrid,current2,this.weight);
+					t1=performance.now();
 		 var time=t1-t0;
          var length = opt.len;
-		 //var operations = 
 		  length=length.toFixed(2);
 		 time=time.toFixed(4);
                 animate(visited_in_order,opt.arr,end,start);
-		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
+		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms";
 		 return;
-				 
+				
 			}
 			continue;
 		} 
 		
-     
-	 var gScore=currentNode2.g + distance;
+	 var gScore=current2.g + distance;
+		
 		visited_in_order.push(neighborGrid);
 		
-		
-	if(!neighborGrid.visited || gScore < neighborGrid.g){
-		
-			neighborGrid.parent=currentNode2;
+			neighborGrid.parent=current2;
 			neighborGrid.g=gScore;
 			
 			 var hScore;
 	 switch(x){
 	  case "Manhattan":
-	  hScore = manhattan(neighborGrid,start); 
+	  hScore = manhattan(neighborGrid, start); 
 	  //console.log(hScore);
       break;
 	  
@@ -385,7 +399,7 @@ end.by=end;
 
     } 
       
-       neighborGrid.by=end;
+           neighborGrid.by=end;
 			neighborGrid.h= (hScore);
 			 var fScore=neighborGrid.h + neighborGrid.g;
              neighborGrid.f=fScore;
@@ -397,24 +411,17 @@ end.by=end;
 		  		else{
 					endlist.rescoreElement(neighborGrid);
 				}
-			
-		}
-
-
+	
   }
-        
-        
-        
-}
+		
+	
+	}
 time=performance.now()-t0;
 time=time.toFixed(4);
 animate(visited_in_order,[],end,start);
-document.getElementById('information').innerText="Length : " + "0" + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
-return ;
-    
+document.getElementById('information').innerText="Length : " + "0" + "\n" + "Time : " + time + "ms";
+	return [];
+
 }
-
-
-
 
 }

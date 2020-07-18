@@ -58,7 +58,7 @@ body{
 	opacity:1;
 	background-color:palegreen;
 }
-.clr{background-color:gray;}
+.clr{background-color:#34495e;}
 
 
 .node-visited{
@@ -66,7 +66,7 @@ body{
     
 }
 .node-shortest-path{
-	background-color:yellow;
+	background-color:#fffe6a;
 }
 ._node-visited{
 	background-color:#99e6ff;
@@ -134,7 +134,7 @@ body{
     font-size:16px;
 }
 .patterns{
-	bottom:60px;
+	bottom:40px;
 	position:absolute;
 }
 .dropbtn{
@@ -212,6 +212,19 @@ body{
 	width:28%;
 	cursor:pointer;
 	opacity:1;
+    font-weight: bold;
+}
+
+.chng{
+    background-color:rgba(255,255,255,0.7);
+	color:dimgrey;
+	margin:7px;
+	margin-top:14px;
+	border-radius:5px;
+	width:28%;
+	cursor:pointer;
+	opacity:1;
+    font-weight: bold;
 }
 
 .about{

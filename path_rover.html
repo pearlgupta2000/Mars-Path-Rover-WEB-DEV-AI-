@@ -57,6 +57,9 @@ $(function(){
 	$("#rec_div").click(() => {
        Recursion_Division();
     });
+    $("#sim_demo").click(() => {
+       simpleDemonstration();
+    });
 	
 });
 
@@ -213,24 +216,25 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 
 
 <div class="patterns" > 
-
-<div class="select"> <span>Mazes & Pattern </span></div>
-
-<div class="dropbtn pat">
-<input type="radio" id="stair" name="pattern_" value="stair">
-<label for ="stair" > Stair Pattern</label><br>
-<input type="radio" id="rec_div" name="pattern_" value="rec_div">
-<label for ="rec_div" > Recursion Division</label><br>
-</div>
+    <div class="select"> <span>Mazes & Pattern </span></div>
+        <div class="dropbtn pat">
+            <input type="radio" id="stair" name="pattern_" value="stair">
+            <label for ="stair" > Stair Pattern</label><br>
+            <input type="radio" id="rec_div" name="pattern_" value="rec_div">
+            <label for ="rec_div" > Recursion Division</label><br>
+            <input type="radio" id="sim_demo" name="pattern_" value="sim_demo">
+            <label for ="sim_demo" >Spiral Pattern</label><br>
+            
+        </div>
 </div>
  
 </div>
      
 
 <div class="_click">  
-<button class="click_button" id="start">Start Search</button>                
-<button class="click_button" id="clr_grid">Clear Grid</button>
-<button class="click_button" id="clear_">Clear Path</button>
+    <button class="click_button" id="start">Start Search</button>                
+    <button class="click_button" id="clr_grid">Clear Grid</button>
+    <button class="click_button" id="clear_">Clear Path</button>
 </div>
 
 <div id = "information">

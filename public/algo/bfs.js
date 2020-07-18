@@ -47,11 +47,10 @@ bfs(maze,src, dest) {
 			var opt= pathTo(dest,this.weight); 
 		 var time=t1-t0;
          var length =opt.len;
-		 var operations = k;
 		 length=length.toFixed(2);
 		 time=time.toFixed(4);
 		 animate(visited_in_order,opt.arr,dest,src);
-		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : " +k;
+		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms";
          return;
     }
     
@@ -138,11 +137,10 @@ bidirbst(maze,src,dest){
 					t1=performance.now();
 		 var time=t1-t0;
          var length = opt.len;
-		 //var operations = 
 		 length=length.toFixed(2);
 		 time=time.toFixed(4);
                     animate(visited_in_order,opt.arr,dest,src);
-		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : " +k;
+		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms";
          return;
                   
                 }
@@ -184,11 +182,10 @@ bidirbst(maze,src,dest){
 				t1=performance.now();
 		 var time=t1-t0;
          var length =   opt.len;
-		 //var operations = 
 		 length=length.toFixed(2);
 		 time=time.toFixed(4);
                 animate(visited_in_order,opt.arr,dest,src);
-		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : " +k;
+		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms";
          return;
              
             }
@@ -213,7 +210,7 @@ bidirbst(maze,src,dest){
 time=performance.now()-t0;
 time=time.toFixed(4);
 animate(visited_in_order,[],end,start);
-document.getElementById('information').innerText="Length : " + "0" + "\n" + "Time : " + time + "ms"+ "\nOperations : ";   
+document.getElementById('information').innerText="Length : " + "0" + "\n" + "Time : " + time + "ms";   
     return [];
 }
 

@@ -20,6 +20,7 @@ include('dik.js');
 include('best fs.js');
 include("stair_pattern.js");
 include("rec_division.js");
+include("simple_demo.js");
     
 var visited_in_order=[];
 
@@ -166,6 +167,20 @@ function clearWalls() {
         document.getElementById( obj.x + ',' + obj.y).setAttribute("class", "grid");
    });
     obstacles = [];
+    
+    var s = document.getElementById("stair");
+    var m = document.getElementById("rec_div");
+    var n = document.getElementById("sim_demo");
+    if(s.disabled == true){
+        s.disabled = false;
+    }
+    if(m.disabled == true){
+        m.disabled = false;
+    }
+    if(n.disabled == true){
+        n.disabled = false;
+    }
+    
 	restart();
 }
 
@@ -174,13 +189,14 @@ function clearWalls() {
 function restart(){
 	for(var i=0;i<visited_in_order.length ;i++){
 		var object = _.filter(obstacles, function(obj){
-        return obj.x === visited_in_order[i].x && obj.y ===visited_in_order[i].y;
-    })
-	if(object.length == 0){
-		document.getElementById(visited_in_order[i].x + ',' + visited_in_order[i].y).setAttribute("class","grid"); 
+            return obj.x === visited_in_order[i].x && obj.y ===visited_in_order[i].y;
+        })
+	   if(object.length == 0){
+		  document.getElementById(visited_in_order[i].x + ',' + visited_in_order[i].y).setAttribute("class","grid"); 
+	   }
 	}
-	}
-	document.getElementById(endpnt[0] + ',' + endpnt[1]).setAttribute("class","grid end_");
+    
+   document.getElementById(endpnt[0] + ',' + endpnt[1]).setAttribute("class","grid end_");
    visited_in_order=[];	
   
 
@@ -189,11 +205,10 @@ function restart(){
 var link;
 function start_search(){
 	
-	/**link = document.getElementById("start");
-	link.disabled = true;
-	link.style.backgroundColor="light-gray";***/
 	
-
+    link__ = document.getElementById("start");
+    link__.disabled = true;
+    link__.setAttribute("class","chng");
 	restart();
 	
 	
@@ -228,10 +243,6 @@ function start_search(){
 		   else{
 			 graph.biastar(graph,start,end,x);
 		   }
-	   /**setTimeout(() => {
-         link.disabled = false;
-         }, result*1);*/
-	
 		   break;
 
 		case "IDA*":

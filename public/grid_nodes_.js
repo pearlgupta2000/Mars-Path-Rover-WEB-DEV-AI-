@@ -101,11 +101,32 @@ function animate(visitedNodesInOrder, nodesInShortestPathOrder,end,src){
 	 nodesInShortestPathOrder.pop();
 	 // link.disabled = true;
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
+        
       setTimeout(() => {
         const node = nodesInShortestPathOrder[i];
         document.getElementById(node.x + ',' + node.y).className =
           'grid node-shortest-path';
+          
+          if(node.x === nodesInShortestPathOrder[nodesInShortestPathOrder.length - 1].x  && node.y ===  nodesInShortestPathOrder[nodesInShortestPathOrder.length - 1].y){
+            var ll = document.getElementById("start");
+            if(ll.disabled == true){
+                ll.disabled = false;
+                ll.setAttribute("class","click_button");
+            }
+              link = document.getElementById("clr_grid");
+    if(link.disabled == true){
+        link.disabled = false;
+        link.setAttribute("class","click_button");
+    }
+    link_ = document.getElementById("clear_");
+    if(link_.disabled == true){
+        link_.disabled = false;
+        link_.setAttribute("class","click_button");
+    }
+        };
       }, 16 * i);
+        
+        
     }
 	
 	

@@ -1,6 +1,3 @@
-
-
-
 var startpnt = [9,12];
 var endpnt = [9,19];
 
@@ -13,32 +10,29 @@ var i = 0;
 
 function funy(x,y, event){
     if(i===2) {
-       // if(obstacles.length>0) {
-		//               var object_visit = _.filter(visited_in_order, function(obj){
-        //            return obj.x === x && obj.y ===y;
-        //        })
-            var object = _.filter(obstacles, function(obj){
-                    return obj.x === x && obj.y ===y;
-                })
-				if(startpnt[0]===x && startpnt[1]===y){
-					document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid end_");
-					document.getElementById(endpnt[0]+","+endpnt[1]).setAttribute("end", "end");
-					return;
-				}
-            if(_.isUndefined(object) || object.length == 0 || obstacles.length == 0 ) {
-				document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid");
-                document.getElementById( x + ',' + y).setAttribute("class", "grid end_");
-                $('div[end="end"]').each(function(i,el) {
-                    $(el).removeAttr("end");
-                });
-                document.getElementById(x+","+y).setAttribute("end", "end");
-                endpnt= [x,y];
+        
+                    var object = _.filter(obstacles, function(obj){
+                        return obj.x === x && obj.y ===y;
+                    })
+                    if(startpnt[0]===x && startpnt[1]===y){
+                        document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid end_");
+                        document.getElementById(endpnt[0]+","+endpnt[1]).setAttribute("end", "end");
+                        return;
+                    }
+                if(_.isUndefined(object) || object.length == 0 || obstacles.length == 0 ) {
+                    document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid");
+                    document.getElementById( x + ',' + y).setAttribute("class", "grid end_");
+                    $('div[end="end"]').each(function(i,el) {
+                        $(el).removeAttr("end");
+                    });
+                    document.getElementById(x+","+y).setAttribute("end", "end");
+                    endpnt= [x,y];
 
-            }
-			else{
-					document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid end_");
-						document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("end","end");
-			}
+                }
+                else{
+                        document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid end_");
+                            document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("end","end");
+                }
 
         return;
     } else if(i===1) {
@@ -130,10 +124,7 @@ function defineClass(x,y) {
    // funy(x,y);
 }
 document.addEventListener("dragover", function(event) {
-  // prevent default to allow drop
-  //if(event){
 	  event.preventDefault();
-  //}
 }, false); 
 
 function clearClass(event) {

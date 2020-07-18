@@ -42,14 +42,13 @@ getHeap() {
 			 t1=performance.now();
 		     var time=t1-t0;
              var length = opt.len; 
-		     var operations = k;
 		     length=length.toFixed(2);
 		     time=time.toFixed(4);
 		     
-			 animate(visited_in_order,opt.arr,dest,src);  ///////////////////////////////////////////////////
+			 animate(visited_in_order,opt.arr,dest,src);  
 		    
 		    
-		    document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
+		    document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms";
          return;
 		  }
 		  
@@ -83,7 +82,7 @@ getHeap() {
 time=performance.now()-t0;
 time=time.toFixed(4);
 animate(visited_in_order,[],end,start);
-document.getElementById('information').innerText="Length : " + "0" + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
+document.getElementById('information').innerText="Length : " + "0" + "\n" + "Time : " + time + "ms";
 return [];	  
   }	
     
@@ -145,18 +144,15 @@ bidirdik(maze,src,dest){
                 
                 if(neighborGrid.by===dest){
 						 t1=performance.now();
-						 var opt=newPath(take,neighborGrid,this.weight);  ///////////////////////////////////////////////////////////////////////
+						 var opt=newPath(take,neighborGrid,this.weight);  
 		 var time=t1-t0;
          var length = opt.len;
-		 var operations = k
 		  length=length.toFixed(2);
 		 time=time.toFixed(4);
-                    //  document.getElementById(nodeA.x + ',' + nodeA.y).setAttribute("class","grid path");
-//    document.getElementById(nodeB.x + ',' + nodeB.y).setAttribute("class","grid path");
 		 
 		  animate(visited_in_order,opt.arr,dest,src);
 		 
-		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
+		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms";
 		 return;
                 }   
                 continue;
@@ -204,12 +200,11 @@ bidirdik(maze,src,dest){
 					 t1=performance.now();
 		 var time=t1-t0;
          var opt =  newPath(neighborGrid,take1,this.weight);
-		 //var operations = 
                var length=opt.len;
 		  length=length.toFixed(2);
 		 time=time.toFixed(4);
             animate(visited_in_order,opt.arr,dest,src);    
-		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
+		 document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms";
 		 return;
                
             }
