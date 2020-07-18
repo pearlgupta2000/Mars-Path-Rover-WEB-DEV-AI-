@@ -11,16 +11,16 @@ function include(file) {
 } 
   
   
-include('interactive2.js');
-include('A_algorithm.js');
-include('bfs.js');
-include('binary_heap.js');
-include('grid_nodes_.js');
-include('dik.js');
-include('best fs.js');
-include("stair_pattern.js");
-include("rec_division.js");
-include("simple_demo.js");
+include('public/interactive2.js');
+include('public/algo/A_algorithm.js');
+include('public/algo/bfs.js');
+include('public/binary_heap.js');
+include('public/grid_nodes_.js');
+include('public/algo/dik.js');
+include('public/algo/best fs.js');
+include("public/patterns/stair_pattern.js");
+include("public/patterns/rec_division.js");
+include("public/patterns/simple_demo.js");
     
 var visited_in_order=[];
 
