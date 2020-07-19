@@ -188,6 +188,7 @@ function moveout(x,y) {
 }
 
 
+
 function click_obs(x,y) {	
     if(startpnt[0]===x && startpnt[1] ===y ) {
         return;

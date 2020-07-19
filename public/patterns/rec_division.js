@@ -13,19 +13,6 @@ function rec(row,col){
          let curr = document.getElementById(row + "," + col);
 	     setTimeout(() => {
 		   curr.setAttribute("class","grid clr");
-//               if() {
-//              var k = document.getElementById("start");
-//              if(k.disabled == true){
-//                  k.disabled = false;
-//                  k.setAttribute("class","click_button");
-//              }
-//              var kk = document.getElementById("clr_grid");
-//              if(kk.disabled == true){
-//                  kk.disabled = false;
-//                  kk.setAttribute("class","click_button");
-//              }
-//              
-//          }
          },20*y);
 	      obstacles.push({x:row , y:col});
 	     y++;
@@ -44,9 +31,6 @@ function Recursion_Division(){
       var l = document.getElementById("clr_grid");
       l.disabled = true;
       l.setAttribute("class","chng");
-      var j = document.getElementById("clear_");
-      j.disabled = true;
-      j.setAttribute("class","chng");
       var k = document.getElementById("start");
       k.disabled = true;
       k.setAttribute("class","chng");
@@ -126,5 +110,13 @@ function Recursion_Division(){
 	 for(var i=3;i<columnNumber-1;i+=4){
     rec(4,i);
 	}
+    setTimeout(() => {
+        var l = document.getElementById("clr_grid");
+        l.disabled = false;
+        l.setAttribute("class","click_button");
+        var k = document.getElementById("start");
+        k.disabled = false;
+        k.setAttribute("class","click_button");
+    }, 20* (Math.max(m,y) +1));
 	
 }

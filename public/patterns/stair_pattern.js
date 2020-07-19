@@ -7,10 +7,7 @@ function stairDemonstration() {
     p.disabled = true;
     var l = document.getElementById("clr_grid");
     l.disabled = true;
-    l.setAttribute("class","chng"); 
-    var z = document.getElementById("clear_");
-    z.disabled = true;
-    z.setAttribute("class","chng");
+    l.setAttribute("class","chng");
     var k = document.getElementById("start");
     k.disabled = true;
     k.setAttribute("class","chng");
@@ -18,7 +15,7 @@ function stairDemonstration() {
     
   let currentIdX = rowNumber - 1;
   let currentIdY = 0;
- var j=0;
+    var j=0;
   while (currentIdX > 0 && currentIdY < columnNumber) {
     let currentId = currentIdX + ',' + currentIdY;
    
@@ -43,26 +40,18 @@ function stairDemonstration() {
 	 
 	  setTimeout(() => {
         currentHTMLNode.setAttribute("class","grid clr");
-          if(currentIdX === (rowNumber - 2) && currentIdY === (columnNumber) ){
-              var k = document.getElementById("start");
-              if(k.disabled == true){
-                  k.disabled = false;
-                  k.setAttribute("class","click_button");
-              }
-              var kk = document.getElementById("clr_grid");
-              if(kk.disabled == true){
-                  kk.disabled = false;
-                  kk.setAttribute("class","click_button");
-              }
-              
-          }
       }, 20* j);
 	  obstacles.push({x:currentIdX , y:currentIdY});
     j++;
     currentIdX++;
     currentIdY++;
   }
-    
-    
-
+    setTimeout(()=> {
+      var k = document.getElementById("start");
+      k.disabled = false;
+      k.setAttribute("class","click_button");
+      var kk = document.getElementById("clr_grid");
+      kk.disabled = false;
+      kk.setAttribute("class","click_button");
+    }, 20* (j+1))
 }

@@ -29,6 +29,18 @@ var visited_in_order=[];
     var columnNumber = Math.floor(width/34.55);
     var rowNumber = Math.floor(height/34.55);
 
+function enablePause() {
+    var pauseButton = document.getElementById("pause_");
+    pauseButton.disabled = false;
+    pauseButton.setAttribute("class", "click_button");
+}
+
+function disablePause() {
+    var pauseButton = document.getElementById("pause_");
+    pauseButton.disabled = true;
+    pauseButton.setAttribute("class", "chng");
+}
+
 function createGrid() {
    
     for (var rows = 0; rows < rowNumber; rows++) {
@@ -44,7 +56,8 @@ function createGrid() {
     document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("start", "start");
     document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("end","end");
     document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid end_");
-    document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("class", "grid start_");                                            //added
+    document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("class", "grid start_"); 
+    disablePause();//added
 };
 
 
@@ -204,12 +217,7 @@ function restart(){
 
 var link;
 function start_search(){
-	
-	
-    link__ = document.getElementById("start");
-    link__.disabled = true;
-    link__.setAttribute("class","chng");
-	restart();
+	stopSearch();
 	
 	
 	switch(algo_selected){

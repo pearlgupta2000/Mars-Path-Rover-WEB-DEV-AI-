@@ -7,9 +7,6 @@ function simpleDemonstration() {
     var l = document.getElementById("clr_grid");
     l.disabled = true;
     l.setAttribute("class","chng");
-    var j = document.getElementById("clear_");
-    j.disabled = true;
-    j.setAttribute("class","chng");
     var k = document.getElementById("start");
     k.disabled = true;
     k.setAttribute("class","chng");
@@ -139,5 +136,15 @@ function simpleDemonstration() {
             startCol += 2;
        }
     }
+    setTimeout(() => {
+        var l = document.getElementById("clr_grid");
+        l.disabled = false;
+        l.setAttribute("class","click_button");
+        var k = document.getElementById("start");
+        k.disabled = false;
+        k.setAttribute("class","click_button");
+    }, 20* (Math.max(a,b,c,d)+1));
+    
+    
 }
 

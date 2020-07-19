@@ -40,16 +40,17 @@ $(function(){
     });
   
    $("#start").click(() => {
+        $("#start").text("Restart Search");
+        enablePause();
 		start_search();
     });
     $("#clr_grid").click(() => {
-	 clearWalls();
-       
+        stopSearch();
+        clearWalls();
     });
-	$("#clear_").click(() => {
-       restart();
+    $("#pause_").click(() => {
+        pauseSearch();
     });
-
     $("#stair").click(() => {
        stairDemonstration();
     });
@@ -60,9 +61,7 @@ $(function(){
     $("#sim_demo").click(() => {
        simpleDemonstration();
     });
-	
 });
-
 
 </script>
 
@@ -233,8 +232,8 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 
 <div class="_click">  
     <button class="click_button" id="start">Start Search</button>                
-    <button class="click_button" id="clr_grid">Clear Grid</button>
-    <button class="click_button" id="clear_">Clear Path</button>
+    <button class="click_button" id="pause_">Pause Search</button>
+    <button class="click_button" id="clr_grid">Clear Wall</button>
 </div>
 
 <div id = "information">
