@@ -193,8 +193,7 @@ function clearWalls() {
     if(n.disabled == true){
         n.disabled = false;
     }
-    
-	restart();
+    clearPath();
 }
 
 
