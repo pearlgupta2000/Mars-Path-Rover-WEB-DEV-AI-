@@ -34,15 +34,12 @@ function Recursion_Division(){
       var k = document.getElementById("start");
       k.disabled = true;
       k.setAttribute("class","chng");
-      
-    
       var m=0;
 	  let col=0,row=0;
       let endRow = rowNumber -1;
       let endCol = columnNumber -1;
     
-    //first row
-     for(let i=col; i<=endCol;++i){
+      for(let i=col; i<=endCol;++i){
             let currentId = row + ',' + i;
             if(endpnt[0] == row && endpnt[1]== i) continue;
             if(startpnt[0] == row && startpnt[1]== i) continue;
@@ -54,8 +51,7 @@ function Recursion_Division(){
             obstacles.push({x:row , y:i});
         }
         row++;
-    
-    //end col
+
      for(let i=row; i<=endRow;++i){
             let currentId = i + ',' + endCol;
             if(endpnt[0] == i && endpnt[1]== endCol) continue;
@@ -69,8 +65,7 @@ function Recursion_Division(){
         }
         endCol--;
 
-     //printing bottom row
-         if(endRow>row){
+     if(endRow>row){
             for(let i=endCol ; i>=col ;i--){
                 let currentId = endRow + ',' + i;
                 if(endpnt[0] == endRow && endpnt[1]== i) continue;
@@ -83,12 +78,9 @@ function Recursion_Division(){
                 obstacles.push({x:endRow , y:i});
             }
             endRow--;
-        }
-        
-        
-        //printing first col
-        
-        if(endCol>col){
+    }
+
+    if(endCol>col){
             for(let i=endRow ; i>=row ;i--){
                 let currentId = i + ',' + col;
                 if(endpnt[0] == i && endpnt[1]== col) continue;
@@ -101,14 +93,14 @@ function Recursion_Division(){
                 obstacles.push({x:i , y:col});
             }
             col++;
-         }
+    }
     
 
     for(var i=5;i<columnNumber-2;i+=4){
-    rec(1,i);
+		rec(1,i);
 	}
-	 for(var i=3;i<columnNumber-1;i+=4){
-    rec(4,i);
+	for(var i=3;i<columnNumber-1;i+=4){
+		rec(4,i);
 	}
     setTimeout(() => {
         var l = document.getElementById("clr_grid");

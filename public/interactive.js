@@ -10,7 +10,8 @@ function include(file) {
   
 } 
   
-  
+include('public/Animation.js');
+include('public/PathDetection.js');  
 include('public/interactive2.js');
 include('public/algo/A_algorithm.js');
 include('public/algo/bfs.js');
@@ -21,13 +22,17 @@ include('public/algo/best fs.js');
 include("public/patterns/stair_pattern.js");
 include("public/patterns/rec_division.js");
 include("public/patterns/simple_demo.js");
-    
-var visited_in_order=[];
 
- var width = window.outerWidth;
-    var height = window.outerHeight;
-    var columnNumber = Math.floor(width/34.55);
-    var rowNumber = Math.floor(height/34.55);
+  
+var visited_in_order=[];
+var width = window.outerWidth;
+var height = window.outerHeight;
+var columnNumber = Math.floor(width/34.55);
+var rowNumber = Math.floor(height/34.55);
+var Grid=[];  
+var id=1;
+var algo_selected = "A*";
+
 
 function enablePause() {
     var pauseButton = document.getElementById("pause_");
@@ -57,12 +62,9 @@ function createGrid() {
     document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("end","end");
     document.getElementById(endpnt[0]+','+endpnt[1]).setAttribute("class","grid end_");
     document.getElementById(startpnt[0]+','+startpnt[1]).setAttribute("class", "grid start_"); 
-    disablePause();//added
+    disablePause();
 };
 
-
-
-var Grid=[];        // contain 0 and 1
  
 for(var i=0;i<rowNumber;i++){
 	Grid[i]=new Array(columnNumber);
@@ -87,9 +89,6 @@ for(var i=0 ; i<rowNumber ; i++){
 }
 
 }
-
-
-var id=1;
 
 function close(){
 	if(id==1){
@@ -121,7 +120,6 @@ function close(){
 	}
 }
 
-var algo_selected = "A*";
 
 function A_algo(){
 	close();
@@ -203,133 +201,107 @@ function restart(){
 		var object = _.filter(obstacles, function(obj){
             return obj.x === visited_in_order[i].x && obj.y ===visited_in_order[i].y;
         })
-	   if(object.length == 0){
+	    if(object.length == 0){
 		  document.getElementById(visited_in_order[i].x + ',' + visited_in_order[i].y).setAttribute("class","grid"); 
-	   }
+	    }
 	}
     
-   document.getElementById(endpnt[0] + ',' + endpnt[1]).setAttribute("class","grid end_");
-   visited_in_order=[];	
-  
-
+    document.getElementById(endpnt[0] + ',' + endpnt[1]).setAttribute("class","grid end_");
+    visited_in_order=[];	
 }
 
-var link;
 function start_search(){
 	stopSearch();
-	
 	
 	switch(algo_selected){
 		
 		case "A*":
-		
 		   w = document.getElementById("weight1").value;
 		   make_grid(w);
-		    var diagonal =  document.getElementById("a1").checked; 
-            var bi = document.getElementById("a2").checked;
-			var dont=document.getElementById("a3").checked;			
+		   var diagonal =  document.getElementById("a1").checked; 
+           var bi = document.getElementById("a2").checked;
+	       var dont=document.getElementById("a3").checked;			
 		   var graph = new Graph(Grid,diagonal,w,dont);
-
            var start = graph.grid[startpnt[0]][startpnt[1]];
            var end = graph.grid[endpnt[0]][endpnt[1]];
-     
 		   var xx=document.getElementsByName('path_A1'); 
-
-          	 var x;  
-			
-			   for(var i=0;i<xx.length;i++){
-				   if(xx[i].checked){
-					  x=xx[i].value; 
-					  break;
-				   }
-			   }
+           var x;  
+		   for(var i=0;i<xx.length;i++){
+				if(xx[i].checked){
+					x=xx[i].value; 
+					break;
+				}
+			}
 		     
-		   if(!bi){
-            graph.astarsearch(graph, start, end , x );   
-		   }
-		   else{
-			 graph.biastar(graph,start,end,x);
-		   }
-		   break;
+		    if(!bi){
+				graph.astarsearch(graph, start, end , x );   
+		    }
+		    else{
+				graph.biastar(graph,start,end,x);
+		    }
+		    break;
 
 		case "IDA*":
-              w = document.getElementById("weight2").value;
-		     make_grid(w);
-             var diagonal = document.getElementById("a4").checked;
-             var dont = document.getElementById("a5").checked;
+            w = document.getElementById("weight2").value;
+		    make_grid(w);
+            var diagonal = document.getElementById("a4").checked;
+            var dont = document.getElementById("a5").checked;
             var time_ = document.getElementById("weight").value;
             var trackRecursion = document.getElementById("a6").checked;
             var help =new ida_graph(Grid,diagonal,dont,w,time_,trackRecursion);
-            
-            
             var start_ = help.grid[startpnt[0]][startpnt[1]];
-           var end_ = help.grid[endpnt[0]][endpnt[1]];
-            
-             var xx=document.getElementsByName('path_A2'); 
-
-          	 var x;  
-			
-			   for(var i=0;i<xx.length;i++){
-				   if(xx[i].checked){
-					  x=xx[i].value; 
-					  break;
-				   }
-			   }
-            
-            var result = help.idasearch(help,start_,end_,x);
-            //alert(result.length);
-     
-             break;
+            var end_ = help.grid[endpnt[0]][endpnt[1]];
+            var xx=document.getElementsByName('path_A2'); 
+			var x;  
+			for(var i=0;i<xx.length;i++){
+				if(xx[i].checked){
+					x=xx[i].value; 
+					break;
+				}
+			}
+            help.idasearch(help,start_,end_,x);
+            break;
+			 
 		case "BreadthFS":
-                make_grid(1);
-				 var diagonal =  document.getElementById("a7").checked;  
-                 var bi = document.getElementById('a8').checked;
-				 var dont=document.getElementById("a9").checked;
-                var helping = new helper(Grid,diagonal,dont);
-                var source = helping.grid[startpnt[0]][startpnt[1]];
-                var dest = helping.grid[endpnt[0]][endpnt[1]];
-               
-                if(!bi){
-                var dist = helping.bfs(helping, source, dest);
-                }
-                else{
-                    var dist=helping.bidirbst(helping,source,dest);
-                }
-               
-            
-                //alert(dist);
-                break;	 
+            make_grid(1);
+	     	var diagonal =  document.getElementById("a7").checked;  
+            var bi = document.getElementById('a8').checked;
+			var dont=document.getElementById("a9").checked;
+            var helping = new helper(Grid,diagonal,dont);
+            var source = helping.grid[startpnt[0]][startpnt[1]];
+            var dest = helping.grid[endpnt[0]][endpnt[1]]; 
+            if(!bi){
+               helping.bfs(helping, source, dest);
+            }
+            else{
+               helping.bidirbst(helping,source,dest);
+            }
+            break;	 
+			
 		case "BestFS":
-               make_grid(1);
-			    var diagonal =  document.getElementById("a10").checked; 
+            make_grid(1);
+		    var diagonal =  document.getElementById("a10").checked; 
             var bi = document.getElementById("a11").checked;
 			var dont=document.getElementById("a12").checked;			
-		   var graph2 = new BestfsGraph(Grid,diagonal,dont);
-
-           var start = graph2.grid[startpnt[0]][startpnt[1]];
-           var end = graph2.grid[endpnt[0]][endpnt[1]];
-      
-		   var xx=document.getElementsByName('path_A3'); 
-
-          	 var x;  
-			
-			   for(var i=0;i<xx.length;i++){
-				   if(xx[i].checked){
-					  x=xx[i].value; 
-					  break;
-				   }
+		    var graph2 = new BestfsGraph(Grid,diagonal,dont);
+            var start = graph2.grid[startpnt[0]][startpnt[1]]; 
+            var end = graph2.grid[endpnt[0]][endpnt[1]];
+		    var xx=document.getElementsByName('path_A3'); 
+          	var x;  
+			for(var i=0;i<xx.length;i++){
+			   if(xx[i].checked){
+				  x=xx[i].value; 
+				  break;
 			   }
-			   
-		  // alert(x);
-		   if(!bi){
-           var result = graph2.bestFS(graph2, start, end , x );   
-		   }
-		   else{
-			   var result=graph2.biBestFS(graph2,start,end,x);
-		   }
-		   //alert(result);
-			   
-             break;
+		    }
+		    if(!bi){
+			    graph2.bestFS(graph2, start, end , x );   
+		    }
+		    else{
+			    graph2.biBestFS(graph2,start,end,x);
+		    }
+            break;
+			
         case "DJK":
                 make_grid(1);
 			    var diagonal =  document.getElementById("a13").checked;  
@@ -338,23 +310,13 @@ function start_search(){
                 var helping = new helper_dik(Grid,diagonal,dont);
                 var source = helping.grid[startpnt[0]][startpnt[1]];
                 var dest = helping.grid[endpnt[0]][endpnt[1]];
-            if(!bi){
-                var dist = helping.dijkishtras(helping, source, dest);
-            }
-            else{
-                var dist=helping.bidirdik(helping,source,dest);
-            }
-            
+				if(!bi){
+					var dist = helping.dijkishtras(helping, source, dest);
+				}
+				else{
+					var dist=helping.bidirdik(helping,source,dest);
+				}
                 break;	 
-        /**case "JPS":
-               make_grid(1);
-             break;	
-         case "OJPS":
-               make_grid(1);
-             break;		
-         case "Trace":
-               make_grid(1);
-             break;		*/		 
-	}
-	
+        		 
+	}	
 }

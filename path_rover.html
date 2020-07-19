@@ -7,18 +7,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
-
-
-
 <link rel="stylesheet" type="text/css" href="css/style.css"> 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script type="text/javascript" src="public/interactive.js"> </script>
 <script type="text/javascript" src="public/interactive2.js"> </script>
-<!--script type="text/javascript" src="bfs.js"></script-->
-<!--script type="text/javascript" src="A_algorithm.js"></script-->
-
-
 <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+
+
 
 <script>
 window.onload=createGrid;
@@ -67,9 +63,7 @@ $(function(){
 
 
 
-
 </head>
-
 
 <body style="height: 100%; width: 100%">
 
@@ -77,21 +71,18 @@ $(function(){
 
 <div id="container" ui-grid="gridOptions" ui-grid-auto-resize>
 
-
 <div id="instructions"> 
 <header>
 <span id="_header"> Instructions </span>
-<span id="_hide" onclick="hide_ins()">Hide</span>
+<span id="_hide">Hide</span>
 </header>
 <p id="ins_head">
 Click within the white grid and drag your mouse to draw obstacles.<br> Drag the <span style="color:#00ff00;"> green</span> node to set the start position. <br> Drag the <span style="color:#ff2800;">red </span>node to set the end position.<br>Choose the algorithm from right hand panel . <br> Click the start search in the lower-right corner to start animation.
 </p>
 </div>
 
-
-
 <div id="algorithm"> 
-<div class="select"> <span>Select Algorithm </span></div>
+<div class="select"><i class="fa fa-code" aria-hidden="true"></i> <span>Select Algorithm </span></div>
 
 <div class="i_algo"> 
 
@@ -103,7 +94,6 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 <div class="heuristic">
 <input type="radio" id="Man" name="path_A1" value="Manhattan" checked>
 <label for="Manhattan">Manhattan</label>
-<!--span class="label_l"> Manhattan</span-->
 <br>
 <input type="radio" id="Man" name="path_A1" value="Euclidiean">
 <label for="Euclidiean">Euclidiean</label>
@@ -132,8 +122,6 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 </div>
 </div>
 </div>
-
-
 
 <div class="i_algo"> 
 
@@ -215,7 +203,7 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
 
 
 <div class="patterns" > 
-    <div class="select"> <span>Mazes & Pattern </span></div>
+    <div class="select"><i class="fa fa-cubes" aria-hidden="true"></i> <span>Mazes & Pattern </span></div>
         <div class="dropbtn pat">
             <input type="radio" id="stair" name="pattern_" value="stair">
             <label for ="stair" > Stair Pattern</label><br>
@@ -223,7 +211,6 @@ Click within the white grid and drag your mouse to draw obstacles.<br> Drag the 
             <label for ="rec_div" > Recursion Division</label><br>
             <input type="radio" id="sim_demo" name="pattern_" value="sim_demo">
             <label for ="sim_demo" >Spiral Pattern</label><br>
-            
         </div>
 </div>
  
