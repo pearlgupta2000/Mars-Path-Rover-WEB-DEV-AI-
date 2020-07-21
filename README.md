@@ -14,7 +14,7 @@ expanding the most promising node chosen according to a specified rule.
 
 ***Technologies used*** - HTML, CSS, JAVASCRIPT, JQUERY
 
-***Patterns for obstacles*** - implemented some patterns(obstacles) like spiral pattern , stair pattern , recursion division . 
+
 
 
  
