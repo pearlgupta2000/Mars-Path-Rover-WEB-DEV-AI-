@@ -80,7 +80,7 @@ class helper{
         time=performance.now()-t0;
         time=time.toFixed(4);
         animate(visited_in_order,[],end,start);
-        document.getElementById('information').innerText="Length : " + "0" + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
+        document.getElementById('information').innerText="Length : " + "0" + "\n" + "Time : " + time + "ms";
         return [];
     }
     
@@ -104,7 +104,8 @@ class helper{
         dest.by=dest;
         endlist.push(dest);
 
-        while(startlist.length && endlist.length){
+        while(startlist.length || endlist.length){
+			if(startlist.length>0){
             var take= startlist.shift();
             take.closed = true;
             var neighbors = neighborss(take,this.grid,this.diagonal,this.dont); 
@@ -140,6 +141,8 @@ class helper{
                     startlist.push(neighborGrid);
                 }
             }
+			}
+			if(endlist.length>0){
             //woring on END NODE
             var take1 = endlist.shift();
             take1.closed=true;
@@ -177,10 +180,11 @@ class helper{
                     endlist.push(neighborGrid);
                 }
             }
+		}
         }
         time=performance.now()-t0;
         time=time.toFixed(4);
-        animate(visited_in_order,[],end,start);
+        animate(visited_in_order,[],dest,start);
         document.getElementById('information').innerText="Length : " + "0" + "\n" + "Time : " + time + "ms";   
         return [];
     }

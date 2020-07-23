@@ -219,7 +219,8 @@ class BestfsGraph{
         endlist.push(end);
         var k=0;
         
-        while(heap.size() > 0 && endlist.size() > 0){
+        while(heap.size() > 0 || endlist.size() > 0){
+			if(heap.size()>0){
             var t0=performance.now(),t1;
             var current=heap.pop();
             current.closed=true;
@@ -276,6 +277,8 @@ class BestfsGraph{
                     heap.rescoreElement(neighborGrid);
                 }
             }
+			}
+			if(endlist.size()>0){
             var current2=endlist.pop();
             current2.closed=true;
             
@@ -337,6 +340,7 @@ class BestfsGraph{
                     endlist.rescoreElement(neighborGrid);
                 }
             }
+			}
         }
         
         time=performance.now()-t0;

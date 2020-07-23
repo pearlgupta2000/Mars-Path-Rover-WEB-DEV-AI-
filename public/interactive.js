@@ -65,6 +65,9 @@ function createGrid() {
     disablePause();
 };
 
+function change_theme(color){
+	document.body.style.background = color;
+}
  
 for(var i=0;i<rowNumber;i++){
 	Grid[i]=new Array(columnNumber);
@@ -207,7 +210,8 @@ function restart(){
 	}
     
     document.getElementById(endpnt[0] + ',' + endpnt[1]).setAttribute("class","grid end_");
-    visited_in_order=[];	
+    visited_in_order=[];
+	document.getElementById('information').innerText="Length : " + "0" + "\n" + "Time : ";
 }
 
 function start_search(){
