@@ -17,12 +17,12 @@ a great algorithm; guarantees the shortest path<br/>
 - **Best-First Search**<br/>
 Best-first search is a search algorithm which explores a graph by expanding the most promising node chosen according to a specified rule.<br/>
 
-### **Technologies used** <br/> 
-> HTML5 <br/>  
-> CSS3 <br/> 
-> JavaScript <br/> 
-> JQuery <br/> 
-> AI Algorithms<br/>
+### **Technologies used**<br/> 
+- HTML5<br/>  
+- CSS3<br/> 
+- JavaScript<br/> 
+- JQuery<br/> 
+- AI Algorithms<br/>
 
 ### **CONTRIBUTORS**<br>
 -[Pearl Gupta](https://github.com/pearlgupta2000) <br/> 
