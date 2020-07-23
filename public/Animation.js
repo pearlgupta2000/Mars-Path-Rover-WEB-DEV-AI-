@@ -31,7 +31,7 @@ function animate(visitedNodesInOrder, nodesInShortestPathOrder,end,src){
 	    if (i === visitedNodesInOrder.length) {
 			var timer = new Timer(() => {
             this.animateShortestPath(nodesInShortestPathOrder);
-            }, 15.1 * i)  
+            }, 15.3 * i)  
             timers.push(timer);
 			return;
 		}  
