@@ -2,7 +2,6 @@
 body{
 	overflow:hidden;
     background-color:#211a23;
-	/*;*/
 }
 
 #wrapper{
@@ -98,7 +97,7 @@ body{
 	padding:5px;
 	width:560px;
 	height:160px;
-	background-color: #cecfca;
+	background-color:#cecfca;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 	opacity:0.9;
 	position:fixed;
@@ -122,7 +121,7 @@ body{
 .mode{
 	opacity:1;
 	margin:5px;
-	background-color:#8f9094;
+	background-color: #8f9094;
 	opacity:0.9;
 	position:fixed;
 	border-radius:10px;
@@ -156,7 +155,6 @@ body{
 
 #algorithm{
 	background-color: #cecfca;
-/*        #230000;*/
 	opacity:0.9;
 	position:fixed;
 	border-radius:10px;

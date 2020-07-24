@@ -112,7 +112,7 @@ class BestfsGraph{
                 length=length.toFixed(2);
                 time=time.toFixed(4);
                 animate(visited_in_order,opt.arr,end,start);
-                document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms"+ "\nOperations : ";
+                document.getElementById('information').innerText="Length : " + length + "\n" + "Time : " + time + "ms";
                 return;
             }
             current.closed=true;

@@ -89,7 +89,6 @@ class helper{
         var t0=performance.now(),t1;
         var startlist = [];
         var endlist = [];
-        var k=0;
         
         src.visited = true;
         src.dist=0;
