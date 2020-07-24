@@ -7,8 +7,8 @@ body{
 #wrapper{
 	margin-left:auto;
 	margin-right:auto;
-	margin-bottom:auto;      /* change*/
-	margin-top:auto;         /* change*/
+	margin-bottom:auto;      
+	margin-top:auto;        
 	width:1366px;
 }
 
@@ -19,18 +19,21 @@ body{
     z-index: -10;
     left: 0px;
     top: 0px;
+	margin-right:0px;
+	margin-bottom:0px;
 }
 
-
 #container{
-	
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:auto;      
+	margin-top:auto;
 	height:100%;
 	width:100%;
 	outline:1px ridge lightgray;
 	position:relative;
 	border:none;
 	padding:0;
-	margin:0;
     font-size:0;
 }
 

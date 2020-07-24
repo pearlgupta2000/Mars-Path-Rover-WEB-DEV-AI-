@@ -27,8 +27,8 @@ include("public/patterns/simple_demo.js");
 var visited_in_order=[];
 var width = window.outerWidth;
 var height = window.outerHeight;
-var columnNumber =39; //Math.floor(width/34.55);       /* change*/
-var rowNumber = 21;//Math.floor(height/34.55);         /* change*/
+var columnNumber =39;     /* change*/
+var rowNumber = 21;      /* change*/
 var Grid=[];  
 var id=1;
 var algo_selected = "A*";
