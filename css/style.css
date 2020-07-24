@@ -7,6 +7,8 @@ body{
 #wrapper{
 	margin-left:auto;
 	margin-right:auto;
+	margin-bottom:auto;      /* change*/
+	margin-top:auto;         /* change*/
 	width:1366px;
 }
 
